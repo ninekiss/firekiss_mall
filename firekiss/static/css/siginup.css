@@ -1,0 +1,454 @@
+/*  sinin and sigup page content */
+.cont {
+    width: 1190px;
+    margin: 0 auto;
+}
+.input {
+    width: 100%;
+    height: 34px;
+    font-size: 14px;
+    text-indent: 10px; 
+    margin-bottom: 15px;
+    border: 1px solid #bbb;
+}
+.msg {
+    font-size: 14px;
+    font-weight: 600;
+    color: #f00;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: clip;
+    position: absolute;
+}
+.btn {
+    display: block;
+    width: 200px;
+    height: 35px; 
+    border: 0;
+    cursor: pointer;
+    border-radius: 3px;
+    font-size: 16px;
+    font-weight: 700;
+    color: #fff;
+    background: #f00;
+}
+.step3 .disenabled {
+    background: #ccc;
+    color: #fff;
+}
+
+
+/* login page */
+
+.top {
+    height: 100px;
+}
+.top h1 {
+    height: 100px;
+    font-size: 30px;
+    line-height: 100px;
+}
+.top a {
+    float: left;
+    width: 220px;
+    height: 100px;
+    text-align: center;
+    color: #f00;
+}
+.con {
+    width: 100%;
+    background: rgb(253, 11, 45);
+}
+.center {
+    height: 600px;
+    background: url('../images/TB1l9NKB3HqK1RjSZFgXXa7JXXa-1190-600.jpg') 0px 0px no-repeat;
+}
+.banner a {
+    float: left;
+    width: 600px;
+    height: 600px;
+}
+.banner img {
+    width: 100%;
+}
+.login form {
+    float: right;
+    width: 300px;
+    height: 300px;
+    margin: 120px 65px;
+    padding: 30px;
+    background: #fff; 
+    position: relative;
+}
+.login h1 {
+    height: 40px;
+    text-indent: 5px;
+    /* line-height: 40px; */
+    font-size: 20px;
+    font-weight: 500;
+}
+.login label {
+    display: block;
+    width: 100%;
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: 600;
+}
+.login .checkbox {
+    display: inline-block;
+    margin:0 0 5px 5px;
+    font-size: 14px;
+}
+
+.login .btn {
+    width: 302px;
+    border: 0;
+    border-radius: 3px;
+    font-size: 16px;
+    font-weight: 700;
+    text-indent: 0;
+    color: #fff;
+    background: #f00;
+    cursor: pointer;
+}
+.login_other {
+    margin-bottom: 5px;
+    padding-left: 80px;
+    font-size: 14px;
+}
+.login_other a {
+    margin: 0 0 0 6px;
+    color: #999;
+}
+.login_other .register_link {
+    color: #f00
+}
+.login .msg {
+    display: none;
+    width: 300px;
+    height: 30px;
+    padding: 0 30px;
+    line-height: 30px;
+    left: 0px;
+    bottom: 20px;
+}
+.bottom {
+    height: 100px;
+    text-align: center;
+    font-size: 14px;
+}
+.b_link {
+    height: 20px;
+    padding: 30px 0 10px 0;
+}
+.b_link a {
+    margin: 0 10px;    
+    color: #1e90ff;
+}
+.bottom p {
+    color: #999;
+    font-size: 14px;
+}
+
+
+/* register page */
+.l_con {
+    width: 100%;
+}
+.step_con {
+    height: 50px;
+}
+.step_title {
+    width: 940px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    margin: 0 auto;
+    cursor: default;
+}
+.step_title h1 {
+    float: left;
+    width: 100px;
+    padding: 0 20px;
+    border-bottom: 2px solid #ddd;
+    font-size: 20px;
+    color: #f00;
+}
+.step_title div {
+    float: left;
+    width: 200px;
+    height: 50px;
+    font-weight: 600;
+    border-bottom: 2px solid #ddd;
+}
+.step_title span {
+    display: inline-block;
+    width: 28px;
+    height: 28px;
+    line-height: 28px;
+    margin: 11px 10px;
+    border-radius: 14px;
+    color: #fff;
+    background-color: #ccc;
+}
+.step_title .active {
+    border-bottom: 2px solid #f00;
+}
+.active span {
+    background-color: #f00;
+}
+
+.r_input_con .btn {
+     margin: 0 200px;
+}
+.step {
+    width: 800px;
+    margin: 50px auto;
+}
+.r_input_con {
+    width: 800px;
+    margin: 0 100px;
+}
+.step label {
+    display: inline-block;
+    text-align: right;
+    width: 150px;
+}
+.step .input {
+    width: 280px;
+    margin:0 0 20px 20px;
+}
+.step .input_group {
+    position: relative;
+}
+.step .msg {
+    width: 500px;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: clip;
+    display: none;
+    right: -170px;
+    top: 3px;
+}
+.step1 {
+    display: none;
+}
+.step2 {
+    display: none;
+}
+.vercode_pic {
+    width: 100px;
+    height: 36px;
+    border: 1px solid #fff;
+    position: absolute;
+    right: 338px;
+    top: -1px;
+    cursor:pointer;
+}
+.vercode_pic img {
+    width: 100%;
+}
+.vercode_pic span {
+    width: 100px;
+    height: 36px;
+    background: #fff9;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    display: none;
+}
+@keyframes refresh {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+.vercode_pic i {
+    width: 25px;
+    height: 25px;
+    background: url('../images/icon_recode.png') 0px 0px no-repeat;
+    background-size: 25px;
+    position: absolute;
+    top: 5px;
+    left: 39px;
+}
+.vercode_pic .i_ro {
+    animation: refresh 500ms ease 1 normal;
+}
+.vercode_pic:hover span {
+    display: block;
+}
+.step3 {
+    display: none;
+}
+.step3 h2{
+    font-size: 20px;
+    height: 50px;
+    line-height: 50px;
+    margin-bottom: 20px;
+}
+.step3 ul {
+    width: 100%;
+    height: 30px;
+    margin-bottom: 20px;
+}
+.step3 li {
+    float: left;
+    width: 120px;
+    height: 30px;
+    line-height: 30px;
+    font-size: 14px;
+}
+.step3 input {
+    margin-right: 10px;
+}
+.step3 li a{
+    display:block;
+    line-height: 30px;
+}
+.step3 p {
+    margin: 10px 0 100px;
+}
+.step3 p a{
+    display: block;
+    width: 120px;
+    height: 50px;
+    line-height: 50px;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bolder;
+    border: 1px solid #1e90ff;
+    color: rgba(255, 0, 0, 0.5);
+    background: url() 0px 0px no-repeat;
+}
+.step3 .btn {
+    margin-top: 20px;
+}
+.step3 a {
+    line-height: 35px;
+    text-align: center;
+    color: #1e90ff;
+}
+
+.step4 {
+    height: 300px;
+    overflow: hidden;
+}
+.step4 .r_input_con {
+    padding-left: 100px;
+    height: 300px;
+    position: relative;
+}
+.step4 h2 {
+    font-size: 20px;
+    height: 50px;
+    line-height: 50px;
+    margin-bottom: 20px;
+}
+.step4 h2 span {
+    display: inline-block;
+    font-size: 18px;
+    text-indent: 20px;
+    font-weight: 700;
+    color: #f00;
+
+}
+.step4 p {
+    margin-bottom: 50px;
+}
+.step4 .btn {
+    float: left;
+    margin: 0 20px 0 0;
+}
+.step4 a {
+    float: left;
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 35px;
+    color: #f00;    
+}
+.step4 {
+    display: none;
+}
+.step4 .re_send {
+    width: 1000px;
+    margin: 0 auto;
+    display: none;
+}
+.re_send .input_group {
+    width: 600px;
+    height: 40px;
+    margin: 20px 0 0 100px;
+    position: relative;
+}
+.re_send input {
+    width: 300px;
+    text-indent: 10px;
+    border: 1px solid #ccc;
+    height: 30px;
+}
+.re_send .input_group span {
+    position: absolute;
+    left: 470px;
+    top: 0px;
+}
+.re_send .btn {
+    width: 200px;
+    margin:0 200px;
+    text-align: center;
+    display: block;
+}
+.re_send .disabled {
+    background: rgba(245, 133, 133, 0.89);
+    cursor: not-allowed;
+    outline: none;
+    color: #fff;
+}
+
+/* register pact */
+.pact {
+    width: 700px;
+    height: 500px;
+    margin: 50px auto;
+    padding: 20px;
+    border: 2px solid #ccc;
+    font-size: 14px;
+    color: #333;
+    position: relative;
+    /* display: none; */
+}
+.pact h2 {
+    font-size: 22px;
+    height: 40px;
+    text-align: center;
+}
+.pact p {
+    line-height: 20px;
+    margin: 10px auto;
+}
+.pact a {
+    font-size: 16px;
+    font-weight: 700;
+    color: #f00;
+}
+.pact .btn {
+    margin: 0 auto;
+}
+.pact .close {
+    width: 50px;
+    height: 50px;
+    font-size: 22px;
+    font-weight: bolder;
+    border: 0;
+    outline: none;
+    color: #f00;
+    background: #fff;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+}

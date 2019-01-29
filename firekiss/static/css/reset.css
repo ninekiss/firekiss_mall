@@ -1,0 +1,59 @@
+/* 重置部分元素默认样式 先写目前用到的部分，日后有需求再加*/
+
+/*清除间距*/
+body, p, h1, h2, h3, h4, h5, h6, ul, dl, dt, dd, form, input {
+	margin: 0;
+	padding: 0;
+}
+
+/*清除ul小圆点*/
+ul {
+	list-style: none;
+}
+
+/*清除a标签下划线*/
+a {
+	text-decoration: none;
+}
+
+/*清除em斜体*/
+em, i {
+	font-style: normal;
+}
+
+/*清除input的边框和图片在IE下做链接时生成的边框*/
+ input, img {
+	border: 0;
+}
+
+/*设置字体大小继承自body的字体设置*/
+h1, h2, h3, h4, h5, h6 {
+	font-size: 100%;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0
+}
+
+/*清除浮动，解决magrin-top塌陷*/
+.clearfix:before, .clearfix:after {
+	content: "";
+	display: table;
+}
+.clearfix:after {
+	clear: both;
+}
+/*兼容IE*/
+.clearfix {
+	zoom: 1;
+}
+
+
+/*左右浮动*/
+.fl {
+	float: left;
+}
+.fr {
+	float: right;
+}

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>火吻注册</title>
+    <link rel="stylesheet" href="css/reset.css">
+    <link rel="stylesheet" href="css/siginup.css">
+    <script src="js/jquery-1.12.4.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        $(function() {
+           register();
+        });
+    </script>
+</head>
+<body>
+    <div class="r_con">
+        <div class="cont step_con">
+            <div class="step_title">
+                <a href="index.html" class="logo"><h1>FIREKISS</h1></a>
+                <div class="active"><span>1</span>设置用户名</div>
+                <div><span>2</span>填写账号信息</div>
+                <div><span>3</span>设置支付方式</div>
+                <div><span>4</span>注册成功</div>
+            </div>
+            <div class="step_cont">
+                <div class="step step1">
+                    <div class="r_input_con">
+                        <div class="input_group">
+                            <label for="username"><span>用户名</span></label>
+                            <input type="text" id="username" class="input">
+                            <span class="msg">用户名已存在</span>
+                        </div>
+                        <input type="button" class="btn" id="step1_btn" value="下一步">
+                    </div>
+                </div>
+                <div class="step step2">
+                    <form class="r_input_con">
+                        <input type="hidden" name="username" id="username">
+                        
+                        <div class="input_group">
+                            <label for="pwd">密码</label>
+                            <input type="password" id="pwd" name="pwd" class="input">
+                            <span class="msg"></span>
+                        </div>
+                        <div class="input_group">
+                            <label>再次输入</label>
+                            <input type="password" id="apwd" name="apwd" class="input">
+                            <span class="msg"></span>
+                        </div>
+                        <div class="input_group">
+                            <label for="mail">邮箱</label>
+                            <input type="text" id="mail" name="mail" class="input">
+                            <span class="msg"></span>
+                        </div>
+                        <div class="input_group">
+                            <label for="tel">手机</label>
+                            <input type="text" id="tel" name="tel" class="input">
+                            <span class="msg"></span>
+                        </div>
+                        <div class="input_group">
+                            <label for="code">验证码</label>
+                            <input type="text" id="code" name="code" class="input">
+                            <span class="msg"></span>
+                            <div class="vercode_pic">
+                                <img src="images/vercode.png" alt="">
+                                <span><i></i></span>
+                            </div>
+                        </div>
+                        <input type="submit" class="btn" id="step2_btn" value="下一步">
+                    </form>
+                </div>
+                <div class="step step3">
+                    <div class="r_input_con">
+                        <h2>添加支付方式</h2>
+                        <ul>
+                            <li><input type="radio" name="pay" id="kisspay" checked>KissPay</li>
+                            <li><input type="radio" name="pay" id="alipay">支付宝</li>
+                            <li><input type="radio" name="pay" id="wechatpay">微信支付</li>
+                            <li><input type="radio" name="pay" id="unionpay">银联支付</li>
+                            <li><input type="radio" name="pay" id="paypay">PayPal</li>
+                            <li><a href="#">更多支付方式></a></li>
+                        </ul>
+                        <p><a href="#">KissPay</a></p>
+                        <a class="btn disenabled" id="nowadd">现在添加</a>
+                        <button class="btn" id="afteradd">暂时跳过? 以后添加</button>
+                    </div>
+                </div>
+                <div class="step step4">
+                    <div class="r_input_con">
+                        <h2>验证邮件已送达邮箱: <span id="user_mail">570185655@qq.com</span></h2>
+                        <p>请登录邮箱，点击激活链接激活账号，激活链接在24小时内有效</p>
+                        <button class="btn" id="success_btn">请查收邮件</button>
+                        <a href="#" id="resend_link">没有收到邮件?</a>
+                    </div>
+                    <div class="re_send">
+                        <div class="input_group">
+                            <label for="resend_email">邮箱:</label>
+                            <input type="text" id="resend_email">
+                            <span class="msg">邮箱格式不正确!</span>
+                        </div>
+                        <div class="input_group">
+                            <input type="button" class="btn" id="resend_btn" value="重新发送">
+                        </div>
+                    </div>
+                </div>
+                <div class="pact">
+                    <h2>注册协议</h2>
+                    <div>
+                    <p></p><b>【审慎阅读】</b>您在申请注册流程中点击同意前，应当认真阅读以下协议。<b><u>请您务必审慎阅读、充分理解协议中相关条款内容，其中包括:</u></b>
+                    <p>1、<b><u>与您约定免除或限制责任的条款</u>；</b></p>
+                    <p>2、<b><u>与您约定法律适用和管辖的条款</u>；</b></p>
+                    <p>3、<b><u>其他以粗体下划线标识的重要条款</u>；</b></p>
+                    <p>如您对协议有任何疑问，可向平台客服咨询。</p>
+                    <p><b>【特别提示】</b>当您按照注册页面提示填写信息、阅读并同意协议且完成全部注册程序后，即表示您已充分阅读、理解并接受协议的全部内容。
+                    如您因平台服务与淘宝发生争议的，适用《火吻平台服务协议》处理。如您在使用平台服务过程中与其他用户发生争议的，依您与其他用户达成的协议处理。
+                    </p>
+                    <p>阅读协议的过程中，如果您不同意相关协议或其中任何条款约定，您应立即停止注册程序。</p>
+                    <p><a href="#">《火吻平台服务协议》</a></p>
+                    <p><a href="#">《隐私权政策》</a></p>
+                    <p><a href="#">《法律声明》</a></p>
+                    <p><a href="#">《吻付服务协议》</a></p>
+                    </div>
+                    <button class="close" id="close">X</button>
+                    <button class="btn .pact_btn" id="agree">同意协议</button>
+                </div>
+            </div>
+        </div>
+            
+    </div>
+</body>
+</html>

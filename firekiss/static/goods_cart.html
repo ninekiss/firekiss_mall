@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>火吻-购物车</title>
+	<link rel="stylesheet" href="css/reset.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+	<script src="js/jquery-1.12.4.js"></script>
+	<script src="js/main.js"></script>
+	<script src="js/cart.js"></script>
+	<script>
+	</script>
+</head>
+<body>
+	<!-- 火吻商城首页 -->
+	<!-- 顶部栏 -->
+	<div class="top_con">
+		<div class="top">
+			<!-- 未登录 -->
+			<ul class="no_login fl">
+				<li><a href="index.html">火吻首页</a><i class="icon_home"></i></li>
+				<li><span>哞，欢迎来火吻</span></li>
+				<li><a href="login.html">请登录</a></li>
+				<li><a href="register.html">免费注册</a></li>
+			</ul>
+			<!-- 登录后 -->
+			<ul class="login fl">
+				<li><a href="index.html">火吻首页</a><i class="icon_home"></i></li>
+				<li><span>Hi,</span></li>
+				<li><a href="#">高加索之吻</a></li>
+				<li><a href="#"><i></i></a></li>
+				<li><a href="#">积分<em>100000</em></a></li>
+				<li><a href="#">消息<em>15</em></a></li>
+				<li><a href="#">退出</a></li>
+			</ul>
+			<!-- 未开发功能 -->
+			<ul class="other_fk fr">
+				<li><span>|</span></li>
+				<li><a href="#">手机版</a><i class="icon_mobile"></i></li>
+				<li><a href="#">冰吻鲜生</a></li>
+				<li><a href="#">商家支持</a></li>
+				<li><a href="#">网站导航</a><i class="icon_nav"></i></li>
+			</ul>
+			<!-- 用户相关 -->
+			<ul class="user_set fr">
+				<li><a href="#">我的宝贝</a></li>
+				<li><a href="#">购物车<em>0</em>件</a><i class="icon_cart"></i></li>
+				<li><a href="#">收藏夹</a></li>
+			</ul>
+		</div>
+	</div>
+
+	<!-- 头部栏包括logo、搜索框 -->
+	<div class="header list_page cart_page">
+		<a href="#" class="logo fl"><h1>FIREKISS</h1></a>
+		<h3>购物车</h3>
+		<div class="search fl">
+			<form class="search_str">
+				<input type="text" name="" class="input_text fl" placeholder="请输入关键词">
+				<input type="submit" name="" class="input_btn fl" value="搜 索">
+			</form>
+		</div>
+	</div>
+
+	<!-- goods cart -->
+	<div class="cart_con clearfix">
+		<div class="c_center">
+			<div class="se_header">
+				<a href="javascript:;" class="se_op"><span>全部商品<em>30</em></span></a>
+				<a href="javascript:;"><span>降价商品<em>2</em></span></a>
+				<a href="javascript:;"><span>库存紧张<em>0</em></span></a>
+				<div class="settle_right fr">
+					<span>已选商品(不含运费)</span>
+					<em>0.00</em>
+					<input type="submit" value="结算">
+				</div>
+			</div>
+			<div class="se_title">
+				<span class="s_all">
+					<input type="checkbox" class="all_chex">
+					全选
+				</span>
+				<span class="s_infos">商品信息</span>
+				<span class="s_oneprice">单价</span>
+				<span class="s_count">数量</span>
+				<span class="s_manyprice">金额</span>
+				<span class="s_op">操作</span>
+			</div>
+			<div class="se_body">
+				<div class="s_group">
+					<div class="s_store">
+						<input type="checkbox" class="group_chex">
+						<span>店铺:<a href="#">火吻国际官方直营店</a></span>
+					</div>
+					<div class="s_goods">
+						<ul class="clearfix">
+							<li class="s_check">
+								<input type="checkbox" class="goods_chex">
+							</li>
+							<li class="s_info">
+								<a href="#" class="g_pic">
+									<img src="images/O1CN01Mad12l1XfbGzEvwfE_!!704392951.jpg_80x80.jpg" alt="">
+								</a>
+								<a href="#" class="g_title">电磨机手持迷你玉石抛光打磨雕刻工具家用木雕打磨机电动小型电钻</a>
+								<p><i></i><i></i><i></i></p>
+							</li>
+							<li class="s_stand">
+								<span>口味:&nbsp;<em>红糖味桂花糕</em></span>
+								<i>修改</i>
+							</li>
+							<li class="s_oneprice">
+								<p>￥24.00</p>
+								<h6>￥<em>16.80</em></h6>
+							</li>
+							<li class="s_count">
+								<input type="button" class="btn" value="-">
+								<input type="text" value="1">
+								<input type="button" class="btn" value="+">
+							</li>
+							<li class="s_manyprice">
+								<h6>￥<em>16.80</em></h6>
+							</li>
+							<li class="s_op">
+								<p><a href="#">移入收藏夹</a></p>
+								<p><a href="javascript:;">删除</a></p>
+								<p class="s_same"><a href="#">相似宝贝</a></p>
+							</li>
+						</ul>
+					</div>
+					<div class="s_goods">
+						<ul class="clearfix">
+							<li class="s_check">
+								<input type="checkbox" class="goods_chex">
+							</li>
+							<li class="s_info">
+								<a href="#" class="g_pic">
+									<img src="images/O1CN01Mad12l1XfbGzEvwfE_!!704392951.jpg_80x80.jpg" alt="">
+								</a>
+								<a href="#" class="g_title">电磨机手持迷你玉石抛光打磨雕刻工具家用木雕打磨机电动小型电钻</a>
+								<p><i></i><i></i><i></i></p>
+							</li>
+							<li class="s_stand">
+								<span>口味:&nbsp;<em>红糖味桂花糕</em></span>
+								<i>修改</i>
+							</li>
+							<li class="s_oneprice">
+								<p>￥24.00</p>
+								<h6>￥<em>16.80</em></h6>
+							</li>
+							<li class="s_count">
+								<input type="button" class="btn" value="-">
+								<input type="text" value="1">
+								<input type="button" class="btn" value="+">
+							</li>
+							<li class="s_manyprice">
+								<h6>￥<em>78.5</em></h6>
+							</li>
+							<li class="s_op">
+								<p><a href="#">移入收藏夹</a></p>
+								<p><a href="javascript:;">删除</a></p>
+								<p class="s_same"><a href="#">相似宝贝</a></p>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="s_group">
+					<div class="s_store">
+						<input type="checkbox" class="group_chex">
+						<span>店铺:<a href="#">火吻国际官方直营店</a></span>
+					</div>
+					<div class="s_goods">
+						<ul class="clearfix">
+							<li class="s_check">
+								<input type="checkbox" class="goods_chex">
+							</li>
+							<li class="s_info">
+								<a href="#" class="g_pic">
+									<img src="images/O1CN01Mad12l1XfbGzEvwfE_!!704392951.jpg_80x80.jpg" alt="">
+								</a>
+								<a href="#" class="g_title">电磨机手持迷你玉石抛光打磨雕刻工具家用木雕打磨机电动小型电钻</a>
+								<p><i></i><i></i><i></i></p>
+							</li>
+							<li class="s_stand">
+								<span>口味:&nbsp;<em>红糖味桂花糕</em></span>
+								<i>修改</i>
+							</li>
+							<li class="s_oneprice">
+								<p>￥24.00</p>
+								<h6>￥<em>16.80</em></h6>
+							</li>
+							<li class="s_count">
+								<input type="button" class="btn" value="-">
+								<input type="text" value="1">
+								<input type="button" class="btn" value="+">
+							</li>
+							<li class="s_manyprice">
+								<h6>￥<em>16.80</em></h6>
+							</li>
+							<li class="s_op">
+								<p><a href="#">移入收藏夹</a></p>
+								<p><a href="javascript:;">删除</a></p>
+								<p class="s_same"><a href="#">相似宝贝</a></p>
+							</li>
+						</ul>
+					</div>
+					<div class="s_goods">
+						<ul class="clearfix">
+							<li class="s_check">
+								<input type="checkbox" class="goods_chex">
+							</li>
+							<li class="s_info">
+								<a href="#" class="g_pic">
+									<img src="images/O1CN01Mad12l1XfbGzEvwfE_!!704392951.jpg_80x80.jpg" alt="">
+								</a>
+								<a href="#" class="g_title">电磨机手持迷你玉石抛光打磨雕刻工具家用木雕打磨机电动小型电钻</a>
+								<p><i></i><i></i><i></i></p>
+							</li>
+							<li class="s_stand">
+								<span>口味:&nbsp;<em>红糖味桂花糕</em></span>
+								<i>修改</i>
+							</li>
+							<li class="s_oneprice">
+								<p>￥24.00</p>
+								<h6>￥<em>16.80</em></h6>
+							</li>
+							<li class="s_count">
+								<input type="button" class="btn" value="-">
+								<input type="text" value="1">
+								<input type="button" class="btn" value="+">
+							</li>
+							<li class="s_manyprice">
+								<h6>￥<em>16.80</em></h6>
+							</li>
+							<li class="s_op">
+								<p><a href="#">移入收藏夹</a></p>
+								<p><a href="javascript:;">删除</a></p>
+								<p class="s_same"><a href="#">相似宝贝</a></p>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- bot ad -->
+	<div class="bot_ads">
+		<div class="ads_title">
+			<a href="#" class="fl"><h1>最近浏览</h1></a>
+			<a href="#" class="fr">猜你喜欢&gt;</a>
+			<i></i>
+		</div>
+		<div class="result_list">
+				<ul class="clearfix">
+					<li>
+						<div class="border_shake no_icon">
+							<a href="#" class="pic">
+								<img src="images/TB107BWXgnD8KJjy1XdCweZsVXa_023057.jpg" alt="">
+							</a>
+							<p class="price">¥<em>1399.00</em><span class="before_price">¥<em>1399.00</em></span></p>
+							<p class="sales">
+								<span>该款月成交 <em>4.1万笔</em></span>
+								<a href="#">包邮</a>
+							</p>
+							<p class="title"><a href="#"><span>iPhone XR</span> 4G智能手机苹果xr全面屏手机</a></p>
+							<p class="saler"><a href="#">火吻官方自营店</a></p>
+					</div>
+					</li>
+					<li>
+							<div class="border_shake no_icon">
+								<a href="#" class="pic">
+									<img src="images/TB107BWXgnD8KJjy1XdCweZsVXa_023057.jpg" alt="">
+								</a>
+								<p class="price">¥<em>1399.00</em><span class="before_price">¥<em>1399.00</em></span></p>
+								<p class="sales">
+									<span>该款月成交 <em>4.1万笔</em></span>
+									<a href="#">包邮</a>
+								</p>
+								<p class="title"><a href="#"><span>iPhone XR</span> 4G智能手机苹果xr全面屏手机</a></p>
+								<p class="saler"><a href="#">火吻官方自营店</a></p>
+						</div>
+					</li>
+					<li>
+							<div class="border_shake no_icon">
+								<a href="#" class="pic">
+									<img src="images/TB107BWXgnD8KJjy1XdCweZsVXa_023057.jpg" alt="">
+								</a>
+								<p class="price">¥<em>1399.00</em><span class="before_price">¥<em>1399.00</em></span></p>
+								<p class="sales">
+									<span>该款月成交 <em>4.1万笔</em></span>
+									<a href="#">包邮</a>
+								</p>
+								<p class="title"><a href="#"><span>iPhone XR</span> 4G智能手机苹果xr全面屏手机</a></p>
+								<p class="saler"><a href="#">火吻官方自营店</a></p>
+						</div>
+					</li>
+					<li>
+							<div class="border_shake no_icon">
+								<a href="#" class="pic">
+									<img src="images/TB107BWXgnD8KJjy1XdCweZsVXa_023057.jpg" alt="">
+								</a>
+								<p class="price">¥<em>1399.00</em><span class="before_price">¥<em>1399.00</em></span></p>
+								<p class="sales">
+									<span>该款月成交 <em>4.1万笔</em></span>
+									<a href="#">包邮</a>
+								</p>
+								<p class="title"><a href="#"><span>iPhone XR</span> 4G智能手机苹果xr全面屏手机</a></p>
+								<p class="saler"><a href="#">火吻官方自营店</a></p>
+						</div>
+					</li>
+					<li>
+							<div class="border_shake no_icon">
+								<a href="#" class="pic">
+									<img src="images/TB107BWXgnD8KJjy1XdCweZsVXa_023057.jpg" alt="">
+								</a>
+								<p class="price">¥<em>1399.00</em><span class="before_price">¥<em>1399.00</em></span></p>
+								<p class="sales">
+									<span>该款月成交 <em>4.1万笔</em></span>
+									<a href="#">包邮</a>
+								</p>
+								<p class="title"><a href="#"><span>iPhone XR</span> 4G智能手机苹果xr全面屏手机</a></p>
+								<p class="saler"><a href="#">火吻官方自营店</a></p>
+						</div>
+					</li>
+				</ul>
+		</div>
+	</div>
+
+	<!-- bot search -->
+	<div class="bot_search list_page clearfix">
+		<form class="search_str">
+			<input type="text" name="" class="input_text fl" placeholder="请输入关键词">
+			<input type="submit" name="" class="input_btn fl" value="搜 索">
+		</form>
+	</div>
+
+	<!-- bot advice -->
+	<p class="bot_advice"><i class="i_advice"></i>在此反馈您的意见和建议吧，<a href="#">立刻反馈</a></p>
+	<!-- footer -->
+	<div class="foot_con">
+		<div class="foot clearfix">
+			<a href="#" class="fk_ensure">
+				<img src="images/ensure.jpg" alt="火吻品控">
+			</a>
+			<div class="desc clearfix">
+				<dl>
+					<dt>购物指南</dt>
+					<dd><a href="#">免费注册</a></dd>
+					<dd><a href="#">开通kisspay</a></dd>
+					<dd><a href="#">kisspay充值</a></dd>
+				</dl>
+				<dl>
+					<dt>火吻保障</dt>
+					<dd><a href="#">发票保障</a></dd>
+					<dd><a href="#">售后规则</a></dd>
+					<dd><a href="#">缺货赔付</a></dd>
+				</dl>
+				<dl>
+					<dt>支付方式</dt>
+					<dd><a href="#">快捷支付</a></dd>
+					<dd><a href="#">信用卡</a></dd>
+					<dd><a href="#">kisspay</a></dd>
+					<dd><a href="#">蚂蚁花呗</a></dd>
+					<dd><a href="#">货到付款</a></dd>
+					<dd><a href="#">支付宝</a></dd>
+					<dd><a href="#">paypal</a></dd>
+				</dl>
+				<dl>
+					<dt>商家服务</dt>
+					<dd><a href="#">火吻规则</a></dd>
+					<dd><a href="#">商家入驻</a></dd>
+					<dd><a href="#">商家中心</a></dd>
+					<dd><a href="#">物流服务</a></dd>
+					<dd><a href="#">运营服务</a></dd>
+				</dl>
+				<dl>
+					<dt>手机火吻</dt>
+					<dd>
+						<a href="#"><img src="images/qr_code.png" alt=""></a>
+					</dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+	
+	<!-- bottom -->
+	<div class="bottom_con">
+		<div class="bottom clearfix">
+			<div class="bot_link">
+				<a href="#">关于火吻</a>
+				<a href="#">帮助中心</a>
+				<a href="#">开放平台</a>
+				<a href="#">诚聘英才</a>
+				<a href="#">联系我们</a>
+				<a href="#">网站合作</a>
+				<a href="#">法律声明</a>
+				<a href="#">隐私权政策</a>
+				<a href="#">知识产权</a>
+				<a href="#">廉正举报</a>
+				<a href="#">规则意见征集</a>
+			</div>
+			<div class="fk_other_link">
+				<a href="#">观天集团</a> |
+				<a href="#">火吻</a> |
+				<a href="#">全星系速卖通</a> |
+				<a href="#">观天星际交易市场</a> |
+				<a href="#">2084</a> |
+				<a href="#">火矢星旅</a> |
+				<a href="#">观天数据</a> |
+				<a href="#">Aodoco</a> |
+				<a href="#">KissPay</a> |
+				<a href="#">赫斯顿商业协会</a> |
+			</div>
+			<div class="fk_info">
+				<p>
+					<span>增值电信业务经营许可证：<a href="#">赫斯顿A-J637098</a></span>
+					<span>市场名称登记证：工商网市字33010041049号</span>
+					<span>出版物网络交易平台服务经营备案证：新出发威备字第001号</span>
+				</p>
+				<p>
+					<span>互联网违法和不良信息举报电话：00001-00000001 blxxjb@firekiss-inc.com</span>
+					<span>互联网药品信息服务资质证书编号：<a href="#">银-（经营性）-2049-0002</a></span>
+					<span><a href="#" class="police_icon"><i></i>银河警备 33010002000120号</a></span>
+				</p>
+				<p>
+					<span>医疗器械网络交易服务第三方平台备案：（银）网械平台备字[2049]第00001号</span>
+					<span>互联网药品交易服务资格证书：赫斯顿A20150001</span>
+				</p>
+				<p>
+					<span>威尔市网络食品销售第三方平台提供者备案：威网食A33010001</span>
+					<span><a href="#">0000001举报</a></span>
+				</p>
+				<p><span class="allright">© 20028-2049 FIREKISS.COM 版权所有</span></p>
+				<p>
+					<a href="#"><img src="" alt=""></a>
+					<a href="#"><img src="" alt=""></a>
+				</p>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 固定定位元素 -->
+	<div class="right_nav_con logined">
+		<div class="right_nav cart_page clearfix">
+			<a href="#" class="vip clearfix" title="会员中心"><i></i><div><img src="images/getAvatar.jpg" alt=""></div></a>
+			<a href="#" class="shop_cart clearfix"><i></i><span>购物车</span><em>50</em></a>
+			<a href="#" class="money" title="支付方式"><i></i></a>
+			<a href="#" class="colle" title="我的收藏"><i></i></a>
+			<a href="#" class="seen" title="我看过的"><i></i></a>
+			<a href="#" class="pay" title="我要充值"><i></i></a>
+			<a href="#" class="feed" title="用户反馈"><i></i></a>
+			<a href="#" class="qr" title="手机火吻"><i></i></a>
+			<a href="javascript:;" class="r_top"><i></i></a>
+		</div>
+	</div>
+</body>
+</html>
