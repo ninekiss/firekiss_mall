@@ -120,3 +120,11 @@ TINYMCE_DEFAULT_CONFIG = {
     'width': 600,
     'height': 400,
 }
+
+# 发邮件配置
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.qq.com'
+EMAIL_PORT = 25
+EMAIL_HOST_USER = 'seespace@foxmail.com'  # 发送邮件的邮箱
+EMAIL_HOST_PASSWORD = 'wgrmaypehqxdcacj'  # 客户端授权码
+EMAIL_FROM= 'FIREKISS 火吻<seespace@foxmail.com>'  # 收件人看到的发件人昵称
