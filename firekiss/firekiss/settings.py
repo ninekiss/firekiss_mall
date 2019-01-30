@@ -122,9 +122,18 @@ TINYMCE_DEFAULT_CONFIG = {
 }
 
 # 发邮件配置
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.qq.com'
+# EMAIL_PORT = 25
+# EMAIL_HOST_USER = 'seespace@foxmail.com'  # 发送邮件的邮箱
+# EMAIL_HOST_PASSWORD = 'wgrmaypehqxdcacj'  # 客户端授权码
+# EMAIL_FROM = 'FIREKISS 火吻 <seespace@foxmail.com>'  # 收件人看到的发件人昵称
+
+# 发邮件配置
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.qq.com'
-EMAIL_PORT = 25
-EMAIL_HOST_USER = 'seespace@foxmail.com'  # 发送邮件的邮箱
-EMAIL_HOST_PASSWORD = 'wgrmaypehqxdcacj'  # 客户端授权码
-EMAIL_FROM= 'FIREKISS 火吻<seespace@foxmail.com>'  # 收件人看到的发件人昵称
+EMAIL_USE_SSL = True
+EMAIL_HOST = 'smtp.exmail.qq.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'product@firekiss.tk'  # 发送邮件的邮箱
+EMAIL_HOST_PASSWORD = 'Lyy520..'  # 密码
+EMAIL_FROM = 'FIREKISS火吻 <product@firekiss.tk>'  # 收件人看到的发件人昵称

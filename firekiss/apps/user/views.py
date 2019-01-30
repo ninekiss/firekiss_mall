@@ -2,7 +2,7 @@ from django.views.generic import View
 from django.shortcuts import render, redirect
 from django.http import JsonResponse, HttpResponse
 from django.core.urlresolvers import reverse
-from django.core.mail import send_mail
+from celery_task.tasks import send_confirm_mail
 from django.conf import settings
 from user.models import User
 
@@ -10,64 +10,8 @@ from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import SignatureExpired
 import re
 
+
 # Create your views here.
-
-
-# /user/register
-def register(request):
-    """用户注册"""
-    return render(request, 'register.html')
-
-
-# /user/register
-def register_handle(request):
-    """注册处理"""
-    # 接收收据
-    usr_name = request.GET.get('name')
-    username = request.POST.get('name')
-    password = request.POST.get('pwd')
-    apassword = request.POST.get('apwd')
-    tel = request.POST.get('tel')
-    mail = request.POST.get('mail')
-    ver_code = request.POST.get('code')
-
-    # 校验数据
-
-    # get 请求
-    if request.method == 'GET':
-
-        if usr_name:
-            # 校验用户名是否重复
-            try:
-                user = User.objects.get(username=usr_name)
-            except User.DoesNotExist:
-                # 数据库中该用户名不存在则抛出该异常
-                user = None
-
-            if user:
-                # 用户名已存在(没抛异常)
-                return JsonResponse({"msg": "existed"})
-
-        return render(request, 'register.html')
-
-    # post 请求
-    if request.method == 'POST':
-        # 校验数据完整性
-        if not all([username, password, apassword, tel, mail, ver_code]):
-            return JsonResponse({"msg": "incomplete"})
-
-        # 其他数据本版本后端不做校验
-        # 校验邮箱
-        ret = re.match(r'^[\-_]?[A-Za-z\d\.]+[\-_]?[A-Za-z\d\.]+[\-_]?@[\-_]?[A-Za-z\d]+[\-_]?[A-Za-z\d]+[\-_]?\.[A-Za-z]{2,6}(\.[A-Za-z]{2,6})*$', mail)
-        if not ret:
-            return JsonResponse({"msg": "email_illegal"})
-        user = User.objects.create(username=username, password=password, email=mail, tel=tel)
-        user.is_active = 0
-        user.save()
-
-        return JsonResponse({"msg": "success"})
-    #
-
 
 # 使用类视图
 class Register(View):
@@ -127,14 +71,7 @@ class Register(View):
         token = token.decode()
 
         # 发送邮件
-        subject = '欢迎来到FIREKISS 火吻'  # 主题
-        message = ''  # 正文
-        sender = settings.EMAIL_HOST_USER  # 发件人
-        recceiver = [mail]  # 收件人
-        # 正文包含html内容
-        html_message = '<h1>%s,欢迎来到火吻商城</h1><p>请点击下面的链接完成账户激活,链接在24小时候后失效</p><p><a href="http://192.168.0.100:8000/user/active/%s">http://192.168.0.100:8000/user/active/%s</a></p>' %(user.username, token, token)
-
-        send_mail(subject, message, sender, recceiver, html_message=html_message)
+        send_confirm_mail.delay(mail, user.username, token)
 
         return JsonResponse({"msg": "success"})
 
