@@ -449,7 +449,7 @@ function register() {
     var $step4 = $('.step4');
 
     // 每个步骤需要的组件
-    var $user_name = $step1.find('#username');
+    var $user_name = $step1.find('#user');
     var step1_msg = $step1.find('.msg');
     var $form = $step2.find('form');
     var $user_mail = $step4.find('#user_mail');
@@ -481,7 +481,7 @@ function register() {
     var usr_tel = '';
     var usr_mail = '';
     var usr_code = '';
-
+    var csrftoken = $.cookie('csrftoken');
     // 正则
     var re_name = /^[\u4e00-\u9fa5A-Za-z_][\u4e00-\u9fa5A-Za-z\d_]{3,15}$/
     var re_pwd = /^.*(?=.{6,})(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[[!@#$%^&*?\.,]).*$/;
@@ -505,6 +505,9 @@ function register() {
     var leftNum = 60;
     var c_switch = false;
 
+    // 返回数据
+    var msg = '';
+
     
     pact();
 
@@ -526,20 +529,33 @@ function register() {
             step1_msg.show();
         }
         else {
-            // 模拟判断用户名是否已存在
-            if (usr_name == "kean"){
-                step1_msg.html('用户名已存在!')
-                step1_msg.show();
-            }
-            else {
-                pass_name = true;
-                $step1.hide();
-                // 步骤二头部激活效果
-                $step_head.eq(1).addClass('active').siblings().removeClass('active');
-                $step2.show();
-                // 把步骤一输入验证后的用户名传给步骤二的表单隐藏域
-                d_name.val(usr_name);
-            }
+            // 发送ajax请求
+            $.ajax({
+                url: '/user/register_handle', 
+                type: 'get',
+                datatype: 'json',
+                data: {"name": usr_name}
+            })
+            .done(function(data) {
+                msg = data.msg;
+                 // 判断用户名是否已存在
+                if (msg == 'existed'){
+                    step1_msg.html('用户名已存在!')
+                    step1_msg.show();
+                }
+                else {
+                    pass_name = true;
+                    $step1.hide();
+                    // 步骤二头部激活效果
+                    $step_head.eq(1).addClass('active').siblings().removeClass('active');
+                    $step2.show();
+                    // 把步骤一输入验证后的用户名传给步骤二的表单隐藏域
+                    d_name.val(usr_name);
+                }
+            })
+            .fail(function() {
+                alert('网络繁忙，请稍后重试！');
+            });
         }
     });
 
@@ -630,7 +646,7 @@ function register() {
         refersh_proc = true;
 
         ver_resh.addClass('i_ro');
-        $(this).find('img').prop('src','images/vercode2.png');
+        $(this).find('img').prop('src','../images/vercode2.png');
 
         clearTimeout(timer2);
         timer2 = setTimeout(function() {
@@ -645,11 +661,40 @@ function register() {
         e.preventDefault();
         // 判断表单选项是否漏输
         if (pass_name & pass_pwd & pass_apwd & pass_mail & pass_tel & pass_code) {
-            $step2.hide();
-            // 步骤三头部激活效果
-            $step_head.eq(2).addClass('active').siblings().removeClass('active');
-            $step3.show();
-            $user_mail.html(usr_mail);
+            // 发送ajax请求
+            $.ajax({
+                url: '/user/register_handle', 
+                type: 'post',
+                datatype: 'json',
+                headers: {"X-CSRFToken": csrftoken},
+                data: {
+                    "name": usr_name,
+                    "pwd": usr_pwd,
+                    "apwd": usr_apwd,
+                    "tel": usr_tel,
+                    "mail": usr_mail,
+                    "code": usr_code
+                }
+            })
+            .done(function(data) {
+                msg = data.msg;
+                if (msg == 'success') {
+                    $step2.hide();
+                    // 步骤三头部激活效果
+                    $step_head.eq(2).addClass('active').siblings().removeClass('active');
+                    $step3.show();
+                    $user_mail.html(usr_mail);
+                }
+                else if (msg == 'incomplete') {
+                    alert('IncomplateError:数据不完整，请重试!');
+                }
+                else if (msg == 'email_illegal'){
+                    alert('EmailIllegal:邮箱不支持，请重试!');
+                }
+            })
+            .fail(function() {
+                alert('网络繁忙，请稍后重试!');
+            });
         }
         else {
             alert('所有项均不能为空!');
@@ -665,7 +710,7 @@ function register() {
 
     // 步骤四
     success_btn.click(function() {
-        window.location.href = "index.html";
+        window.location.href = "/";
     });
     resend_link.click(function() {
         $step4.find('.r_input_con').hide().next().show();
@@ -852,115 +897,115 @@ function filter_con(params) {
 
 // goods_cart page
 // 目前较多bug未解决
-function shop_cart() {
-    // 结算头 
-    var $cart_con = $('.cart_con');
-    var $se_header = $('.se_header');
-    var $settle_right = $('.settle_right');
-    var $all_chex = $('.chex');
-    var $check_all = $('#check_all_goods');
-    var $check_store = $('.check_now_store');
-    var $check_one = $('.check_one_goods');
-    var $s_group = $('.s_group');
-    var $s_goods = $('.s_goods');
-    var $remove_goods = $s_goods.find('.s_op p ').eq(1).find('a');
-    var all_checked = false;
-    var store_checked = false;
-    var one_checked = false;
+// function shop_cart() {
+//     // 结算头 
+//     var $cart_con = $('.cart_con');
+//     var $se_header = $('.se_header');
+//     var $settle_right = $('.settle_right');
+//     var $all_chex = $('.chex');
+//     var $check_all = $('#check_all_goods');
+//     var $check_store = $('.check_now_store');
+//     var $check_one = $('.check_one_goods');
+//     var $s_group = $('.s_group');
+//     var $s_goods = $('.s_goods');
+//     var $remove_goods = $s_goods.find('.s_op p ').eq(1).find('a');
+//     var all_checked = false;
+//     var store_checked = false;
+//     var one_checked = false;
 
-    $cart_con.delegate('.chex', 'click', function() {
-        if($(this).prop('checked')) {
-            $settle_right.find('input').addClass('se_enabled');
-        }
-        else {
-            $settle_right.find('input').removeClass('se_enabled');
-        }
+//     $cart_con.delegate('.chex', 'click', function() {
+//         if($(this).prop('checked')) {
+//             $settle_right.find('input').addClass('se_enabled');
+//         }
+//         else {
+//             $settle_right.find('input').removeClass('se_enabled');
+//         }
         
-    });
-    $remove_goods.each(function() {
-        $(this).click(function() {
-            if($(this).parent().parent().parent().parent().siblings().length < 2) {
-                $(this).parent().parent().parent().parent().parent().remove();
-            }
-            $(this).parent().parent().parent().parent().remove();
-        });
-    });
+//     });
+//     $remove_goods.each(function() {
+//         $(this).click(function() {
+//             if($(this).parent().parent().parent().parent().siblings().length < 2) {
+//                 $(this).parent().parent().parent().parent().parent().remove();
+//             }
+//             $(this).parent().parent().parent().parent().remove();
+//         });
+//     });
 
-    // 商品
-    var $goods_count = $s_goods.find('.s_count input').eq(1);
-    var $count_add = $goods_count.next();
-    var $count_less = $goods_count.prev();
-    var $one_price = $s_goods.find('.s_oneprice em');
-    var $many_price = $s_goods.find('.s_manyprice em');
-    var $all_price = $settle_right.find('em');
-    var now_count = 0;
-    var c_one_price = parseInt(parseFloat($one_price.html())*100);
-    var c_many_price = 0;
-    var c_all_price = 0;
-    var re_count = /^\d+$/;
+//     // 商品
+//     var $goods_count = $s_goods.find('.s_count input').eq(1);
+//     var $count_add = $goods_count.next();
+//     var $count_less = $goods_count.prev();
+//     var $one_price = $s_goods.find('.s_oneprice em');
+//     var $many_price = $s_goods.find('.s_manyprice em');
+//     var $all_price = $settle_right.find('em');
+//     var now_count = 0;
+//     var c_one_price = parseInt(parseFloat($one_price.html())*100);
+//     var c_many_price = 0;
+//     var c_all_price = 0;
+//     var re_count = /^\d+$/;
     
 
-    // 单个商品价格数量区域
-    $goods_count.keyup(function() {
-        now_count = parseInt($goods_count.val());
-        if(now_count == 0 | !(re_count.test(now_count))) {
-            now_count = 1;
-        }
-        $(this).val(now_count);
-        c_many_price = now_count*c_one_price/100;
+//     // 单个商品价格数量区域
+//     $goods_count.keyup(function() {
+//         now_count = parseInt($goods_count.val());
+//         if(now_count == 0 | !(re_count.test(now_count))) {
+//             now_count = 1;
+//         }
+//         $(this).val(now_count);
+//         c_many_price = now_count*c_one_price/100;
 
-        $many_price.html(c_many_price);
-        c_all_price = c_many_price;
-        console.log(c_all_price);
+//         $many_price.html(c_many_price);
+//         c_all_price = c_many_price;
+//         console.log(c_all_price);
 
-    });
-    $count_add.click(function() {
-        now_count = parseInt($goods_count.val());
-        now_count++;
-        $goods_count.val(now_count);
-        c_many_price = now_count*c_one_price/100;
-        $many_price.html(c_many_price);
-        c_all_price = c_many_price;
-        console.log(c_all_price);
-    });
-    $count_less.click(function() {
-        now_count = parseInt($goods_count.val());
-        now_count--;
-        if(now_count<1){
-            now_count = 1;
-        }
-        $goods_count.val(now_count);
-        c_many_price = now_count*c_one_price/100;
-        $many_price.html(c_many_price);
-        c_all_price = c_many_price;
-        console.log(c_all_price);
-    });
+//     });
+//     $count_add.click(function() {
+//         now_count = parseInt($goods_count.val());
+//         now_count++;
+//         $goods_count.val(now_count);
+//         c_many_price = now_count*c_one_price/100;
+//         $many_price.html(c_many_price);
+//         c_all_price = c_many_price;
+//         console.log(c_all_price);
+//     });
+//     $count_less.click(function() {
+//         now_count = parseInt($goods_count.val());
+//         now_count--;
+//         if(now_count<1){
+//             now_count = 1;
+//         }
+//         $goods_count.val(now_count);
+//         c_many_price = now_count*c_one_price/100;
+//         $many_price.html(c_many_price);
+//         c_all_price = c_many_price;
+//         console.log(c_all_price);
+//     });
 
-    $se_header.delegate('a', 'click', function() {
-        $(this).addClass('se_op').siblings().removeClass('se_op');
-    })
+//     $se_header.delegate('a', 'click', function() {
+//         $(this).addClass('se_op').siblings().removeClass('se_op');
+//     })
 
-    // 全选整个购物车的所有商品
-    $check_all.click(function () {
-        if($(this).prop('checked')) {
-            $check_store.prop('checked', true);
-            $check_one.prop('checked', true);
-        }
-        else {
-            $check_store.prop('checked', false);
-            $check_one.prop('checked', false);
-        }
-    });
+//     // 全选整个购物车的所有商品
+//     $check_all.click(function () {
+//         if($(this).prop('checked')) {
+//             $check_store.prop('checked', true);
+//             $check_one.prop('checked', true);
+//         }
+//         else {
+//             $check_store.prop('checked', false);
+//             $check_one.prop('checked', false);
+//         }
+//     });
     
-    // 选中购物车中某个商品
-    $s_group.delegate('.check_now_store', 'click', function() {
-        if($(this).prop('checked')) {
-            $(this).parent().parent().find('.check_one_goods').prop('checked', true);
-        }
-        else {
-            $(this).parent().parent().find('.check_one_goods').prop('checked', false);
-        }
-    });
+//     // 选中购物车中某个商品
+//     $s_group.delegate('.check_now_store', 'click', function() {
+//         if($(this).prop('checked')) {
+//             $(this).parent().parent().find('.check_one_goods').prop('checked', true);
+//         }
+//         else {
+//             $(this).parent().parent().find('.check_one_goods').prop('checked', false);
+//         }
+//     });
 
     // $s_goods.delegate('.check_one_goods', 'click', function() {
     //     if($(this).prop('checked')) {
@@ -993,4 +1038,4 @@ function shop_cart() {
     //     }
     // };
     
-};
+// };
