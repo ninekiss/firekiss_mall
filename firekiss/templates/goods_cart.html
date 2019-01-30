@@ -1,0 +1,215 @@
+{% extends "base_goods.html" %}
+{% block title %}购物车-火吻商城{% endblock title %}
+{% block topfiles %}
+	<script src="js/cart.js"></script>
+	<script></script>
+{% endblock topfiles %}
+
+{# 头部栏包括logo、搜索框 #}
+{% block header %}
+	<!-- 头部栏包括logo、搜索框 -->
+	<div class="header list_page cart_page">
+		<a href="#" class="logo fl"><h1>FIREKISS</h1></a>
+		<h3>购物车</h3>
+		<div class="search fl">
+			<form class="search_str">
+				<input type="text" name="" class="input_text fl" placeholder="请输入关键词">
+				<input type="submit" name="" class="input_btn fl" value="搜 索">
+			</form>
+		</div>
+	</div>
+{% endblock header %}
+
+{# 每个商品相关页主要内容块 #}
+{% block body_main %}
+	<!-- goods cart -->
+	<div class="cart_con clearfix">
+		<div class="c_center">
+			<div class="se_header">
+				<a href="javascript:;" class="se_op"><span>全部商品<em>30</em></span></a>
+				<a href="javascript:;"><span>降价商品<em>2</em></span></a>
+				<a href="javascript:;"><span>库存紧张<em>0</em></span></a>
+				<div class="settle_right fr">
+					<span>已选商品(不含运费)</span>
+					<em>0.00</em>
+					<input type="submit" value="结算">
+				</div>
+			</div>
+			<div class="se_title">
+				<span class="s_all">
+					<input type="checkbox" class="all_chex">
+					全选
+				</span>
+				<span class="s_infos">商品信息</span>
+				<span class="s_oneprice">单价</span>
+				<span class="s_count">数量</span>
+				<span class="s_manyprice">金额</span>
+				<span class="s_op">操作</span>
+			</div>
+			<div class="se_body">
+				<div class="s_group">
+					<div class="s_store">
+						<input type="checkbox" class="group_chex">
+						<span>店铺:<a href="#">火吻国际官方直营店</a></span>
+					</div>
+					<div class="s_goods">
+						<ul class="clearfix">
+							<li class="s_check">
+								<input type="checkbox" class="goods_chex">
+							</li>
+							<li class="s_info">
+								<a href="#" class="g_pic">
+									<img src="images/O1CN01Mad12l1XfbGzEvwfE_!!704392951.jpg_80x80.jpg" alt="">
+								</a>
+								<a href="#" class="g_title">电磨机手持迷你玉石抛光打磨雕刻工具家用木雕打磨机电动小型电钻</a>
+								<p><i></i><i></i><i></i></p>
+							</li>
+							<li class="s_stand">
+								<span>口味:&nbsp;<em>红糖味桂花糕</em></span>
+								<i>修改</i>
+							</li>
+							<li class="s_oneprice">
+								<p>￥24.00</p>
+								<h6>￥<em>16.80</em></h6>
+							</li>
+							<li class="s_count">
+								<input type="button" class="btn" value="-">
+								<input type="text" value="1">
+								<input type="button" class="btn" value="+">
+							</li>
+							<li class="s_manyprice">
+								<h6>￥<em>16.80</em></h6>
+							</li>
+							<li class="s_op">
+								<p><a href="#">移入收藏夹</a></p>
+								<p><a href="javascript:;">删除</a></p>
+								<p class="s_same"><a href="#">相似宝贝</a></p>
+							</li>
+						</ul>
+					</div>
+					<div class="s_goods">
+						<ul class="clearfix">
+							<li class="s_check">
+								<input type="checkbox" class="goods_chex">
+							</li>
+							<li class="s_info">
+								<a href="#" class="g_pic">
+									<img src="images/O1CN01Mad12l1XfbGzEvwfE_!!704392951.jpg_80x80.jpg" alt="">
+								</a>
+								<a href="#" class="g_title">电磨机手持迷你玉石抛光打磨雕刻工具家用木雕打磨机电动小型电钻</a>
+								<p><i></i><i></i><i></i></p>
+							</li>
+							<li class="s_stand">
+								<span>口味:&nbsp;<em>红糖味桂花糕</em></span>
+								<i>修改</i>
+							</li>
+							<li class="s_oneprice">
+								<p>￥24.00</p>
+								<h6>￥<em>16.80</em></h6>
+							</li>
+							<li class="s_count">
+								<input type="button" class="btn" value="-">
+								<input type="text" value="1">
+								<input type="button" class="btn" value="+">
+							</li>
+							<li class="s_manyprice">
+								<h6>￥<em>78.5</em></h6>
+							</li>
+							<li class="s_op">
+								<p><a href="#">移入收藏夹</a></p>
+								<p><a href="javascript:;">删除</a></p>
+								<p class="s_same"><a href="#">相似宝贝</a></p>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<div class="s_group">
+					<div class="s_store">
+						<input type="checkbox" class="group_chex">
+						<span>店铺:<a href="#">火吻国际官方直营店</a></span>
+					</div>
+					<div class="s_goods">
+						<ul class="clearfix">
+							<li class="s_check">
+								<input type="checkbox" class="goods_chex">
+							</li>
+							<li class="s_info">
+								<a href="#" class="g_pic">
+									<img src="images/O1CN01Mad12l1XfbGzEvwfE_!!704392951.jpg_80x80.jpg" alt="">
+								</a>
+								<a href="#" class="g_title">电磨机手持迷你玉石抛光打磨雕刻工具家用木雕打磨机电动小型电钻</a>
+								<p><i></i><i></i><i></i></p>
+							</li>
+							<li class="s_stand">
+								<span>口味:&nbsp;<em>红糖味桂花糕</em></span>
+								<i>修改</i>
+							</li>
+							<li class="s_oneprice">
+								<p>￥24.00</p>
+								<h6>￥<em>16.80</em></h6>
+							</li>
+							<li class="s_count">
+								<input type="button" class="btn" value="-">
+								<input type="text" value="1">
+								<input type="button" class="btn" value="+">
+							</li>
+							<li class="s_manyprice">
+								<h6>￥<em>16.80</em></h6>
+							</li>
+							<li class="s_op">
+								<p><a href="#">移入收藏夹</a></p>
+								<p><a href="javascript:;">删除</a></p>
+								<p class="s_same"><a href="#">相似宝贝</a></p>
+							</li>
+						</ul>
+					</div>
+					<div class="s_goods">
+						<ul class="clearfix">
+							<li class="s_check">
+								<input type="checkbox" class="goods_chex">
+							</li>
+							<li class="s_info">
+								<a href="#" class="g_pic">
+									<img src="images/O1CN01Mad12l1XfbGzEvwfE_!!704392951.jpg_80x80.jpg" alt="">
+								</a>
+								<a href="#" class="g_title">电磨机手持迷你玉石抛光打磨雕刻工具家用木雕打磨机电动小型电钻</a>
+								<p><i></i><i></i><i></i></p>
+							</li>
+							<li class="s_stand">
+								<span>口味:&nbsp;<em>红糖味桂花糕</em></span>
+								<i>修改</i>
+							</li>
+							<li class="s_oneprice">
+								<p>￥24.00</p>
+								<h6>￥<em>16.80</em></h6>
+							</li>
+							<li class="s_count">
+								<input type="button" class="btn" value="-">
+								<input type="text" value="1">
+								<input type="button" class="btn" value="+">
+							</li>
+							<li class="s_manyprice">
+								<h6>￥<em>16.80</em></h6>
+							</li>
+							<li class="s_op">
+								<p><a href="#">移入收藏夹</a></p>
+								<p><a href="javascript:;">删除</a></p>
+								<p class="s_same"><a href="#">相似宝贝</a></p>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock body_main %}
+
+{# 底部分页相关 #}
+{% block body_other %}
+{% endblock body_other %}
+
+{# 右侧选项 #}
+{% block right_op %}
+	<a href="#" class="vip clearfix" title="会员中心"><i></i><div><img src="images/getAvatar.jpg" alt=""></div></a>
+	<a href="#" class="shop_cart clearfix"><i></i><span>购物车</span><em>50</em></a>
+{% endblock right_op %}

@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+
+{# 网页body块 #}
+{% block body %}
+	{# 每个商品相关页主要内容块 #}
+	{% block body_main %}
+	{% endblock body_main %}
+
+	{# 底部分页相关 #}
+	{% block body_other %}
+		<!-- 底部分页 -->
+		<div class="result_pagena_con">
+			<div class="result_pagena">
+				<ul>
+					<li><a href="javascript:;" id="r_prev_page" class="now_page">&lt;上一页</a></li>
+					<div class="page_con">
+						<li><a href="javascript:;" class="now_page">1</a></li>
+						<li><a href="javascript:;">2</a></li>
+						<li><a href="javascript:;">333</a></li>
+						<li><span>···</span></li>
+					</div>
+					<li><a href="javascript:;" id="r_next_page">下一页&gt;</a><i class="i_china_year" title="春节快乐，猪事如意"></i></li>
+					<li><span>共<em class="all_pages">5</em>页，到第</span></li>
+					<li><input type="text" id="page_to" placeholder="1">页</li>
+					<li><input type="submit" id="page_to_btn" value="确定" class="btn"></li>
+				</ul>
+			</div>
+		</div>
+
+		<!-- bot fast_link -->
+		<ul class="bot_fast clearfix">
+			<li><span>您是不是想找</span></li>
+			<li ><a href="#" >华为</a></li>
+			<li><a href="#">小米</a></li>
+			<li><a href="#">魅族</a></li>
+			<li><a href="#">荣耀</a></li>
+			<li><a href="#">苹果</a></li>
+			<li><a href="#">苹果</a></li>
+			<li><a href="#">三星</a></li>
+		</ul>
+	{% endblock body_other %}
+
+	<!-- bot ad -->
+	<div class="bot_ads">
+		<div class="ads_title">
+			<a href="#" class="fl"><h1>掌柜热卖</h1></a>
+			<a href="#" class="fr">更多热卖&gt;</a>
+			<i></i>
+		</div>
+		<div class="result_list">
+				<ul class="clearfix">
+					<li>
+						<div class="border_shake no_icon">
+							<a href="#" class="pic">
+								<img src="images/TB107BWXgnD8KJjy1XdCweZsVXa_023057.jpg" alt="">
+							</a>
+							<p class="price">¥<em>1399.00</em><span class="before_price">¥<em>1399.00</em></span></p>
+							<p class="sales">
+								<span>该款月成交 <em>4.1万笔</em></span>
+								<a href="#">包邮</a>
+							</p>
+							<p class="title"><a href="#"><span>iPhone XR</span> 4G智能手机苹果xr全面屏手机</a></p>
+							<p class="saler"><a href="#">火吻官方自营店</a></p>
+					</div>
+					</li>
+					<li>
+							<div class="border_shake no_icon">
+								<a href="#" class="pic">
+									<img src="images/TB107BWXgnD8KJjy1XdCweZsVXa_023057.jpg" alt="">
+								</a>
+								<p class="price">¥<em>1399.00</em><span class="before_price">¥<em>1399.00</em></span></p>
+								<p class="sales">
+									<span>该款月成交 <em>4.1万笔</em></span>
+									<a href="#">包邮</a>
+								</p>
+								<p class="title"><a href="#"><span>iPhone XR</span> 4G智能手机苹果xr全面屏手机</a></p>
+								<p class="saler"><a href="#">火吻官方自营店</a></p>
+						</div>
+					</li>
+					<li>
+							<div class="border_shake no_icon">
+								<a href="#" class="pic">
+									<img src="images/TB107BWXgnD8KJjy1XdCweZsVXa_023057.jpg" alt="">
+								</a>
+								<p class="price">¥<em>1399.00</em><span class="before_price">¥<em>1399.00</em></span></p>
+								<p class="sales">
+									<span>该款月成交 <em>4.1万笔</em></span>
+									<a href="#">包邮</a>
+								</p>
+								<p class="title"><a href="#"><span>iPhone XR</span> 4G智能手机苹果xr全面屏手机</a></p>
+								<p class="saler"><a href="#">火吻官方自营店</a></p>
+						</div>
+					</li>
+					<li>
+							<div class="border_shake no_icon">
+								<a href="#" class="pic">
+									<img src="images/TB107BWXgnD8KJjy1XdCweZsVXa_023057.jpg" alt="">
+								</a>
+								<p class="price">¥<em>1399.00</em><span class="before_price">¥<em>1399.00</em></span></p>
+								<p class="sales">
+									<span>该款月成交 <em>4.1万笔</em></span>
+									<a href="#">包邮</a>
+								</p>
+								<p class="title"><a href="#"><span>iPhone XR</span> 4G智能手机苹果xr全面屏手机</a></p>
+								<p class="saler"><a href="#">火吻官方自营店</a></p>
+						</div>
+					</li>
+					<li>
+							<div class="border_shake no_icon">
+								<a href="#" class="pic">
+									<img src="images/TB107BWXgnD8KJjy1XdCweZsVXa_023057.jpg" alt="">
+								</a>
+								<p class="price">¥<em>1399.00</em><span class="before_price">¥<em>1399.00</em></span></p>
+								<p class="sales">
+									<span>该款月成交 <em>4.1万笔</em></span>
+									<a href="#">包邮</a>
+								</p>
+								<p class="title"><a href="#"><span>iPhone XR</span> 4G智能手机苹果xr全面屏手机</a></p>
+								<p class="saler"><a href="#">火吻官方自营店</a></p>
+						</div>
+					</li>
+				</ul>
+		</div>
+	</div>
+
+	<!-- bot search -->
+	<div class="bot_search list_page clearfix">
+		<form class="search_str">
+			<input type="text" name="" class="input_text fl" placeholder="请输入关键词">
+			<input type="submit" name="" class="input_btn fl" value="搜 索">
+		</form>
+	</div>
+
+	<!-- bot advice -->
+	<p class="bot_advice"><i class="i_advice"></i>在此反馈您的意见和建议吧，<a href="#">立刻反馈</a></p>
+{% endblock body %}

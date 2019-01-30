@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+{% block title %}火吻商城-首页{% endblock title %}
+{% block topfiles %}
+	<script>
+		$(function () {
+			banner();
+			sear_redisplay();
+			nav_jump();
+		});
+	</script>
+{% endblock topfiles %}
+{% block is_index %}
+{% endblock is_index %}
+{% block is_index_two %}
+{% endblock is_index_two%}
+
+{# 头部栏包括logo、搜索框 #}
+{% block header %}
+	<div class="header">
+		<a href="#" class="logo fl"><h1>FIREKISS</h1></a>
+		<div class="search fl">
+			<form class="search_str">
+				<input type="text" name="" class="input_text fl" placeholder="搜索 火吻 商品/品牌/店铺">
+				<input type="submit" name="" class="input_btn fl" value="搜 索">
+			</form>
+			<ul class="search_fast">
+				<li class="first"><a href="#" >针织衫</a></li>
+				<li class="search_hot"><a href="#">连衣裙</a></li>
+				<li><a href="#">摄像头</a></li>
+				<li class="search_hot"><a href="#">四件套</a></li>
+				<li><a href="#">客厅灯</a></li>
+				<li class="search_hot"><a href="#">口红</a></li>
+				<li><a href="#">运动鞋</a></li>
+				<li class="search_hot"><a href="#">手机</a></li>
+				<li class="search_hot"><a href="#">牛奶</a></li>
+			</ul>
+		</div>
+	</div>
+{% endblock header %}
+
+{# 导航栏 #}
+{% block nav %}
+	<div class="nav_con">
+		<div>商品分类</div>
+		<ul class="cate">
+			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
+			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
+			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
+			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
+			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
+			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
+			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
+			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
+			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
+			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
+			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
+			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
+			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
+			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
+			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
+			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
+		</ul>
+		<ul class="nav">
+			<!-- <li><a href="#" class="fk_mart clearfix"><i></i></a></li>
+			<li><a href="#" class="fk_star clearfix"><i></i></a></li>
+			<li><a href="#" class="fk_vip clearfix"><i></i></a></li> -->
+			<li><a href="#" class="fk_mart">火吻超市</a></li>
+			<li><a href="#" class="fk_star">火吻星际</a></li>
+			<li><a href="#" class="fk_vip">火吻会员</a></li>
+			<li><a href="#">电器城</a></li>
+			<li><a href="#">冰吻鲜生</a></li>
+			<li><a href="#">医药馆</a></li>
+			<li><a href="#">营业厅</a></li>
+			<li><a href="#">魅力惠</a></li>
+			<li><a href="#">火矢星旅</a></li>
+			<li><a href="#">汉河快购</a></li>
+		</ul>
+	</div>
+{% endblock nav %}
+
+{# 顶部悬浮搜索框块 #}
+{% block top_fixed_search %}
+	<div class="global">
+		<h1>FIRE KISS 火吻</h1>
+		<form class="search">
+			<input type="text" name="" class="input_text fl" placeholder="搜索 火吻 商品/品牌/店铺">
+			<input type="submit" name="" class="input_btn fl" value="搜 索">
+		</form>
+	</div>
+{% endblock top_fixed_search %}

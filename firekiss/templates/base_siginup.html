@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load staticfiles %}
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {# 网页标题块 #}
+	<title>{% block title %}{% endblock title %}</title>
+    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'css/siginup.css' %}">
+    <script src="{% static 'js/jquery-1.12.4.js' %}"></script>
+    <script src="{% static 'js/jquery.cookie.js' %}"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    {# 网页顶部引入文件块#}
+	{% block topfiles %}{% endblock topfiles %}
+</head>
+<body>
+    {# 页面主体部分 #}
+    {% block body %}
+    {% endblock body %}
+</body>
+</html>

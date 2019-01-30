@@ -1,23 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
-{% load staticfiles %}
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>火吻注册</title>
-    <link rel="stylesheet" href="{% static 'css/reset.css' %}">
-    <link rel="stylesheet" href="{% static 'css/siginup.css' %}">
-    <script src="{% static 'js/jquery-1.12.4.js' %}"></script>
-    <script src="{% static 'js/jquery.cookie.js' %}"></script>
-    <script src="{% static 'js/main.js' %}"></script>
+{% extends "base_siginup.html" %}
+{% load staticfiles%}
+{% block title %}火吻注册{% endblock title %}
+{% block topfiles %}
     <script>
         $(function() {
            register();
         });
     </script>
-</head>
-<body>
+{% endblock topfiles %}
+
+{# 页面主体部分 #}
+{% block body %}
     <div class="r_con">
         <div class="cont step_con">
             <div class="step_title">
@@ -130,7 +123,5 @@
                 </div>
             </div>
         </div>
-            
     </div>
-</body>
-</html>
+{% endblock body %}
