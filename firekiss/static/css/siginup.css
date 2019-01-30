@@ -124,7 +124,6 @@
     color: #f00
 }
 .login .msg {
-    display: none;
     width: 300px;
     height: 30px;
     padding: 0 30px;
@@ -323,7 +322,7 @@
     font-weight: bolder;
     border: 1px solid #1e90ff;
     color: rgba(255, 0, 0, 0.5);
-    background: url() 0px 0px no-repeat;
+    /*background: url('') 0px 0px no-repeat;*/
 }
 .step3 .btn {
     margin-top: 20px;

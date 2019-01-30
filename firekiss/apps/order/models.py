@@ -27,8 +27,8 @@ class OrderInfo(BaseModel):
     )
 
     order_id = models.CharField(max_length=128, primary_key=True, verbose_name='订单编号')
-    user = models.ForeignKey('user.User', verbose_name='用户')
-    addr = models.ForeignKey('user.Address', verbose_name='地址')
+    user = models.ForeignKey('user.User', on_delete=models.CASCADE, verbose_name='用户')
+    addr = models.ForeignKey('user.Address', on_delete=models.CASCADE, verbose_name='地址')
     pay_method = models.SmallIntegerField(choices=PAY_METHOD_CHOICES, verbose_name='支付方式')
     total_count = models.IntegerField(default=1, verbose_name='数目')
     total_price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='总金额')
@@ -47,8 +47,8 @@ class OrderInfo(BaseModel):
 
 class OrderGoods(BaseModel):
     """订单商品模型类"""
-    order = models.ForeignKey('OrderInfo', verbose_name='订单')
-    sku = models.ForeignKey('goods.GoodsSKU', verbose_name='商品SKU')
+    order = models.ForeignKey('OrderInfo', on_delete=models.CASCADE, verbose_name='订单')
+    sku = models.ForeignKey('goods.GoodsSKU', on_delete=models.CASCADE, verbose_name='商品SKU')
     count = models.IntegerField(default=1, verbose_name='数量')
     price = models.DecimalField(max_digits=10, decimal_places=2, verbose_name='价格')
 
@@ -66,8 +66,8 @@ class GoodsAppraisal(BaseModel):
         (2, '追加评价'),
         (3, '掌柜解释'),
     )
-    goods = models.ForeignKey('OrderGoods', verbose_name='评价商品')
-    user = models.ForeignKey('user.User', verbose_name='评价用户')
+    goods = models.ForeignKey('OrderGoods', on_delete=models.CASCADE, verbose_name='评价商品')
+    user = models.ForeignKey('user.User', on_delete=models.CASCADE, verbose_name='评价用户')
     appr_status = models.SmallIntegerField(choices=APPR_STATUS, verbose_name='评论分类')
     detail_star = models.SmallIntegerField(default=0, verbose_name='描述星评')
     saler_star = models.SmallIntegerField(default=0, verbose_name='卖家星评')
@@ -83,7 +83,7 @@ class GoodsAppraisal(BaseModel):
 
 class AppraisalImage(BaseModel):
     """评价图片模型类"""
-    appr = models.ForeignKey('GoodsAppraisal', verbose_name='评价')
+    appr = models.ForeignKey('GoodsAppraisal', on_delete=models.CASCADE, verbose_name='评价')
     image = models.ImageField(upload_to='appraisal_image', verbose_name='评价图片')
 
     class Meta:

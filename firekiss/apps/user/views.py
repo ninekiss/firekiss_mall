@@ -5,6 +5,7 @@ from django.core.urlresolvers import reverse
 from celery_task.tasks import send_confirm_mail
 from django.conf import settings
 from user.models import User
+from django.contrib.auth import authenticate, login
 
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import SignatureExpired
@@ -56,7 +57,7 @@ class Register(View):
             mail)
         if not ret:
             return JsonResponse({"msg": "email_illegal"})
-        user = User.objects.create(username=username, password=password, email=mail, tel=tel)
+        user = User.objects.create_user(username=username, password=password, email=mail, tel=tel)
         user.is_active = 0
         user.save()
 
@@ -103,4 +104,49 @@ class Login(View):
     """登录"""
     def get(self, request):
         """显示登陆页面"""
-        return render(request, 'login.html')
+        # 判断是否记住了用户名
+        if 'username' in request.COOKIES:
+            username = request.COOKIES.get('username')
+            remember = 'checked'
+        else:
+            username = ''
+            remember = ''
+        return render(request, 'login.html', {"username": username, "remember": remember})
+
+    def post(self, request):
+        """登录处理"""
+        # 接收数据
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        # 校验数据
+        if not all([username, password]):
+            return render(request, 'login.html', {"msg": "数据不完整,请重试"})
+        user = authenticate(username=username, password=password)
+
+        if user is not None:
+            if user.is_active:
+                # 用户已激活
+
+                # 记录用户登录状态
+                login(request, user)
+
+                # 跳转到首页
+                response = redirect(reverse('goods:index'))
+
+                # 判断是否需要记住用户名
+                remember = request.POST.get('remember')
+
+                if remember == 'on':
+                    # 记住用户名,cookie存活时间为7天
+                    response.set_cookie('username', username, max_age=7*24*3600)
+                else:
+                    response.delete_cookie('username')
+
+                return response
+            else:
+                # 用户未激活
+                return render(request, 'login.html', {"msg": "账户未激活，请查收激活邮件进行激活"})
+
+        else:
+            return render(request, 'login.html', {"msg": "用户名或密码错误,请重试"})
