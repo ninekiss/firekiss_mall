@@ -25,7 +25,7 @@ class User(BaseModel, AbstractUser):
 
 class Address(BaseModel):
     """地址模型类"""
-    user_id = models.ForeignKey('User', verbose_name='所属账户')
+    user_id = models.ForeignKey('User', on_delete=models.CASCADE, verbose_name='所属账户')
     receiver = models.CharField(max_length=30, verbose_name='收件人')
     addr = models.CharField(max_length=256, verbose_name='详细地址')
     area = models.CharField(max_length=256, verbose_name='所在地区')

@@ -120,3 +120,36 @@ TINYMCE_DEFAULT_CONFIG = {
     'width': 600,
     'height': 400,
 }
+
+# 发邮件配置
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.qq.com'
+# EMAIL_PORT = 25
+# EMAIL_HOST_USER = 'seespace@foxmail.com'  # 发送邮件的邮箱
+# EMAIL_HOST_PASSWORD = 'wgrmaypehqxdcacj'  # 客户端授权码
+# EMAIL_FROM = 'FIREKISS 火吻 <seespace@foxmail.com>'  # 收件人看到的发件人昵称
+
+# 发邮件配置
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_SSL = True
+EMAIL_HOST = 'smtp.exmail.qq.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'product@firekiss.tk'  # 发送邮件的邮箱
+EMAIL_HOST_PASSWORD = 'Lyy520..'  # 密码
+# EMAIL_FROM = 'FIREKISS火吻 <product@firekiss.tk>'  # 收件人看到的发件人昵称
+
+
+# django缓存配置
+CACHES = {
+    "default": {
+        "BACKEND": "django_redis.cache.RedisCache",
+        "LOCATION": "redis://192.168.0.100:6379/1",
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+# 使用缓存作为session后端
+SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+SESSION_CACHE_ALIAS = "default"

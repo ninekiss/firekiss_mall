@@ -531,7 +531,7 @@ function register() {
         else {
             // 发送ajax请求
             $.ajax({
-                url: '/user/register_handle', 
+                url: '/user/register', 
                 type: 'get',
                 datatype: 'json',
                 data: {"name": usr_name}
@@ -663,7 +663,7 @@ function register() {
         if (pass_name & pass_pwd & pass_apwd & pass_mail & pass_tel & pass_code) {
             // 发送ajax请求
             $.ajax({
-                url: '/user/register_handle', 
+                url: '/user/register', 
                 type: 'post',
                 datatype: 'json',
                 headers: {"X-CSRFToken": csrftoken},

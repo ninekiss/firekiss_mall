@@ -11,9 +11,9 @@ class GoodsSKU(BaseModel):
         (0, '下架'),
     )
 
-    goods = models.ForeignKey('Goods', verbose_name='商品SPU')
-    type = models.ForeignKey('GoodsType', verbose_name='商品种类')
-    brand = models.ForeignKey('GoodsBrand', verbose_name='商品品牌')
+    goods = models.ForeignKey('Goods', on_delete=models.CASCADE, verbose_name='商品SPU')
+    type = models.ForeignKey('GoodsType', on_delete=models.CASCADE, verbose_name='商品种类')
+    brand = models.ForeignKey('GoodsBrand', on_delete=models.CASCADE, verbose_name='商品品牌')
     name = models.CharField(max_length=128, verbose_name='名称')
     desc = models.CharField(max_length=256, verbose_name='简介')
     image = models.ImageField(upload_to='goods', verbose_name='图片')
@@ -45,7 +45,7 @@ class Goods(BaseModel):
 
 class GoodsImage(BaseModel):
     """商品图片模型类"""
-    sku = models.ForeignKey('GoodsSKU', verbose_name='商品SKU')
+    sku = models.ForeignKey('GoodsSKU', on_delete=models.CASCADE, verbose_name='商品SKU')
     image = models.ImageField(upload_to='goods_image', verbose_name='商品图片')
 
     class Meta:
@@ -69,8 +69,8 @@ class GoodsProperty(BaseModel):
 
 class GoodsPropMapp(BaseModel):
     """商品属性中间表"""
-    sku = models.ForeignKey('GoodsSKU', verbose_name='商品SKU')
-    prop = models.ForeignKey('GoodsProperty', verbose_name='商品属性')
+    sku = models.ForeignKey('GoodsSKU', on_delete=models.CASCADE, verbose_name='商品SKU')
+    prop = models.ForeignKey('GoodsProperty', on_delete=models.CASCADE, verbose_name='商品属性')
     prop_value = models.CharField(max_length=256, verbose_name='商品属性值')
 
     class Meta:
@@ -115,8 +115,8 @@ class ServerPromise(BaseModel):
 
 class GoodsPromiseMapp(BaseModel):
     """商品服务承诺中间表"""
-    sku = models.ForeignKey('GoodsSKU', verbose_name='商品SKU')
-    promise = models.ForeignKey('ServerPromise', verbose_name='服务承诺')
+    sku = models.ForeignKey('GoodsSKU', on_delete=models.CASCADE, verbose_name='商品SKU')
+    promise = models.ForeignKey('ServerPromise', on_delete=models.CASCADE, verbose_name='服务承诺')
     is_support = models.BooleanField(default=True, verbose_name='是否支持')
 
     class Meta:
@@ -148,7 +148,7 @@ class IndexSaleActive(BaseModel):
 
 class IndexBrand(BaseModel):
     """首页品牌展示模型类"""
-    brand = models.OneToOneField('GoodsBrand', primary_key=True, verbose_name='品牌')
+    brand = models.OneToOneField('GoodsBrand', on_delete=models.CASCADE, primary_key=True, verbose_name='品牌')
     url = models.URLField(verbose_name='品牌链接')
     index = models.SmallIntegerField(verbose_name='展示顺序')
 
