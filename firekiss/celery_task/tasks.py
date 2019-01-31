@@ -1,5 +1,5 @@
 from celery import Celery
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMessage
 from django.conf import settings
 
 
@@ -28,10 +28,19 @@ def send_confirm_mail(to_mail, username, token):
 
     subject = '欢迎来到FIREKISS 火吻'  # 主题
     message = ''  # 正文
-    sender = settings.EMAIL_HOST_USER  # 发件人
+    sender = settings.EMAIL_FROM  # 发件人
     recceiver = [to_mail]  # 收件人
     # 正文包含html内容
     html_message = '<h1>%s,欢迎来到火吻商城</h1><p>请点击下面的链接完成账户激活,链接在24小时候后失效</p><p><a href="http://192.168.0.100:8000/user/active/%s">http://192.168.0.100:8000/user/active/%s</a></p>' % (
     username, token, token)
 
     send_mail(subject, message, sender, recceiver, html_message=html_message)
+
+    # email = EmailMessage(
+    #     'Hello',
+    #     'Body goes here',
+    #     'kiss <product@seespace.ml>',
+    #     [to_mail],
+    #     headers={'Message-ID': 'foo'},
+    # )
+    # email.send(fail_silently=False)
