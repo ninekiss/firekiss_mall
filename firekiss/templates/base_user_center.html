@@ -2,13 +2,6 @@
 {% load staticfiles %}
 {% block title %}个人中心-火吻商城{% endblock title %}
 {% block topfiles %}
-	<script>
-		$(function() {
-			$('#edit_pic').click(function() {
-				$('.upload').toggle();
-			})
-		});
-	</script>
 {% endblock topfiles %}
 
 {# 头部栏包括logo、搜索框 #}
@@ -45,6 +38,8 @@
 			</ul>
 		</div>
 		<div class="u_center">
+		{# 用户中心内容块 #}
+		{% block user_center %}
 			<div class="edit">
 				<div class="e_pic">
 					<img src="{% static 'images/getAvatar.jpg' %}" alt="">
@@ -71,6 +66,7 @@
 					</form>
 				</div>
 			</div>
+		{% endblock user_center %}
 		</div>
 	</div>
 {% endblock body_main %}

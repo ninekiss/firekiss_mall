@@ -12,7 +12,7 @@
 {# 头部栏包括logo、搜索框 #}
 {% block header %}
 	<div class="header list_page">
-		<a href="#" class="logo fl"><h1>FIREKISS</h1></a>
+		<a href="{% url 'goods:index' %}" class="logo fl"><h1>FIREKISS</h1></a>
 		<div class="search fl">
 			<form class="search_str">
 				<input type="text" name="" class="input_text fl" placeholder="请输入关键词">

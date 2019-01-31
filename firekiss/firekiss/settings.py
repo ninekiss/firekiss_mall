@@ -127,10 +127,9 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_SSL = True
 EMAIL_HOST = 'smtp.qiye.aliyun.com'
 EMAIL_PORT = 465
-# EMAIL_PORT = 25
-EMAIL_HOST_USER = 'product@seespace.ml'  # 发送邮件的邮箱
+EMAIL_HOST_USER = 'firekiss@seespace.ml'  # 发送邮件的邮箱
 EMAIL_HOST_PASSWORD = 'Lyy520..'  # 密码
-EMAIL_FROM = 'FIREKISS 火吻 <product@seespace.ml>'  # 收件人看到的发件人昵称
+EMAIL_FROM = 'FIREKISS 火吻 <firekiss@seespace.ml>'  # 收件人看到的发件人昵称
 
 
 # django缓存配置
@@ -147,3 +146,6 @@ CACHES = {
 # 使用缓存作为session后端
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
+
+# 登录的url
+LOGIN_URL = '/user/login'

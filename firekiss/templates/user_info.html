@@ -1,0 +1,40 @@
+{% extends "base_user_center.html" %}
+{% load staticfiles %}
+{% block title %}个人中心-火吻商城{% endblock title %}
+{% block topfiles %}
+	<script>
+		$(function() {
+			$('#edit_pic').click(function() {
+				$('.upload').toggle();
+			})
+		});
+	</script>
+{% endblock topfiles %}
+{% block user_center %}
+	<div class="edit">
+		<div class="e_pic">
+			<img src="{% static 'images/getAvatar.jpg' %}" alt="">
+			<a href="javascript:;" id="edit_pic">编辑头像</a>
+			<input type="file" class="upload" value1="选择图片" name="avatar">
+		</div>
+		<div class="e_info">
+			<form>
+				<label for="">用户名:</label>
+				<input type="text" readonly="readonly" value="{{user.username}}"><br>
+				<label for="">手机:</label>
+				<input type="text"><br>
+				<label for="">邮箱:</label>
+				<input type="text"><br>
+				<label for="">生日:</label>
+				<input type="text"><br>
+				<p>
+					<label for="">性别:</label>
+					<input type="radio">男
+					<input type="radio">女
+					<input type="radio">其他
+				</p>
+				<input type="submit" class="btn" value="保存">
+			</form>
+		</div>
+	</div>
+{% endblock user_center %}

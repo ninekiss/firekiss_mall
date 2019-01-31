@@ -709,9 +709,6 @@ function register() {
     });
 
     // 步骤四
-    success_btn.click(function() {
-        window.location.href = "/";
-    });
     resend_link.click(function() {
         $step4.find('.r_input_con').hide().next().show();
         $resend_email.val(usr_mail);

@@ -95,8 +95,14 @@ body {
 	background: url(../images/FK_0001.png) 0 0 no-repeat;
 	background-size: 100%;
 	position: absolute;
-	left: 88px;
+	left: -5px;
 	top: 10px;
+}
+.login .icon_home {
+	width: 15px;
+	height: 15px;
+	left: -9px;
+    top: 9px;
 }
 
 

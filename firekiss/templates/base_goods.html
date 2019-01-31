@@ -49,76 +49,24 @@
 		</div>
 		<div class="result_list">
 				<ul class="clearfix">
+					{% for goods in goods_list %}
 					<li>
 						<div class="border_shake no_icon">
 							<a href="#" class="pic">
-								<img src="images/TB107BWXgnD8KJjy1XdCweZsVXa_023057.jpg" alt="">
+								<img src="{{goods.image}}" alt="">
 							</a>
-							<p class="price">¥<em>1399.00</em><span class="before_price">¥<em>1399.00</em></span></p>
+							<p class="price">¥<em>{{goods.real_price}}</em><span class="before_price">¥<em>{{goods.bid_price}}</em></span></p>
 							<p class="sales">
-								<span>该款月成交 <em>4.1万笔</em></span>
+								<span>该款月成交 <em>{{goods.sales}}万笔</em></span>
 								<a href="#">包邮</a>
 							</p>
-							<p class="title"><a href="#"><span>iPhone XR</span> 4G智能手机苹果xr全面屏手机</a></p>
-							<p class="saler"><a href="#">火吻官方自营店</a></p>
+							<p class="title"><a href="#"><span>{{goods.name}}</span> </a></p>
+							<p class="saler"><a href="#">{{goods.brand}}</a></p>
 					</div>
 					</li>
-					<li>
-							<div class="border_shake no_icon">
-								<a href="#" class="pic">
-									<img src="images/TB107BWXgnD8KJjy1XdCweZsVXa_023057.jpg" alt="">
-								</a>
-								<p class="price">¥<em>1399.00</em><span class="before_price">¥<em>1399.00</em></span></p>
-								<p class="sales">
-									<span>该款月成交 <em>4.1万笔</em></span>
-									<a href="#">包邮</a>
-								</p>
-								<p class="title"><a href="#"><span>iPhone XR</span> 4G智能手机苹果xr全面屏手机</a></p>
-								<p class="saler"><a href="#">火吻官方自营店</a></p>
-						</div>
-					</li>
-					<li>
-							<div class="border_shake no_icon">
-								<a href="#" class="pic">
-									<img src="images/TB107BWXgnD8KJjy1XdCweZsVXa_023057.jpg" alt="">
-								</a>
-								<p class="price">¥<em>1399.00</em><span class="before_price">¥<em>1399.00</em></span></p>
-								<p class="sales">
-									<span>该款月成交 <em>4.1万笔</em></span>
-									<a href="#">包邮</a>
-								</p>
-								<p class="title"><a href="#"><span>iPhone XR</span> 4G智能手机苹果xr全面屏手机</a></p>
-								<p class="saler"><a href="#">火吻官方自营店</a></p>
-						</div>
-					</li>
-					<li>
-							<div class="border_shake no_icon">
-								<a href="#" class="pic">
-									<img src="images/TB107BWXgnD8KJjy1XdCweZsVXa_023057.jpg" alt="">
-								</a>
-								<p class="price">¥<em>1399.00</em><span class="before_price">¥<em>1399.00</em></span></p>
-								<p class="sales">
-									<span>该款月成交 <em>4.1万笔</em></span>
-									<a href="#">包邮</a>
-								</p>
-								<p class="title"><a href="#"><span>iPhone XR</span> 4G智能手机苹果xr全面屏手机</a></p>
-								<p class="saler"><a href="#">火吻官方自营店</a></p>
-						</div>
-					</li>
-					<li>
-							<div class="border_shake no_icon">
-								<a href="#" class="pic">
-									<img src="images/TB107BWXgnD8KJjy1XdCweZsVXa_023057.jpg" alt="">
-								</a>
-								<p class="price">¥<em>1399.00</em><span class="before_price">¥<em>1399.00</em></span></p>
-								<p class="sales">
-									<span>该款月成交 <em>4.1万笔</em></span>
-									<a href="#">包邮</a>
-								</p>
-								<p class="title"><a href="#"><span>iPhone XR</span> 4G智能手机苹果xr全面屏手机</a></p>
-								<p class="saler"><a href="#">火吻官方自营店</a></p>
-						</div>
-					</li>
+					{% empty %}
+						<p>没有历史浏览记录</p>
+					{% endfor%}
 				</ul>
 		</div>
 	</div>

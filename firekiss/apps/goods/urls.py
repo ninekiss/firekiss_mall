@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from goods import views
+from goods.views import Index
 urlpatterns = [
-    url(r'^$', views.index, name='index'),
+    url(r'^$', Index.as_view(), name='index'),
 ]

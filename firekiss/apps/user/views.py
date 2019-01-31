@@ -4,8 +4,12 @@ from django.http import JsonResponse, HttpResponse
 from django.core.urlresolvers import reverse
 from celery_task.tasks import send_confirm_mail
 from django.conf import settings
-from user.models import User
-from django.contrib.auth import authenticate, login
+from user.models import User, Address
+from goods.models import  GoodsSKU
+from django.contrib.auth import authenticate, login, logout
+from utils.mixin import LoginRequiredMixin
+from django_redis import get_redis_connection
+
 
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 from itsdangerous import SignatureExpired
@@ -131,8 +135,12 @@ class Login(View):
                 # 记录用户登录状态
                 login(request, user)
 
-                # 跳转到首页
-                response = redirect(reverse('goods:index'))
+                # 获取登录之前的url
+                # 默认跳转到首页
+                next_url = request.GET.get('next', reverse('goods:index'))
+
+                # 登录成功之后跳转到登录之前的url
+                response = redirect(next_url)
 
                 # 判断是否需要记住用户名
                 remember = request.POST.get('remember')
@@ -150,3 +158,101 @@ class Login(View):
 
         else:
             return render(request, 'login.html', {"msg": "用户名或密码错误,请重试"})
+
+
+class Logout(View):
+    def get(self, request):
+        # 注销登录
+        logout(request)
+        # 跳转到首页
+        return redirect(reverse('goods:index'))
+
+
+
+class UserCenter(LoginRequiredMixin, View):
+    """用户中心"""
+    def get(self, request):
+        """显示用户中心页面"""
+        # request.user
+        # 如果用户未登录，user为AnonymousUser类的实例对象，is_authenticated()返回值永远是False
+        # 如果用已登录，user为User类的实例对象，is_authenticated()返回值永远是True
+        # 除了自定义传递数据，django默认会把user对象也传递给模板
+
+        # 获取用户历史浏览记录
+        # 使用redis存储用户历史浏览记录，使用list
+        # history_用户id 作为key， 浏览过的商品id作为value,从左边插入数据
+        user = request.user
+        # 连接redis
+        con = get_redis_connection("default")
+        history_key = 'history_%d' % user.id
+
+        hist_ids = con.lrange(history_key, 0, 4)  # 获取最新的5条
+
+        goods_list = []
+        for hist_id in hist_ids:
+            goods = GoodsSKU.objects.get(id=hist_id)
+            goods_list.append(goods)
+
+        # 组织模板上下文
+        context = {
+            "page": "user",
+            "goods_list": goods_list
+        }
+
+        return render(request, 'base_user_center.html', context)
+
+
+class UserAddress(LoginRequiredMixin, View):
+    # 获取用户默认收货地址
+    def get(self, request):
+        # 进行业务处理
+        user = request.user
+        address = Address.objects.get_default_addr(user)
+        return render(request, 'user_address.html', {"page": "address", "address": address})
+
+    def post(self, request):
+        # 获取数据
+        receiver = request.POST.get('receiver')
+        phone = request.POST.get('phone')
+        area = request.POST.get('area')
+        addr = request.POST.get('addr')
+
+        # 校验数据
+        if not all([receiver, phone, area, addr]):
+            return render(request, 'user_address.html', {"page": "address", "msg": "数据不完整"})
+        if not re.match(r'^1[34578][0-9]{9}$', phone):
+            return render(request, 'user_address.html', {"page": "address", "msg": "手机格式不正确"})
+
+        # 进行业务处理
+        user = request.user
+
+        address = Address.objects.get_default_addr(user)
+
+        if address:
+            is_default = False
+        else:
+            is_default = True
+
+        Address.objects.create(user_id=user, receiver=receiver, phone=phone, area=area, addr=addr, is_default=is_default)
+        # 返回应答
+        return redirect(reverse('user:address'))
+
+
+class UserOrder(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, 'user_order.html', {"page": "order"})
+
+
+class PayMethod(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, 'user_build.html', {"page": "pay_method"})
+
+
+class Safety(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, 'user_build.html', {"page": "safety"})
+
+
+class Privacy(LoginRequiredMixin, View):
+    def get(self, request):
+        return render(request, 'user_build.html', {"page": "privacy"})

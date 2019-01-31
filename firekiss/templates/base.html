@@ -20,27 +20,31 @@
 		<div class="top_con">
 			<div class="top">
 				
-				<!-- 未登录 -->
-				<ul class="no_login fl">
-					{% block is_index %}
-						<li><a href="index.html">火吻首页</a><i class="icon_home"></i></li>
-					{% endblock is_index %}
-					<li><span>哞，欢迎来火吻</span></li>
-					<li><a href="/user/login">请登录</a></li>
-					<li><a href="/user/register">免费注册</a></li>
-				</ul>
-				<!-- 登录后 -->
-				<ul class="login fl">
-					{% block is_index_two %}
-						<li><a href="index.html">火吻首页</a><i class="icon_home"></i></li>
-					{% endblock is_index_two%}
-					<li><span>Hi,</span></li>
-					<li><a href="#">高加索之吻</a></li>
-					<li><a href="#"><i></i></a></li>
-					<li><a href="#">积分<em>100000</em></a></li>
-					<li><a href="#">消息<em>15</em></a></li>
-					<li><a href="#">退出</a></li>
-				</ul>
+				
+				{% if user.is_authenticated %}
+					<!-- 登录后 -->
+					<ul class="login fl" style="display:block">
+						{% block is_index_two %}
+							<li><a href="{% url 'goods:index' %}">火吻首页</a><i class="icon_home"></i></li>
+						{% endblock is_index_two%}
+						<li><span>Hi,</span></li>
+						<li><a href="{% url 'user:user' %}">{{user.username}}</a></li>
+						<li><a href="#"><i></i></a></li>
+						<li><a href="#">积分<em>100000</em></a></li>
+						<li><a href="#">消息<em>15</em></a></li>
+						<li><a href="{% url 'user:logout'%}">退出</a></li>
+					</ul>
+				{% else %}
+					<!-- 未登录 -->
+					<ul class="no_login fl">
+						{% block is_index %}
+							<li><a href="index.html">火吻首页</a><i class="icon_home"></i></li>
+						{% endblock is_index %}
+						<li><span>哞，欢迎来火吻</span></li>
+						<li><a href="{% url 'user:login' %}">请登录{{user.username}}</a></li>
+						<li><a href="{% url 'user:register' %}">免费注册</a></li>
+					</ul>
+				{% endif %}
 				<!-- 未开发功能 -->
 				<ul class="other_fk fr">
 					<li><span>|</span></li>
@@ -51,7 +55,7 @@
 				</ul>
 				<!-- 用户相关 -->
 				<ul class="user_set fr">
-					<li><a href="#">我的宝贝</a></li>
+					<li><a href="{% url 'user:order' %}">我的宝贝</a></li>
 					<li><a href="#">购物车<em>0</em>件</a><i class="icon_cart"></i></li>
 					<li><a href="#">收藏夹</a></li>
 				</ul>
@@ -607,12 +611,17 @@
 
 	{# 右侧导航条块 #}
 	{% block right_nav %}
-		<div class="right_nav_con">
+		<div class="logined right_nav_con">
 			<div class="right_nav clearfix">
 				{# 右侧选项 #}
 				{% block right_op %}
-					<a href="#" class="vip" title="会员中心"><i></i></a>
-					<a href="#" class="shop_cart clearfix"><i></i><span>购物车</span></a>
+					{% if user.is_authenticated %}
+						<a href="#" class="vip clearfix" title="会员中心"><i></i><div><img src="{% static 'images/getAvatar.jpg' %}" alt=""></div></a>
+						<a href="#" class="shop_cart clearfix"><i></i><span>购物车</span><em>50</em></a>
+					{% else %}
+						<a href="#" class="vip" title="会员中心"><i></i></a>
+						<a href="#" class="shop_cart clearfix"><i></i><span>购物车</span></a>
+					{% endif %}
 				{% endblock right_op %}
 				<a href="#" class="money" title="支付方式"><i></i></a>
 				<a href="#" class="colle" title="我的收藏"><i></i></a>

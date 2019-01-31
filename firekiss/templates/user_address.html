@@ -1,0 +1,34 @@
+{% extends "base_user_center.html" %}
+{% load staticfiles %}
+{% block title %}个人中心-火吻商城{% endblock title %}
+{% block user_center %}
+	<div>
+		<h2>添加收货地址</h2>
+		<br/>
+		<div>
+			<h5>默认收货地址</h5>
+			<br/>
+			{% if address %}
+			<p>{{address.area}}&nbsp;&nbsp;&nbsp;&nbsp;{{address.addr}}&nbsp;&nbsp;&nbsp;&nbsp;{{address.receiver}}(收)&nbsp;&nbsp;&nbsp;&nbsp;{{address.phone}}</p>
+			{% else %}
+			<p>无默认收货地址</P>
+			{% endif %}
+			
+		</div>
+	</div>
+	<div class="e_info">
+		<form method="post">
+			{% csrf_token %}
+			<label for="">收件人:</label>
+			<input type="text" id="" name= "receiver"><br>
+			<label for="">手机:</label>
+			<input type="text" id="" name= "phone"><br>
+			<label for="">地址:</label>
+			<input type="text" id="" name= "area"><br>
+			<label for="">详细地址:</label>
+			<textarea type="text" id="" name= "addr"></textarea><br>
+			<input type="submit" class="btn" value="添加">
+			<p>{{msg}}<p>
+		</form>
+	</div>
+{% endblock user_center %}
