@@ -616,7 +616,7 @@
 				{# 右侧选项 #}
 				{% block right_op %}
 					{% if user.is_authenticated %}
-						<a href="#" class="vip clearfix" title="会员中心"><i></i><div><img src="{% static 'images/getAvatar.jpg' %}" alt=""></div></a>
+						<a href="#" class="vip clearfix" title="会员中心"><i></i><div><img src="{% if user.avatar %}{{user.avatar.url}}{% else %} {% endif %}" alt=""></div></a>
 						<a href="#" class="shop_cart clearfix"><i></i><span>购物车</span><em>50</em></a>
 					{% else %}
 						<a href="#" class="vip" title="会员中心"><i></i></a>

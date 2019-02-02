@@ -8,7 +8,9 @@ from user.models import User, Address
 from goods.models import  GoodsSKU
 from django.contrib.auth import authenticate, login, logout
 from utils.mixin import LoginRequiredMixin
+from utils.fdfs.storage import FDFSStorage
 from django_redis import get_redis_connection
+
 
 
 from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
@@ -200,6 +202,33 @@ class UserCenter(LoginRequiredMixin, View):
         }
 
         return render(request, 'base_user_center.html', context)
+
+    def post(self, request):
+        """用户修改个人资料"""
+        # 接收收据(当前版本只支持修改头像)
+        user = request.user
+        avatar = request.FILES.get('avatar')
+        # 校验数据
+        if avatar is None:
+            return redirect(reverse('user:user'))
+
+        # 进行业务处理
+
+        # 获取用户对象
+        user = User.objects.get(id=user.id)
+
+        if user:
+            # 使用自定义存储类储存用户上传的文件
+            storage = FDFSStorage()
+            filename = storage.save(avatar.name, avatar)
+
+            # 修改头像
+            user.avatar = filename
+            user.save()
+
+        # 返回应答
+        return redirect(reverse('user:user'))
+
 
 
 class UserAddress(LoginRequiredMixin, View):

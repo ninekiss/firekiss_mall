@@ -149,3 +149,12 @@ SESSION_CACHE_ALIAS = "default"
 
 # 登录的url
 LOGIN_URL = '/user/login'
+
+
+# FastDFS 相关配置
+# 自定义文件存储类配置
+DEFAULT_FILE_STORAGE = 'utils.fdfs.storage.FDFSStorage'
+# fdfs客户配置文件
+HDFS_CLIENT_CONF = './utils/fdfs/client.conf'
+# fdfs服务器所使用的nginx的地址
+HDFS_URL = 'http://192.168.0.100:8888/'
