@@ -1,4 +1,5 @@
 {% extends "base.html" %}
+{% load staticfiles %}
 {% block title %}火吻商城-首页{% endblock title %}
 {% block topfiles %}
 	<script>
@@ -44,21 +45,21 @@
 		<div>商品分类</div>
 		<ul class="cate">
 			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
-			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
-			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
-			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
-			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
-			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
-			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
-			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
-			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
-			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
-			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
-			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
-			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
-			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
-			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
-			<li><a href="#">女装</a> /<a href="#">内衣</a></li>
+			<li><a href="#">男装</a> /<a href="#">运动户外</a></li>
+			<li><a href="#">女鞋</a> /<a href="#">男鞋</a> /<a href="#">箱包</a></li>
+			<li><a href="#">美妆</a> /<a href="#">个人护理</a></li>
+			<li><a href="#">腕表</a> /<a href="#">眼镜</a> /<a href="#">珠宝饰品</a></li>
+			<li><a href="#">手机</a> /<a href="#">数码</a> /<a href="#">电脑办公</a></li>
+			<li><a href="#">母婴玩具</a></li>
+			<li><a href="#">零食</a> /<a href="#">茶酒</a> /<a href="#">进口食品</a></li>
+			<li><a href="#">生鲜水果</a></li>
+			<li><a href="#">大家电</a> /<a href="#">生活电器</a></li>
+			<li><a href="#">家具建材</a></li>
+			<li><a href="#">汽车</a> /<a href="#">配件</a> /<a href="#">用品</a></li>
+			<li><a href="#">家纺</a> /<a href="#">家饰</a> /<a href="#">鲜花</a></li>
+			<li><a href="#">医药保健</a></li>
+			<li><a href="#">厨具</a> /<a href="#">收纳</a> /<a href="#">宠物</a></li>
+			<li><a href="#">图书音像</a></li>
 		</ul>
 		<ul class="nav">
 			<!-- <li><a href="#" class="fk_mart clearfix"><i></i></a></li>
@@ -77,6 +78,145 @@
 		</ul>
 	</div>
 {% endblock nav %}
+
+{# 网页body块 #}
+{% block body %}
+	<!-- 轮播图 -->
+	<div class="slide_con">
+		<div class="slide">
+			<ul class="list">
+				{% for banner in banners %}
+					<li><a href="#"><img src="{{banner.image.url}}" alt=""></a></li>
+				{% endfor%}
+			</ul>
+			<div class="point_con">
+				<ul class="point">
+					<li class="active"></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+			</div>
+			<!-- <div class="prev">P</div>
+			<div class="next">N</div> -->
+		</div>
+	</div>
+
+	<!-- 品牌区域 -->
+
+	<!-- 品牌相关 -->
+	<div class="b_wall_con clearfix">
+		<div class="brand_wall">
+			{% for bp in bps %}
+			<div class="{{bp.style}}">
+				<span><h1>{{bp.name}}</h1></span>
+				<span>{{bp.en_name}}</span>
+				<i></i>
+				<a href="#" class="b_more"></a>
+				<a href="#" class="img_block"><img src="{{bp.image.url}}" alt="{{bp.name}}"></a>
+			</div>
+			{% endfor%}
+
+			<!-- 左侧定位导航条 -->
+			<div class="left_nav">
+				<span>导航</span>
+				<div class="jump_nav">
+					<a href="#" class="l_mart">火吻超市</a>
+					<a href="#" class="l_star">火吻星际</a>
+					<a href="#" class="l_outdoor">户外出行</a>
+					<a href="#" class="l_cool">潮酷电玩</a>
+					<a href="#" class="l_beauty">美丽人生</a>
+					<a href="#" class="l_life">居家生活</a>
+					<a href="#" class="l_home">打造爱巢</a>
+					<a href="#" class="l_ulike">猜你喜欢</a>
+				</div>
+				<a href="javascript:;" class="top">top</a>
+			</div>
+			<!-- 导航条end -->
+
+		</div>
+	</div>
+	<!-- 品牌展示区 -->
+	<div class="b_bann_con clearfix">
+		<div class="brand_bann">
+			<ul>
+				{% for brand in brand_wall%}
+				<li>
+					<img src="{{brand.brand.logo.url}}" alt="">
+					<a href="#">
+						<span class="name">{{brand.brand.brand}}</span>
+						<span class="btn">点击进入</span>
+					</a>
+				</li>
+				{% endfor %}
+				<li class="change"><a href="#"><span class="b_refresh"></span><span class="name">换一批</span></a></li>
+			</ul>
+		</div>
+	</div>
+
+	<!-- 商品区域 -->
+	{% for mb in mbs %}
+		<div class="g_con clearfix">
+		<div class="g_mart clearfix">
+			<div class="mart_link">
+				<h1 class="{{mb.style}}">{{mb.name}}</h1>
+				<span>{{mb.en_name}}</span>
+				{% for m_link in mb.m_links %}
+					<a href="#">{{m_link.name}}</a>
+				{% endfor%}
+			</div>
+			<div class="mart_bann">
+				<a href=""><img src="{{mb.image.url}}" alt="火吻超市冬季促销"></a>
+			</div>
+			<div class="goods_list">
+				<ul class="mart_goods">
+					{% for m_goods in mb.m_goods %}
+					<li>
+						<a href="#">
+							<img src="{{m_goods.sku.image.url}}" alt="">
+							<span>{{m_goods.sku.name}}</span>
+							<em>¥{{m_goods.sku.real_price}}</em>
+						</a>
+					</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+
+	{% for ad in ads%}
+		<!-- 广告 -->
+		<div class="ad_con">
+			<a href="#" class="ads">
+				<img src="{{ad.image.url}}" alt="广告">
+			</a>
+		</div>
+	{% endfor %}
+
+	<!-- 猜你喜欢 -->
+	<div class="g_ulike_con">
+		<div class="g_ulike clearfix">
+			<h1>猜你喜欢</h1>
+			<i class="center_end"></i>
+			<div class="ulike_list">
+				<ul class="ulike_goods">
+					{% for ulike in ulikes %}
+						<li>
+							<a href="#">
+								<img src="{{ulike.sku.image.url}}" alt="">
+								<span>{{ulike.sku.name}}</span>
+								<em>¥{{ulike.sku.real_price}}</em>
+							</a>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+		</div>
+	</div>
+{% endblock body %}
 
 {# 顶部悬浮搜索框块 #}
 {% block top_fixed_search %}

@@ -204,20 +204,17 @@ body {
 .nav_con .cate {
 	width: 200px;
 	padding: 1px 0;
-	background: #000;
-	opacity: 0.55;
+	background: rgba(0,0,0,0.5);
 	position: absolute;
 	left: 0px;
 	top: 42px;
 	z-index: 999;
-	/*display: none; */
 }
 .cate li {
 	height: 31px;
 	color: #fff;
 	line-height: 31px;
 	padding-left: 40px;
-	background: #000;
 }
 .cate li a {
 	color: #fff;
@@ -283,7 +280,7 @@ body {
 .slide_con {
 	width: 100%;
 	height: 500px;
-	background: #f00;
+	background: rgba(0,0,0,0.05);
 }
 .slide {
 	width: 1230px;
@@ -328,7 +325,7 @@ body {
 	position: absolute;
 	left: 0;
 	bottom: 0;
-	z-index: 999;
+	z-index: 2;
 }
 .point li {
 	float: left;
@@ -459,7 +456,8 @@ body {
 	position: relative;
 }
 .brand_bann img {
-	margin: 25px 11px;	
+	width:100px;
+	margin: 20px 12px;
 }
 .brand_bann a {
 	display: block;
