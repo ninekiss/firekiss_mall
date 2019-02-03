@@ -93,7 +93,6 @@ class Active(View):
             info = serializer.loads(token)
             # 激活用户的id
             user_id = info['confirm']
-            print(user_id)
             # 激活用户
             user = User.objects.get(id=user_id)
             print(user)
