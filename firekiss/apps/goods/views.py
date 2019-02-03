@@ -68,3 +68,5 @@ class Index(View):
         content['cart_count'] = cart_count
         # 返回数据
         return render(request, 'index.html', content)
+
+

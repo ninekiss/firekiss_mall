@@ -18,4 +18,5 @@ urlpatterns = [
     url(r'^safety$', Safety.as_view(), name='safety'),  # 安全设置
     url(r'^privacy$', Privacy.as_view(), name='privacy'),  # 隐私设置
 
+
 ]
