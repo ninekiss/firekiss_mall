@@ -1,6 +1,8 @@
 from celery import Celery
-from django.core.mail import send_mail, EmailMessage
+from django.core.mail import send_mail
 from django.conf import settings
+from django.template import loader
+
 
 
 # 使用celery
@@ -10,6 +12,8 @@ import os
 import django
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "firekiss.settings")
 django.setup()
+
+from goods.models import BlockGoodsType, IndexGoods, IndexSaleActive, IndexBrand
 
 # 启用工作者worker
 # 需要拷贝一份项目代码到worker所在的机器上
@@ -36,11 +40,61 @@ def send_confirm_mail(to_mail, username, token):
 
     send_mail(subject, message, sender, recceiver, html_message=html_message)
 
-    # email = EmailMessage(
-    #     'Hello',
-    #     'Body goes here',
-    #     'kiss <product@seespace.ml>',
-    #     [to_mail],
-    #     headers={'Message-ID': 'foo'},
-    # )
-    # email.send(fail_silently=False)
+
+@app.task
+def get_static_index_html():
+    """生成首页静态页面"""
+    # 查询数据
+
+    qs = BlockGoodsType.objects.all()
+
+    # 品牌推广区块
+    brand_popularize = qs.filter(id=1)
+    bps = qs.filter(father_type=brand_popularize)
+
+    # 商品主块
+    main_block = qs.filter(id=5)
+    mbs = qs.filter(father_type=main_block)
+
+    for mb in mbs:
+        # 商品主块文字链接
+        main_link = qs.filter(father_type=mb).order_by('-index')
+        mb.m_links = main_link
+        # 商品主块商品(获取8条)
+        main_goods = IndexGoods.objects.filter(block_type=mb).order_by('-index')[0:8]
+        mb.m_goods = main_goods
+
+    # 猜你喜欢区域商品(获取100条)
+    ulikes = IndexGoods.objects.filter(block_type=13).order_by('-index')[0:100]
+
+    # banner区域(获取6条)
+    banners = IndexSaleActive.objects.filter(display=4).order_by('-index')[0:6]
+
+    # 品牌墙(获取29条)
+    brand_wall = IndexBrand.objects.all().order_by('-index')[0:29]
+
+    # 三个广告位(获取3条)
+    ads = IndexSaleActive.objects.filter(display=1).order_by('-index')[0:3]
+
+    # 组织模板上下文
+    content = {
+        'bps': bps,
+        'mbs': mbs,
+        'banners': banners,
+        'brand_wall': brand_wall,
+        'ads': ads,
+        'ulikes': ulikes
+    }
+
+    # 使用模板
+    # 1.获取模板对象
+    temp = loader.get_template('static_index.html')
+    # 2.渲染模板
+    static_index_html = temp.render(content)
+
+    # 生成静态首页html文件
+    # 1.保存路径
+    save_path = os.path.join(settings.BASE_DIR, 'static/index.html')
+    # 2.保存文件
+    with open(save_path, 'w') as f:
+        f.write(static_index_html)
