@@ -174,7 +174,7 @@
 				<ul class="mart_goods">
 					{% for m_goods in mb.m_goods %}
 					<li>
-						<a href="#">
+						<a href="{% url 'goods:detail' m_goods.sku.id %}">
 							<img src="{{m_goods.sku.image.url}}" alt="">
 							<span>{{m_goods.sku.name}}</span>
 							<em>¥{{m_goods.sku.real_price}}</em>
@@ -205,7 +205,7 @@
 				<ul class="ulike_goods">
 					{% for ulike in ulikes %}
 						<li>
-							<a href="#">
+							<a href="{% url 'goods:detail' ulike.sku.id %}">
 								<img src="{{ulike.sku.image.url}}" alt="">
 								<span>{{ulike.sku.name}}</span>
 								<em>¥{{ulike.sku.real_price}}</em>

@@ -2919,9 +2919,13 @@ body {
 }
 .descs .user_desc {
 	color: #666;
+	width: 100%;
+}
+.d_body .descs p {
+	width: 100%;
 }
 .user_desc ul {
-	height: 45px;
+	height: 46px;
 	margin: 10px 10px 10px 0;
 	overflow: hidden;
 }
@@ -2934,6 +2938,7 @@ body {
 	border: 1px solid #eeebeb;
 	background: #fff;
 }
+
 .user_desc li img {
 	width: 100%;
 }
@@ -2941,6 +2946,7 @@ body {
 	color: #999;
 }
 .descs .clerk_desc {
+	width: 100%;
 	margin: 15px 0;
 	padding: 0 10px;
 	color: #dbaf5c;

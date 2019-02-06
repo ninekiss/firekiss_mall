@@ -64,7 +64,8 @@ class GoodsAppraisal(BaseModel):
         (0, '默认评价'),
         (1, '初次评价'),
         (2, '追加评价'),
-        (3, '掌柜解释'),
+        (3, '初评解释'),
+        (4, '追评解释'),
     )
     goods = models.ForeignKey('OrderGoods', on_delete=models.CASCADE, verbose_name='评价商品')
     user = models.ForeignKey('user.User', on_delete=models.CASCADE, verbose_name='评价用户')
@@ -72,7 +73,7 @@ class GoodsAppraisal(BaseModel):
     detail_star = models.SmallIntegerField(default=0, verbose_name='描述星评')
     saler_star = models.SmallIntegerField(default=0, verbose_name='卖家星评')
     track_star = models.SmallIntegerField(default=0, verbose_name='物流星评')
-    about_goods = models.CharField(max_length=1000, verbose_name='对商品评价')
+    about_goods = models.CharField(max_length=1000, default='未作出评价,系统默认好评!', verbose_name='对商品评价')
     about_server = models.CharField(max_length=1000, verbose_name='对服务评价')
 
     class Meta:
