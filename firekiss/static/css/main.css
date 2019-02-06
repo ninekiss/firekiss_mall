@@ -1484,6 +1484,9 @@ body {
 .result_list .title, .result_list .saler {
 	margin-bottom: 2px;
 	text-indent: 5px;
+	overflow:hidden;
+	text-overflow:clip;
+	white-space:nowrap;
 }
 .title a {
 	color: rgba(0, 0, 0, 0.883);

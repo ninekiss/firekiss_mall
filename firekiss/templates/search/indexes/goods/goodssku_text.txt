@@ -1,0 +1,9 @@
+# 定义全文检索框架所使用的数据模板
+# object是要全文检索的模型类的对象
+
+{{ object.name }}  # 这里GoodsSKU的name属性,名称
+{{ object.desc }}  # 简介
+{{ object.detail }}  # 商品详情
+{{ object.brand.brand }}  # 品牌名
+{{ object.type.type }}  # 分类名
+{{ object.goods }}  # spu

@@ -22,7 +22,7 @@ from goods.models import BlockGoodsType, IndexGoods, IndexSaleActive, IndexBrand
 
 
 # 创建一个Celery对象,并指明中间人(broker)
-app = Celery('celery_task.tasks', broker='redis://192.168.0.100:6379/0')
+app = Celery('celery_task.tasks', broker='redis://192.168.0.101:6379/0')
 
 
 # 定义任务函数，并用celery对象的task方法进行装饰

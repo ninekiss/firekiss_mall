@@ -1,7 +1,8 @@
-from django.shortcuts import render
-from django.http import HttpResponse
+from django.shortcuts import render, redirect
+from django.core.urlresolvers import reverse
 from django.views.generic import View
 from django.core.cache import cache
+from django.core.paginator import Paginator
 from goods.models import GoodsSKU, GoodsType, BlockGoodsType, IndexSaleActive, IndexGoods, IndexBrand
 from order.models import GoodsAppraisal, OrderGoods
 from django_redis import get_redis_connection
@@ -85,8 +86,11 @@ class Detail(View):
     def get(self, request, goods_id):
         """显示详情页"""
         # 查询数据
-        # 商品sku
-        goods = GoodsSKU.objects.get(id=goods_id)
+        try:
+            # 商品sku
+            goods = GoodsSKU.objects.get(id=goods_id)
+        except GoodsSKU.DoesNotExist:
+            return redirect(reverse('goods:index'))
 
         # 宝贝排行榜(每个店铺不同)
         # 根据销量
@@ -150,5 +154,148 @@ class Detail(View):
             'appr_add_count': appr_add_count,
             'apprs': apprs
         }
+        # 购物车商品数量
+        cart_count = 0
+        user = request.user
+        if user.is_authenticated():
+            # 如果用户已登录,获取用户购物车商品数量(使用redis)
+            # key: cart_用户id
+            # field: 商品id
+            # value: 某个商品的数量
+
+            con = get_redis_connection("default")
+            cart_key = 'cart_user%d' % user.id
+            cart_count = con.hlen(cart_key)
+
+            # 添加用户历史浏览记录
+            con = get_redis_connection("default")
+            history_key = 'history_%d' % user.id
+            # 移除列表中的goods_id
+            con.lrem(history_key, 0, goods_id)
+            # 把goods_id插入到列表最左侧
+            con.lpush(history_key, goods_id)
+            # 只保存用户最近5条的历史浏览记录
+            con.ltrim(history_key, 0, 4)
+
+            # 获取用户历史浏览记录
+            hist_ids = con.lrange(history_key, 0, 4)  # 获取最新的5条
+            goods_list = []
+            for hist_id in hist_ids:
+                goods = GoodsSKU.objects.get(id=hist_id)
+                goods_list.append(goods)
+
+        content.update(cart_count=cart_count)
+        content.update(goods_list=goods_list)
         # 返回数据
         return render(request, 'goods_detail.html', content)
+
+
+# list/type_id/page?sort=排序方式
+class List(View):
+    """列表页"""
+    def get(self, request, type_id, page):
+        """显示列表页"""
+        # 查询数据
+        # 获取种类信息
+        try:
+            type = GoodsType.objects.get(id=type_id)
+        except GoodsType.DoesNotExist:
+            return redirect(reverse('goods:index'))
+
+        # 获取排序方式
+        sort = request.GET.get('sort')
+
+        # 获取种类id对应的商品,并进行排序
+        if sort == 'hot':
+            # 人气
+            skus = GoodsSKU.objects.filter(type=type).order_by('-comments')
+        elif sort == 'new':
+            # 新品
+            skus = GoodsSKU.objects.filter(type=type).order_by('-id')
+        elif sort == 'sales':
+            # 销量
+            skus = GoodsSKU.objects.filter(type=type).order_by('-sales')
+        elif sort == 'price':
+            # 价格
+            skus = GoodsSKU.objects.filter(type=type).order_by('-real_price')
+        else:
+            # 默认
+            sort = 'default'
+            skus = GoodsSKU.objects.filter(type=type)
+
+        # 对数据进行分页
+        paginator = Paginator(skus, 1)
+
+
+        # 总页数
+        nums_pages = paginator.num_pages
+
+
+
+        # 获取第page页的数据
+        try:
+            page = int(page)
+        except Exception as e:
+            page = 1
+
+        # 大于总页数
+        if page > nums_pages:
+            page = 1
+
+        # 获取第page页的实例对象
+        skus_page = paginator.page(page)
+
+        # 页码范围自定义
+        # 总页数小于8页,显示所有页码
+        if nums_pages <= 8:
+            if page <= 6:
+                # 1.当前页小于等于6，全部显示在省略号左边
+                pages_left = range(1, nums_pages+1)
+                pages_right = []
+            else:
+                # 2.当前页大于6, 省略号前面固定显示1，2页,省略号后面固定显示当前页前3页，当前页，当前页后两页
+                pages_left = [1, 2]
+                pages_right = range(nums_pages-4, nums_pages+1)
+
+        else:
+            pages_left = [1, 2]
+            pages_right = range(page-2, page+3)
+
+        # 组织模板上下文
+        content = {
+            'type': type,
+            'skus_page': skus_page,
+            'sort': sort,
+            'pages_left': pages_left,
+            'pages_right': pages_right
+        }
+
+        # 购物车商品数量
+        cart_count = 0
+        user = request.user
+        if user.is_authenticated():
+            # 如果用户已登录,获取用户购物车商品数量(使用redis)
+            # key: cart_用户id
+            # field: 商品id
+            # value: 某个商品的数量
+
+            con = get_redis_connection("default")
+            cart_key = 'cart_user%d' % user.id
+            cart_count = con.hlen(cart_key)
+
+            # 获取用户历史浏览记录
+            con = get_redis_connection("default")
+            history_key = 'history_%d' % user.id
+
+            hist_ids = con.lrange(history_key, 0, 4)  # 获取最新的5条
+
+            goods_list = []
+            for hist_id in hist_ids:
+                goods = GoodsSKU.objects.get(id=hist_id)
+                goods_list.append(goods)
+
+        content.update(cart_count=cart_count)
+        content.update(goods_list=goods_list)
+
+        # 返回数据
+        return render(request, 'goods_list.html', content)
