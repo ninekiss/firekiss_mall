@@ -45,7 +45,7 @@
 	<div class="header list_page">
 		<a href="{% url 'goods:index' %}" class="logo fl"><h1>FIREKISS</h1></a>
 		<div class="search fl">
-			<form class="search_str" method="get" action="/search">
+			<form class="search_str" method="get" action="/search/">
 				<input type="text" name="q" class="input_text fl" placeholder="请输入关键词">
 				<input type="submit" name="" class="input_btn fl" value="搜 索">
 			</form>
@@ -75,7 +75,7 @@
 			<div class="all_search">
 				<a href="#">全部</a>
 				<i>></i>
-				<input type="text" placeholder="{{type.type}}">
+				<input type="text" placeholder="{{type.type}}" readonly>
 				<i class="icon"></i>
 			</div>
 			<div class="all_result">

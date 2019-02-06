@@ -8,6 +8,7 @@ from order.models import GoodsAppraisal, OrderGoods
 from django_redis import get_redis_connection
 
 
+
 # Create your views here.
 
 

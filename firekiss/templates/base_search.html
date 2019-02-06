@@ -1,5 +1,5 @@
 {% extends "base.html" %}
-
+{% load gen_range %}
 {# 网页body块 #}
 {% block body %}
 	{# 每个商品相关页主要内容块 #}
@@ -12,18 +12,35 @@
 		<div class="result_pagena_con">
 			<div class="result_pagena">
 				<ul>
-					<li><a href="{% if skus_page.has_previous %}{% url 'goods:list' type.id skus_page.previous_page_number %}?sort={{sort}}{% else %}javascript:;{% endif %}" id="r_prev_page" class="now_page">&lt;上一页</a></li>
+					<li><a href="{% if page.has_previous %}/search/?q={{query}}&page={{page.previous_page_number}}{% else %}javascript:;{% endif %}" id="r_prev_page" class="now_page">&lt;上一页</a></li>
 					<div class="page_con">
-						{% for pageindex in pages_left %}
-						<li><a href="{% url 'goods:list' type.id pageindex %}"{% if pageindex == skus_page.number %}class="now_page"{% endif %}>{{pageindex}}</a></li>
-						{% endfor %}
-						<li><span>···</span></li>
-						{% for pageindex in pages_right %}
-						<li><a href="{% url 'goods:list' type.id pageindex %}"{% if pageindex == skus_page.number %}class="now_page"{% endif %}>{{pageindex}}</a></li>
-						{% endfor %}
+						{% if paginator.num_pages < 8 %}
+							{% if page.number <= 6 %}
+								{% for pageindex in paginator.num_pages|range:"nlet6" %}
+									<li><a href="/search/?q={{query}}&page={{pageindex}}"{% if pageindex == page.number %}class="now_page"{% endif %}>{{pageindex}}</a></li>
+								{% endfor%}
+								<li><span>···</span></li>
+							{% else %}
+								{% for pageindex in 1|range:3 %}
+									<li><a href="/search/?q={{query}}&page={{pageindex}}"{% if pageindex == page.number %}class="now_page"{% endif %}>{{pageindex}}</a></li>
+								{% endfor%}
+								<li><span>···</span></li>
+								{% for pageindex in paginator.nums_pages|range:"let8"  %}
+									<li><a href="/search/?q={{query}}&page={{pageindex}}"{% if pageindex == page.number %}class="now_page"{% endif %}>{{pageindex}}</a></li>
+								{% endfor%}
+							{% endif%}
+						{% else %}
+							{% for pageindex in 1|range:3 %}
+								<li><a href="/search/?q={{query}}&page={{pageindex}}"{% if pageindex == page.number %}class="now_page"{% endif %}>{{pageindex}}</a></li>
+							{% endfor%}
+							<li><span>···</span></li>
+							{% for pageindex in page.number|range:"gt8" %}
+								<li><a href="/search/?q={{query}}&page={{pageindex}}"{% if pageindex == page.number %}class="now_page"{% endif %}>{{pageindex}}</a></li>
+							{% endfor%}
+						{% endif%}
 					</div>
-					<li><a href="{% if skus_page.has_next %}{% url 'goods:list' type.id skus_page.next_page_number %}?sort={{sort}}{% else %}javascript:;{% endif %}" id="r_next_page">下一页&gt;</a><i class="i_china_year" title="春节快乐，猪事如意"></i></li>
-					<li><span>共<em class="all_pages">{{skus_page.paginator.num_pages}}</em>页，到第</span></li>
+					<li><a href="{% if page.has_next %}/search/?q={{query}}&page={{page.next_page_number}}{% else %}javascript:;{% endif %}" id="r_next_page">下一页&gt;</a><i class="i_china_year" title="春节快乐，猪事如意"></i></li>
+					<li><span>共<em class="all_pages">{{page.paginator.num_pages}}</em>页，到第</span></li>
 					<li><input type="text" id="page_to" value="1">页</li>
 					<li><input type="submit" id="page_to_btn1" value="确定" class="btn"></li>
 				</ul>

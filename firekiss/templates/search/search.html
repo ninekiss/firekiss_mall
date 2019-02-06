@@ -1,4 +1,4 @@
-{% extends "base_goods.html" %}
+{% extends "base_search.html" %}
 {% load staticfiles %}
 {% block title %}手机-火吻商城{% endblock title %}
 {% block topfiles %}
@@ -26,12 +26,9 @@
             });
 
 		    page_to_btn.click(function () {
-
 		        var page_to = $(this).parent().prev().children().val();
-		        var type_id = {{type.id|safe}};
-		        var sort = '{{sort|safe}}';
+		        var url = '/search/'+'?q={{query}}&page='+page_to;
 
-		        var url = '/list/'+type_id+'/'+page_to+'?sort='+sort;
 		        if (parseInt(page_to)){
 		            window.location.href = url;
 		        }
@@ -75,7 +72,7 @@
 			<div class="all_search">
 				<a href="#">全部</a>
 				<i>></i>
-				<input type="text" placeholder="{{type.type}}">
+				<input type="text" placeholder="{{query}}" readonly>
 				<i class="icon"></i>
 			</div>
 			<div class="all_result">
@@ -84,8 +81,7 @@
 		</div>
 		<div class="filter">
 			<div class="f_many fl">
-				<div class="div1">
-				</div>
+
 				<div class="div2">
 					<span>收货地:</span>
 					<div>杭州<i class="icon_select"></i></div>
@@ -119,8 +115,8 @@
 			</div>
 			<div class="f_page fr">
 				<p><em>{{page.number}}</em>/<em>{{paginator.num_pages}}</em></p>
-				<input type="button" id="f_prev_page" name="{% if skus_page.has_previous %}{% url 'goods:list' type.id skus_page.previous_page_number %}?sort={{sort}}{% endif %}" class="active_btn"  value="&lt;">
-				<input type="button" id="f_next_page" name="{% if skus_page.has_next %}{% url 'goods:list' type.id skus_page.next_page_number %}?sort={{sort}}{% endif %}" value="&gt;">
+				<input type="button" id="f_prev_page" name="{% if page.has_previous %}/search/?q={{query}}&page={{page.previous_page_number}}{% endif %}" class="active_btn"  value="&lt;">
+				<input type="button" id="f_next_page" name="{% if page.has_next %}/search?q={{query}}&page={{page.next_page_number}}{% endif %}" value="&gt;">
 			</div>
 		</div>
 	</div>
@@ -140,7 +136,18 @@
 								<a href="{% url 'goods:detail' item.object.id %}" class="first">
 									<img src="{{item.object.image.url}}" alt="">
 								</a>
-
+								<a href="{% url 'goods:detail' item.object.id %}" class="first">
+									<img src="{{item.object.image.url}}" alt="">
+								</a>
+								<a href="{% url 'goods:detail' item.object.id %}" class="first">
+									<img src="{{item.object.image.url}}" alt="">
+								</a>
+								<a href="{% url 'goods:detail' item.object.id %}" class="first">
+									<img src="{{item.object.image.url}}" alt="">
+								</a>
+								<a href="{% url 'goods:detail' item.object.id %}" class="first">
+									<img src="{{item.object.image.url}}" alt="">
+								</a>
 							</p>
 							<!--<i class="i_prev"></i>-->
 							<!--<i class="i_next"></i>-->
