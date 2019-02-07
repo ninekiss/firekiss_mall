@@ -11,6 +11,48 @@
 			glass(pself, shadow, follow, multiple);
 			pagenater();
 			detail_con();
+			cart_add();
+
+			function cart_add() {
+			    var $add_btn = $('.cart');
+			    var $cart_top = $('#cart_top_total em');
+			    var $cart_right = $('#cart_right_total em');
+			    // 添加商品到购物车
+				// ajax post请求
+				// 参数:商品id(sku.id),要添加的数量(count)
+				$add_btn.click(function () {
+					// 获取要添加的数量
+					var sku_id = $('#sku_add_count').attr('sku_id');
+					var count = $('#sku_add_count').val();
+					var csrf = $(this).prev().val();
+
+					// 组织参数
+					content = {
+						"sku_id": sku_id,
+						"count": count,
+						"csrfmiddlewaretoken": csrf
+					}
+
+					// 发送ajax请求
+					$.post('/cart/add', content, function (data) {
+						if (data.status == 200){
+							// 添加成功
+							// 修改页面顶部和右侧购物车商品数目
+							$cart_top.text(data.total);
+							$cart_right.text(data.total);
+						}
+						else if (data.status == 301) {
+							window.location.href = '/user/login';
+						}
+						else {
+							alert(data.msg+',请重试!');
+						}
+					});
+				});
+			};
+
+
+
 		})
 	</script>
 {% endblock topfiles %}
@@ -37,9 +79,9 @@
 					<span>物流</span>
 				</p>
 				<p class="score">
-					<span><em>4.7</em>↓</span>
-					<span><em>4.7</em>↓</span>
-					<span><em>4.7</em>↓</span>
+					<span><em>5.2</em>↑</span>
+					<span><em>5.2</em>↑</span>
+					<span><em>5.2</em>↑</span>
 				</p>
 				<i></i>
 				</li>
@@ -77,17 +119,14 @@
 		<div class="search both_search">
 			<form class="search_str" method="get" action="/search/">
 				<input type="text" name="q" class="input_text fl" placeholder="请输入关键词">
-				<input type="submit" name="" class="input_btn fl" value="搜火吻">
-				<input type="submit" name="" class="input_btn self_btn fl" value="搜本店">
+				<input type="submit" name="" class="input_btn fl" value="搜索">
+				<!--<input type="submit" name="" class="input_btn self_btn fl" value="搜本店">-->
 			</form>
 			<ul class="search_fast">
 				<li class="first"><a href="#" >华为</a></li>
 				<li><a href="#">小米</a></li>
 				<li><a href="#">魅族</a></li>
 				<li><a href="#">荣耀</a></li>
-				<li><a href="#">苹果苹果苹果</a></li>
-				<li><a href="#">苹果</a></li>
-				<li><a href="#">苹果苹果苹果苹果</a></li>
 				<li><a href="#">苹果</a></li>
 				<li><a href="#">三星</a></li>
 			</ul>
@@ -180,7 +219,7 @@
 								<div class="count">
 									<b>数量</b>
 									<p>
-										<input type="text" value="1">
+										<input type="text" id="sku_add_count" sku_id="{{goods.id}}" value="1">
 										<span class="count_change">
 											<button class="count_add"></button>
 											<button class="count_less"></button>
@@ -190,7 +229,8 @@
 								</div>
 								<div class="buy_btn">
 									<a href="#">立即购买</a>
-									<a href="#" class="cart"><i></i>加入购物车</a>
+									{% csrf_token %}
+									<a href="javascript:;" class="cart"><i></i>加入购物车</a>
 								</div>
 							</div>
 							<div class="promise">
@@ -241,9 +281,9 @@
 						</p>
 						<p class="s_score">
 							<a href="#">
-								<span>描述<em>4.8 ↑</em></span>
-								<span>服务<em>4.8 ↑</em></span>
-								<span>物流<em>4.8 ↑</em></span>
+								<span>描述<em>5.2 ↑</em></span>
+								<span>服务<em>5.2 ↑</em></span>
+								<span>物流<em>5.2 ↑</em></span>
 							</a>
 						</p>
 						<p class="s_link">

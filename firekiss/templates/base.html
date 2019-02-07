@@ -56,7 +56,7 @@
 				<!-- 用户相关 -->
 				<ul class="user_set fr">
 					<li><a href="{% url 'user:order' %}">我的宝贝</a></li>
-					<li><a href="#">购物车<em>{{cart_count}}</em>件</a><i class="icon_cart"></i></li>
+					<li><a href="{% url 'cart:show' %}" id="cart_top_total">购物车<em>{{cart_count}}</em>件</a><i class="icon_cart"></i></li>
 					<li><a href="#">收藏夹</a></li>
 				</ul>
 			</div>
@@ -192,10 +192,10 @@
 				{% block right_op %}
 					{% if user.is_authenticated %}
 						<a href="#" class="vip clearfix" title="会员中心"><i></i><div><img src="{% if user.avatar %}{{user.avatar.url}}{% else %} {% endif %}" alt=""></div></a>
-						<a href="#" class="shop_cart clearfix"><i></i><span>购物车</span><em>{{cart_count}}</em></a>
+						<a href="{% url 'cart:show' %}" id="cart_right_total" class="shop_cart clearfix"><i></i><span>购物车</span><em>{{cart_count}}</em></a>
 					{% else %}
 						<a href="#" class="vip" title="会员中心"><i></i></a>
-						<a href="#" class="shop_cart clearfix"><i></i><span>购物车</span></a>
+						<a href="{% url 'cart:show' %}" class="shop_cart clearfix"><i></i><span>购物车</span></a>
 					{% endif %}
 				{% endblock right_op %}
 				<a href="#" class="money" title="支付方式"><i></i></a>

@@ -105,6 +105,7 @@ class Active(View):
             # 激活链接已失效
             return HttpResponse('激活链接已失效')
 
+
 class Login(View):
     """登录"""
     def get(self, request):

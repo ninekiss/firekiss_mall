@@ -1801,12 +1801,12 @@ body {
 .store_header .score_con p {
 	text-indent: 0;
 	text-align: center;
-	color: #d4c680;
+	color: #b3a665;
 }
 .store_header .score_con .score {
 	margin-top: -10px;
 	padding-bottom: 10px;
-	color: rgb(21, 139, 21);
+	color: rgb(243, 70, 58);
 }
 .score_con span {
 	padding: 0 3px;
@@ -2077,6 +2077,9 @@ body {
 }
 .i_top h1 {
 	font-size: 18px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 .i_top h4 {
 	font-weight: normal;
@@ -2302,6 +2305,18 @@ body {
 	height: 100px;
 	padding-left: 50px;
 	text-align: center;
+	position: relative;
+}
+.buy_btn .point {
+	width: 16px;
+	height: 16px;
+	border-radius: 8px;
+	background: red;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	z-index: 10000;
+	display: none;
 }
 .buy_btn a {
 	float: left;
@@ -3078,6 +3093,10 @@ body {
 	cursor: not-allowed;
 	outline: none;
 }
+.settle_right .allow_settle {
+	background: #f00;
+	cursor: pointer;
+}
 .c_center .se_title {
 	height: 50px;
 	padding: 0 10px;
@@ -3151,7 +3170,7 @@ body {
 	margin: 10px 5px;
 }
 .g_pic img {
-	width: 100%;
+	width: 80px;
 }
 .s_info .g_title {
 	width: 210px;
@@ -3189,7 +3208,7 @@ body {
 	position: relative;
 }
 .s_stand:hover {
-	border: 1px dashed #f00;
+	/*border: 1px dashed #f00;*/
 }
 .s_stand i {
 	width: 40px;
@@ -3241,6 +3260,7 @@ body {
 	border-color: #aaa;
 	background: #e7e7e7;
 	box-sizing: content-box;
+	cursor: pointer;
 }
 .s_count .btn:hover {
 	border-color: #f00;

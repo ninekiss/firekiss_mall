@@ -185,8 +185,8 @@ class Detail(View):
                 goods = GoodsSKU.objects.get(id=hist_id)
                 goods_list.append(goods)
 
-        content.update(cart_count=cart_count)
-        content.update(goods_list=goods_list)
+            content.update(cart_count=cart_count)
+            content.update(goods_list=goods_list)
         # 返回数据
         return render(request, 'goods_detail.html', content)
 
