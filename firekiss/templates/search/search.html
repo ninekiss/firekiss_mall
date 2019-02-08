@@ -4,6 +4,16 @@
 {% block topfiles %}
 	<script>
 		$(function() {
+		    // 页面刷新时直接发送ajax post请求，获取用户购物车数目和历史浏览记录
+			csrf = $('input[name="csrfmiddlewaretoken"]').val();
+			context = {"csrfmiddlewaretoken": csrf};
+			$.post('/history', context, function (data) {
+				status = data.status;
+				if (status == 200 ){
+				    // 获取成功
+					$('.hist_cart').text(data.cart_count);
+				}
+            });
 			filter_con();
 			pagenater();
 			var top_prev_page = $('#f_prev_page');
@@ -36,7 +46,10 @@
 		});
 	</script>
 {% endblock topfiles %}
-
+{% block top_cart %}
+{% csrf_token %}
+<em class="hist_cart"></em>
+{% endblock top_cart %}
 {# 头部栏包括logo、搜索框 #}
 {% block header %}
 	<div class="header list_page">
@@ -166,3 +179,6 @@
 		</div>
 	</div>
 {% endblock body_main %}
+{% block right_cart %}
+<em class="hist_cart"></em>
+{% endblock right_cart %}

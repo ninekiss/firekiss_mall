@@ -189,6 +189,9 @@ class UserCenter(LoginRequiredMixin, View):
         # 连接redis
         con = get_redis_connection("default")
         history_key = 'history_%d' % user.id
+        # 购物车数目
+        cart_key = 'cart_user%d' % user.id
+        cart_count = con.hlen(cart_key)
 
         hist_ids = con.lrange(history_key, 0, 4)  # 获取最新的5条
 
@@ -200,7 +203,8 @@ class UserCenter(LoginRequiredMixin, View):
         # 组织模板上下文
         context = {
             "page": "user",
-            "goods_list": goods_list
+            "goods_list": goods_list,
+            "cart_count": cart_count
         }
 
         return render(request, 'base_user_center.html', context)
@@ -238,8 +242,17 @@ class UserAddress(LoginRequiredMixin, View):
     def get(self, request):
         # 进行业务处理
         user = request.user
+        # 获取用户购物车记录
+        con = get_redis_connection("default")
+        cart_key = 'cart_user%d' % user.id
+        cart_count = con.hlen(cart_key)
         address = Address.objects.get_default_addr(user)
-        return render(request, 'user_address.html', {"page": "address", "address": address})
+        context = {
+            "page": "address",
+            "address": address,
+            "cart_count": cart_count
+        }
+        return render(request, 'user_address.html', context)
 
     def post(self, request):
         # 获取数据
@@ -274,6 +287,10 @@ class UserOrder(LoginRequiredMixin, View):
     def get(self, request, page):
         # 用户
         user = request.user
+        # 获取用户购物车记录
+        con = get_redis_connection("default")
+        cart_key = 'cart_user%d' % user.id
+        cart_count = con.hlen(cart_key)
 
         # 进行业务处理:获取用户的所有订单
         order_list = OrderInfo.objects.filter(user_id=user).order_by('-create_time')
@@ -292,8 +309,13 @@ class UserOrder(LoginRequiredMixin, View):
         if paginator.num_pages > 10:
             pages.pages_num = range(1, 11)
 
+        context = {
+            "page": "order",
+            "pages": pages,
+            "cart_count": cart_count
+        }
         # 返回应答
-        return render(request, 'user_order.html', {"page": "order", "pages": pages})
+        return render(request, 'user_order.html', context)
 
 
 class PayMethod(LoginRequiredMixin, View):

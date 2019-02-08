@@ -20,8 +20,11 @@ class CartShow(LoginRequiredMixin, View):
         con = get_redis_connection('default')
         # 组织key
         cart_key = 'cart_user%d' % user.id
+        # 获取购物车商品数目
+        cart_count = con.hlen(cart_key)
         # 获取商品id及数量的字典,key不存在返回None
         cart_dict = con.hgetall(cart_key)
+
 
         sku_list = []
 
@@ -37,10 +40,23 @@ class CartShow(LoginRequiredMixin, View):
             total_count += int(count)
             sku_list.append(sku)
 
+        # 获取用户历史浏览记录
+        con = get_redis_connection("default")
+        history_key = 'history_%d' % user.id
+
+        hist_ids = con.lrange(history_key, 0, 4)  # 获取最新的5条
+
+        goods_list = []
+        for hist_id in hist_ids:
+            goods = GoodsSKU.objects.get(id=hist_id)
+            goods_list.append(goods)
+
         # 组织模板上下文
         content = {
             'sku_list': sku_list,
-            'total_count': total_count
+            'total_count': total_count,
+            "cart_count": cart_count,
+            "goods_list": goods_list
         }
 
         return render(request, 'goods_cart.html', content)

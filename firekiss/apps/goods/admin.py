@@ -4,7 +4,6 @@ from goods.models import GoodsSKU, Goods, GoodsImage, GoodsProperty, GoodsType, 
 BlockGoodsType, IndexGoods
 
 
-
 class BaseModelAdmin(admin.ModelAdmin):
     """模型管理器基类"""
     def save_model(self, request, obj, form, change):

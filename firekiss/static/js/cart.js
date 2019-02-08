@@ -241,12 +241,12 @@ $(function () {
                 $('.se_op').find('em').text(total_count);
 
                 if ($(':checked').length <= 0) {
-                // 未选中，不允许结算
-                $('.settle_right').find('input').removeClass('allow_settle');
+                    // 未选中，不允许结算
+                    $('.settle_right').find('input').removeClass('allow_settle');
 
-                // 更新页面上的复选框数量
-                checkbox_count = $(':checkbox').length-1;
-            }
+                    // 更新页面上的复选框数量
+                    checkbox_count = $(':checkbox').length-1;
+                }
             }
             else {
                 alert(data.msg);
@@ -254,6 +254,14 @@ $(function () {
         })
 
 
+    });
+
+    // 无商品时结算按钮禁止提交
+    $('.settle_right').find('input').click(function (event) {
+        if ($(':checked').length <= 0) {
+            event.preventDefault();
+            return;
+        }
     });
 
     // 计算被选中的商品的总价和总数量

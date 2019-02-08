@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.http import JsonResponse
 from django.core.urlresolvers import reverse
 from django.views.generic import View
 from django.core.cache import cache
@@ -6,6 +7,7 @@ from django.core.paginator import Paginator
 from goods.models import GoodsSKU, GoodsType, BlockGoodsType, IndexSaleActive, IndexGoods, IndexBrand
 from order.models import GoodsAppraisal, OrderGoods
 from django_redis import get_redis_connection
+import json
 
 
 
@@ -49,7 +51,7 @@ class Index(View):
             brand_wall = IndexBrand.objects.all().order_by('-index')[:29]
 
             # 三个广告位(获取3条)
-            ads = IndexSaleActive.objects.filter(display=1).order_by('-index')[:3]
+            ads = IndexSaleActive.objects.filter(display=1).order_by('-index')[:1]
 
             # 组织模板上下文
             content = {
@@ -300,3 +302,22 @@ class List(View):
 
         # 返回数据
         return render(request, 'goods_list.html', content)
+
+
+class CartAndHistory(View):
+    """获取用户购物车的数量和历史浏览记录"""
+    def post(self, request):
+        user = request.user
+        # 校验用户是否已登录
+        if not user.is_authenticated():
+            return JsonResponse({"status": 301, "msg": "用户未登录"})
+
+        # 进行业务处理:获取用户购物车数量和历史浏览记录(暂时不获取历史浏览记录)
+
+        # 获取用户购物车记录
+        con = get_redis_connection("default")
+        cart_key = 'cart_user%d' % user.id
+        cart_count = con.hlen(cart_key)
+
+        # 返回应答
+        return JsonResponse({"status": 200, "msg": "获取成功", "cart_count": cart_count})

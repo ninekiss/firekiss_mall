@@ -1,6 +1,30 @@
 {% extends "base_user_center.html" %}
 {% load staticfiles %}
 {% block title %}个人中心-火吻商城{% endblock title %}
+{% block topfiles %}
+<script>
+	$(function () {
+		// 页面刷新时直接发送ajax post请求，获取用户购物车数目和历史浏览记录
+		csrf = $('input[name="csrfmiddlewaretoken"]').val();
+		context = {"csrfmiddlewaretoken": csrf};
+		$.post('/history', context, function (data) {
+			status = data.status;
+			if (status == 200 ){
+				// 获取成功
+				$('.hist_cart').text(data.cart_count);
+			}
+		});
+    });
+</script>
+{% endblock topfiles%}
+{% block top_cart %}
+{% csrf_token %}
+<em class="hist_cart"></em>
+{% endblock top_cart %}
 {% block user_center %}
 	<p>建设中...</p>
 {% endblock user_center %}
+{% block right_cart %}
+{% csrf_token %}
+<em class="hist_cart"></em>
+{% endblock right_cart %}
