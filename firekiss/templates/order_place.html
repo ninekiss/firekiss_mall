@@ -1,0 +1,283 @@
+{% extends "base.html" %}
+{% load staticfiles%}
+{% block title %}订单处理-火吻商城{% endblock title %}
+{% block topcss %}
+<link rel="stylesheet" href="{% static 'css/tasp.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/orderconfirm.css' %}">
+<style>
+.J_Shop em {
+  font-size: 14px;
+}
+</style>
+{% endblock %}
+{% block topfiles %}
+<script>
+    $(function () {
+        // 页面刷新时，显示选中的收货地址到结算区域
+        chex_addr = $('.address-info').find(':checked').next();
+        change_addr(chex_addr);
+
+        // 选中地址改变时，显示选中的收货地址到结算区域
+        $('.address-info').find(':radio').change(function () {
+            is_checked = $(this).prop('checked');
+
+            if (is_checked){
+                chex_addr = $(this).next();
+                change_addr(chex_addr);
+            }
+        });
+
+        // 显示选中的收货地址到结算区域
+        function change_addr (chex_addr) {
+
+            addr = chex_addr.children('span').text();
+            recvier = chex_addr.children('i').text();
+            phone = chex_addr.children('em').text();
+            $('#J_AddrConfirm').text(addr);
+            $('#J_AddrNameConfirm').text(recvier+" "+phone);
+        }
+
+
+        // 提交订单
+        $('#J_Go').click(function () {
+            // 收货地址
+            addr_id = $('input[name="addr_id"]').val();
+            // 订单商品
+            sku_ids = $('input[name="sku_ids"]').val();
+            // 订单商品数量
+            res_count = $('input[name="res_count"]').val();
+            // csrf
+            csrf = $('input[name="csrfmiddlewaretoken"]').val();
+
+            // 组织参数
+            context = {
+                "addr_id": addr_id,
+                "sku_ids": sku_ids,
+                "res_count": res_count,
+                "csrfmiddlewaretoken": csrf
+            };
+
+            console.log(context);
+            // 发送ajax post请求
+            // $.post('order/commit', context, function () {
+            //
+            // });
+        });
+
+
+
+    });
+
+</script>
+{% endblock topfiles %}
+{# 网页body块 #}
+{% block body %}
+  <!-- <body data-spm="1"></body> -->
+  <div id="page">
+    <div id="content" class="grid-c">
+        <div id="address" class="address" style="margin-top: 20px;" data-spm="2">
+            <form name="addrForm" id="addrForm" action="#">
+                <h3>
+                    确认收货地址
+
+                    <span class="manage-address">
+                        <a href="{% url 'user:address' %}" target="_blank" title="管理我的收货地址" class="J_MakePoint">管理收货地址</a>
+                    </span>
+                </h3>
+                <ul id="address-list" class="address-list">
+                    {% for addr in addr_list %}
+                    <li class="J_Addr J_MakePoint clearfix  J_DefaultAddr ">
+                        <div class="address-info">
+                            <input class="J_MakePoint " type="radio" name="addr_id" value="{{addr.id}}" {% if addr.is_default %}checked{% endif%}>
+                            <label for="" class="user-address">
+                                <span>{{addr.area}} {{addr.addr}}</span> (<i>{{addr.receiver}} </i>收) <em>{{addr.phone}}</em>
+                            </label>
+                        </div>
+                    </li>
+                    {% endfor %}
+                </ul>
+                <div class="address-bar">
+                    <a href="{% url 'user:address' %}" class="new J_MakePoint" id="J_NewAddressBtn"target="_blank" >使用新地址</a>
+                </div>
+            </form>
+        </div>
+            <div>
+                <h3 class="dib">确认订单信息</h3>
+                <table cellspacing="0" cellpadding="0" class="order-table" id="J_OrderTable" summary="统一下单订单信息区域">
+                    <thead>
+                        <tr>
+                            <th class="s-title">
+                                店铺宝贝<hr/>
+                            </th>
+                            <th class="s-price">
+                                单价(元)<hr/>
+                            </th>
+                            <th class="s-amount">
+                                数量<hr/>
+                            </th>
+                            <th class="s-agio">
+                                优惠方式(元)<hr/>
+                            </th>
+                            <th class="s-total">
+                                小计(元)<hr/>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody data-spm="3" class="J_Shop" data-tbcbid="0" data-outorderid="47285539868" data-isb2c="false" data-postMode="2" data-sellerid="1704508670">
+                        <tr class="first">
+                            <td colspan="5"></td>
+                        </tr>
+                        <tr class="shop blue-line">
+                            <td colspan="3">
+                                店铺：<a href="javascript:;" class="J_ShopName J_MakePoint" target="_blank" title="火吻国际官方直营店">火吻国际官方直营店</a>
+                            </td>
+                            <td colspan="2" class="promo">
+                                <div>
+                                    <ul class="scrolling-promo-hint J_ScrollingPromoHint"></ul>
+                                </div>
+                            </td>
+                        </tr>
+                        {% for sku in sku_list %}
+                        <tr class="item">
+                            <td class="s-title">
+                                <a href="{% url 'goods:detail' sku.id %}" target="_blank" class="J_MakePoint">
+                                    <img src="{{sku.image.url}}" class="itempic">
+                                    <span class="title J_MakePoint">{{sku.name}}</span>
+                                </a>
+                            </td>
+                            <td class="s-price">
+                                <span class='price'>
+                                    <em class="style-normal-small-black J_ItemPrice">{{sku.real_price}}</em>
+                                </span>
+                            </td>
+                            <td class="s-amount">
+                                <input type="hidden" class="J_Quantity" value="{{sku.count}}" />{{sku.count}}
+                            </td>
+                            <td class="s-agio">
+                                <div class="J_Promotion promotion">{% if sku.pref == 0 %}无优惠{% else %}已优惠{{sku.pref}}元{% endif %}</div>
+                            </td>
+                            <td class="s-total">
+                                <span class='price'>
+                                    <em class="style-normal-bold-red J_ItemTotal " style="color: #ff0000;font-weight: bold">{{sku.amount}}</em>
+                                </span>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        <!--<tr class="item-service">-->
+                            <!--<td colspan="5" class="servicearea" style="display: none"></td>-->
+                        <!--</tr>-->
+                        <tr class="blue-line" style="height: 2px;">
+                            <td colspan="5"></td>
+                        </tr>
+                        <tr class="other other-line">
+                            <td colspan="5">
+                                <ul class="dib-wrap">
+                                    <li class="dib user-info">
+                                        <ul class="wrap">
+                                            <li>
+                                                <div class="field gbook">
+                                                    <label class="label">给卖家留言：</label>
+                                                    <textarea style="width:350px;height:80px;" title="选填：对本次交易的补充说明（建议填写已经和卖家达成一致的说明）" name=""></textarea>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="dib extra-info">
+                                        <div class="shoparea">
+                                            <ul class="dib-wrap">
+                                                <li class="dib title">店铺优惠：</li>
+                                                <li class="dib sel">
+                                                    <div class="J_ShopPromo J_Promotion promotion clearfix">{% if pref == 0 %}无优惠{% else %}已优惠{% endif %}</div>
+                                                </li>
+                                                <li class="dib fee">
+                                                    <span class='price '>
+                                                        <em class="style-normal-bold-black J_ShopPromo_Result" style="color: #ff0000;font-weight: bold">{% if pref == 0 %}0.00{% else %}{{pref}}{% endif %}</em>
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="shoparea">
+                                            <ul class="dib-wrap">
+                                                <li class="dib title">运送方式：</li>
+                                                <li class="dib sel">
+                                                    <div class="J_ShopPromo J_Promotion promotion clearfix">快递&nbsp;&nbsp;{% if tran_price == 0 %}免邮费{% else %}邮费{% endif %}</div>
+                                                </li>
+                                                <li class="dib fee">
+                                                    <span class='price '>
+                                                        <em class="style-normal-bold-black J_ShopPromo_Result" style="color: #ff0000;font-weight: bold">{% if tran_price == 0 %}0.00{% else %}{{tran_price}}{% endif %}</em>
+                                                    </span>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </td>
+                        </tr>
+                        <tr class="shop-total blue-line">
+                            <td colspan="5">
+                                店铺合计(含运费):
+
+                                <span class='price g_price '>
+                                    <span style="color: #ff0000;font-size: 20px">¥</span>
+                                    <em class="style-middle-bold-red J_ShopTotal" style="color: #ff0000;font-weight: bold;font-size: 20px">{{total_pay}}</em>
+                                </span>
+                                <input type="hidden" name="1704508670:2|creditcard" value="false"/>
+                                <input type="hidden" id="J_IsLadderGroup" name="isLadderGroup" value="false"/>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <td colspan="5">
+                                <div class="order-go" data-spm="4">
+                                    <div class="J_AddressConfirm address-confirm">
+                                        <div class="kd-popup pop-back" style="margin-bottom: 40px;">
+                                            <div class="box">
+                                                <div class="bd">
+                                                    <div class="point-in">
+                                                        <em class="t">实付款：</em>
+                                                        <span class='price g_price '>
+                                                            <span style="color: #cccccc;font-weight: bold;font-size: 25px">¥</span>
+                                                            <em class="style-large-bold-red" id="J_ActualFee" style="color: #ff0000;font-weight: bold;font-size: 30px">{{total_pay}}</em>
+                                                        </span>
+                                                    </div>
+                                                    <ul>
+                                                        <li>
+                                                            <em>寄送至:</em>
+
+                                                            <span id="J_AddrConfirm" style="word-break: break-all;"></span>
+                                                        </li>
+                                                        <li>
+                                                            <em>收货人:</em>
+                                                            <span id="J_AddrNameConfirm"></span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <a href="#" class="back J_MakePoint" target="_top">返回购物车</a>
+                                            <input type="hidden" name="sku_ids" value="{{sku_ids}}">
+                                            <input type="hidden" name="res_count" value="{{res_count}}">
+                                            {% csrf_token %}
+                                            <a href="javascript:;" id="J_Go" class=" btn-go" tabindex="0" title="点击此按钮，提交订单。">提交订单</a>
+                                        </div>
+                                    </div>
+                                    <div class="J_confirmError confirm-error">
+                                        <div class="msg J_shopPointError" style="display: none;">
+                                            <p class="error">积分点数必须为大于0的整数</p>
+                                        </div>
+                                    </div>
+                                    <div class="msg" style="clear: both;">
+                                        <p class="tips naked" style="float:right;padding-right: 0">若价格变动，请在提交订单后联系卖家改价，并查看已买到的宝贝</p>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        </form>
+    </div>
+    <div id="footer"></div>
+</div>
+{% endblock body %}
+

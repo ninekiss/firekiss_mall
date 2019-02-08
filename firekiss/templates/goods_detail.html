@@ -20,6 +20,12 @@
 			    // 添加商品到购物车
 				// ajax post请求
 				// 参数:商品id(sku.id),要添加的数量(count)
+				$add_btn.mousedown(function () {
+					$(this).css("background-color","#c14b4b");
+                });
+				$add_btn.mouseup(function () {
+					$(this).css("background-color","red");
+                });
 				$add_btn.click(function () {
 					// 获取要添加的数量
 					var sku_id = $('#sku_add_count').attr('sku_id');
@@ -216,22 +222,25 @@
 						</div>
 						<div class="i_bot">
 							<div class="buy">
+								<form method="post" action="{% url 'order:place' %}">
 								<div class="count">
 									<b>数量</b>
 									<p>
-										<input type="text" id="sku_add_count" sku_id="{{goods.id}}" value="1">
+										<input type="hidden" name="sku_ids" value="{{goods.id}}">
+										<input type="text" name="count" id="sku_add_count" sku_id="{{goods.id}}" value="1">
 										<span class="count_change">
-											<button class="count_add"></button>
-											<button class="count_less"></button>
+											<a class="count_add"></a>
+											<a class="count_less"></a>
 										</span>
 										<span>&nbsp; 件 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;库存<em>{{goods.stock}}</em>件</span>
 									</p>
 								</div>
 								<div class="buy_btn">
-									<a href="#">立即购买</a>
+									<input type="submit" value="立即购买">
 									{% csrf_token %}
 									<a href="javascript:;" class="cart"><i></i>加入购物车</a>
 								</div>
+								</form>
 							</div>
 							<div class="promise">
 								<span>服务承诺</span>

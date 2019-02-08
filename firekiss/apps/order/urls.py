@@ -1,5 +1,7 @@
 from django.conf.urls import url
-from order import views
+from order.views import OrderPlace
+
+
 urlpatterns = [
-#    url(r'^$', views.index),
+   url(r'^place$', OrderPlace.as_view(), name='place'),
 ]

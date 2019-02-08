@@ -202,8 +202,6 @@ $(function () {
         // 商品id(sku_id)
         sku_id = $(this).parents('.s_goods').find('.update_goods_count').attr('sku_id');
 
-        alert(sku_id)
-
         // csrf
         csrf = $('input[name="csrfmiddlewaretoken"]').val();
 

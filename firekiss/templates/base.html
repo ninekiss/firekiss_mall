@@ -9,6 +9,7 @@
 	<title>{% block title %}{% endblock title %}</title>
 	<link rel="stylesheet" href="{% static 'css/reset.css' %}">
 	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+	{% block topcss %}{% endblock %}
 	<script src="{% static 'js/jquery-1.12.4.js' %}"></script>
 	<script src="{% static 'js/main.js' %}"></script>
 	{# 网页顶部引入文件块#}

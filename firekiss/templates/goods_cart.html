@@ -25,6 +25,7 @@
 {% block body_main %}
 	<!-- goods cart -->
 	<div class="cart_con clearfix">
+		<form method="post" action="{% url 'order:place' %}">
 		<div class="c_center">
 			<div class="se_header">
 				<a href="javascript:;" class="se_op"><span>全部商品<em>{{total_count}}</em></span></a>
@@ -58,7 +59,7 @@
 					<div class="s_goods">
 						<ul class="clearfix">
 							<li class="s_check">
-								<input type="checkbox" class="goods_chex">
+								<input type="checkbox" name="sku_ids" value="{{sku.id}}" class="goods_chex">
 							</li>
 							<li class="s_info">
 								<a href="{% url 'goods:detail' sku.id %}" class="g_pic">
@@ -103,6 +104,7 @@
 				</div>
 			</div>
 		</div>
+		</form>
 	</div>
 {% endblock body_main %}
 
