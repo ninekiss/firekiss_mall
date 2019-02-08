@@ -38,7 +38,7 @@
 			<ul class="clearfix">
 				<li><a href="{% url 'user:user' %}" {% if page == 'user' %} class="now_page"{% endif %}>个人资料</a></li>
 				<li><a href="{% url 'user:address' %}" {% if page == 'address' %} class="now_page"{% endif %}>收货地址</a></li>
-				<li><a href="{% url 'user:order' %}" {% if page == 'order' %} class="now_page"{% endif %}>我的订单</a></li>
+				<li><a href="{% url 'user:order' 1 %}" {% if page == 'order' %} class="now_page"{% endif %}>我的订单</a></li>
 				<li><a href="{% url 'user:pay_method' %}" {% if page == 'pay_method' %} class="now_page"{% endif %}>支付设置</a></li>
 				<li><a href="{% url 'user:safety' %}" {% if page == 'safety' %} class="now_page"{% endif %}>安全设置</a></li>
 				<li><a href="{% url 'user:privacy' %}" {% if page == 'privacy' %} class="now_page"{% endif %}>隐私设置</a></li>

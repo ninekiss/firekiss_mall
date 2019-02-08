@@ -45,7 +45,7 @@
             // 订单商品
             sku_ids = $('input[name="sku_ids"]').val();
             // 订单商品数量
-            res_count = $('input[name="res_count"]').val();
+            req_count = $('input[name="res_count"]').val();
             // csrf
             csrf = $('input[name="csrfmiddlewaretoken"]').val();
 
@@ -53,15 +53,51 @@
             context = {
                 "addr_id": addr_id,
                 "sku_ids": sku_ids,
-                "res_count": res_count,
+                "req_count": req_count,
                 "csrfmiddlewaretoken": csrf
             };
 
             console.log(context);
             // 发送ajax post请求
-            // $.post('order/commit', context, function () {
-            //
-            // });
+            $.post('/order/commit', context, function (data) {
+                status = data.status;
+                if (status == 200){
+                    // 创建订单成功
+                    // 发送支付请求
+                    order_id = data.order_id;
+                    context = {
+                        "order_id": order_id,
+                        "csrfmiddlewaretoken": csrf
+                    };
+                    $.post('/order/pay', context, function (data) {
+                        status = data.status;
+                        if (status == 200){
+                            // 支付接口调用成功
+                            // 引导用户到支付页面进行支付
+                            window.open(data.pay_url);
+
+                            // 向交易查询页面发送请求, 查询交易状态
+                            $.post('/order/check', context, function (data) {
+                                status = data.status;
+                                if (status == 200){
+                                    // 支付成功
+                                    alert(data.msg);
+                                    window.location.href = '/user/order/1'
+                                }
+                                else {
+                                    alert(data.msg);
+                                }
+                            });
+                        }
+                        else {
+                            alert(data.msg);
+                        }
+                    });
+                }
+                else {
+                    alert(data.msg);
+                }
+            });
         });
 
 

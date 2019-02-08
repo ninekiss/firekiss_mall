@@ -56,7 +56,7 @@
 				</ul>
 				<!-- 用户相关 -->
 				<ul class="user_set fr">
-					<li><a href="{% url 'user:order' %}">我的宝贝</a></li>
+					<li><a href="{% url 'user:order' 1 %}">我的宝贝</a></li>
 					<li><a href="{% url 'cart:show' %}" id="cart_top_total">购物车<em>{{cart_count}}</em>件</a><i class="icon_cart"></i></li>
 					<li><a href="#">收藏夹</a></li>
 				</ul>

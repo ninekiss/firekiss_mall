@@ -1,6 +1,129 @@
 {% extends "base_user_center.html" %}
 {% load staticfiles %}
 {% block title %}个人中心-火吻商城{% endblock title %}
+{% block topfiles %}
+<script>
+	$(function () {
+		// 订单状态
+	    $('.o_status');
+	    // 操作
+		$('.o_operate').each(function () {
+			o_status = $(this).prev().val();
+			if (o_status == 1) {
+			    // 待支付
+				$(this).text('去支付');
+				$(this).parent().prev().prev().text('待支付');
+			}
+			else if (o_status == 4) {
+			    // 待支付
+				$(this).text('去评价');
+				$(this).parent().prev().prev().text('待评价');
+			}
+			else {
+			    $(this).text('已完成');
+				$(this).parent().prev().prev().text('已完成');
+			}
+        });
+		$('.o_operate').click(function () {
+			if ($(this).prev().val() == 1) {
+			    // 去支付
+				// 发送支付请求
+				// 组织参数
+				order_id = $(this).parent().children().eq(1).val();
+				csrf = $(this).parent().children().eq(0).val();
+				context = {
+					"order_id": order_id,
+					"csrfmiddlewaretoken": csrf
+				};
+				console.log(context);
+				$.post('/order/pay', context, function (data) {
+					status = data.status;
+					if (status == 200){
+						// 支付接口调用成功
+						// 引导用户到支付页面进行支付
+						window.open(data.pay_url);
+
+						// 向交易查询页面发送请求, 查询交易状态
+						$.post('/order/check', context, function (data) {
+							status = data.status;
+							if (status == 200){
+								// 支付成功
+								alert(data.msg);
+								location.reload();
+							}
+							else {
+								alert(data.msg);
+							}
+						});
+					}
+					else {
+						alert(data.msg);
+					}
+				});
+			}
+			else if ($(this).prev().val() == 4) {
+			    // 去评价
+				alert('去评价');
+			}
+        });
+    });
+</script>
+
+{% endblock topfiles %}
 {% block user_center %}
-	<p>建设中...</p>
+	<table border="1px">
+		<tr>
+		<th>订单编号</th>
+		<th>支付方式</th>
+		<th>商品</th>
+		<th>数量</th>
+		<th>支付金额</th>
+		<th>订单状态</th>
+		<th>创建时间</th>
+		<th>操作</th>
+		</tr>
+		{% for order in pages %}
+			<tr>
+				<td>{{order.order_id}}</td>
+				<td>{% if order.pay_method == 3 %}支付宝{% else %}其他方式{% endif %}</td>
+				<td>
+					<table>
+						{% for order_sku in order.order_skus %}
+						<tr>
+							<td>
+								<p><img width="80px" src="{{order_sku.sku.image.url}}"></p>
+							</td>
+							<td  width="300px">
+								<p>{{order_sku.sku.name}}</p>
+							</td>
+						</tr>
+						{% endfor %}
+					</table>
+				</td>
+				<td>{{order.total_count}}</td>
+				<td>{{order.real_paid}}元</td>
+
+				<td class="o_statu">
+
+				</td>
+				<td>{{order.create_time}}</td>
+				<td>
+					{% csrf_token %}
+					<input type="hidden" name="order_id" value="{{order.order_id}}">
+					<input type="hidden" name="status" value="{{order.order_status}}">
+					<a href="#" class="o_operate" style="color:indianred"></a>
+				</td>
+			</tr>
+		{% endfor%}
+	</table>
+
+		<div style="width: 100%;margin: 0;">
+			<ul>
+			{% for pindex in pages.pages_num %}
+			<li style="float:left;padding: 5px 10px;margin: 10px;border: 1px solid #cccccc">
+				<a href="{% url 'user:order' pindex %}">{{pindex}}</a>
+			</li>
+			{% endfor %}
+		</ul>
+		</div>
 {% endblock user_center %}

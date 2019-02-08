@@ -2329,6 +2329,7 @@ body {
 	color: #f00;
 	background: rgb(251, 236, 236);
 	box-sizing:content-box;
+	cursor: pointer;
 }
 .buy_btn .cart {
 	color: #fff;

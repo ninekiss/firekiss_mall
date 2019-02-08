@@ -46,9 +46,7 @@
 							// 修改页面顶部和右侧购物车商品数目
 							$cart_top.text(data.total);
 							$cart_right.text(data.total);
-						}
-						else if (data.status == 301) {
-							window.location.href = '/user/login';
+							alert(data.msg);
 						}
 						else {
 							alert(data.msg+',请重试!');

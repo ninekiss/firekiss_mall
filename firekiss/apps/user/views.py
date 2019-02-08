@@ -5,11 +5,13 @@ from django.core.urlresolvers import reverse
 from celery_task.tasks import send_confirm_mail
 from django.conf import settings
 from user.models import User, Address
-from goods.models import  GoodsSKU
+from goods.models import GoodsSKU
+from order.models import OrderInfo, OrderGoods
 from django.contrib.auth import authenticate, login, logout
 from utils.mixin import LoginRequiredMixin
 from utils.fdfs.storage import FDFSStorage
 from django_redis import get_redis_connection
+from django.core.paginator import Paginator
 
 
 
@@ -268,8 +270,30 @@ class UserAddress(LoginRequiredMixin, View):
 
 
 class UserOrder(LoginRequiredMixin, View):
-    def get(self, request):
-        return render(request, 'user_order.html', {"page": "order"})
+    """用户中心订单页面"""
+    def get(self, request, page):
+        # 用户
+        user = request.user
+
+        # 进行业务处理:获取用户的所有订单
+        order_list = OrderInfo.objects.filter(user_id=user).order_by('-create_time')
+        for order in order_list:
+            # 订单商品
+            order_skus = OrderGoods.objects.filter(order=order)
+            # 动态添加订单商品属性
+            order.order_skus =order_skus
+        # 分页
+        paginator = Paginator(order_list, 1)
+
+        pages = paginator.page(page)
+
+        pages.pages_num = paginator.page_range
+
+        if paginator.num_pages > 10:
+            pages.pages_num = range(1, 11)
+
+        # 返回应答
+        return render(request, 'user_order.html', {"page": "order", "pages": pages})
 
 
 class PayMethod(LoginRequiredMixin, View):
