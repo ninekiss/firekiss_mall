@@ -9,6 +9,7 @@
 	<title>火吻商城-首页</title>
 	<link rel="stylesheet" href="/static/css/reset.css">
 	<link rel="stylesheet" type="text/css" href="/static/css/main.css">
+	
 	<script src="/static/js/jquery-1.12.4.js"></script>
 	<script src="/static/js/main.js"></script>
 	
@@ -27,14 +28,18 @@
 	
 		<div class="top_con">
 			<div class="top">
-				<!-- 未登录 -->
-				<ul class="no_login fl">
-					
+				
+				
+				
+					<!-- 未登录 -->
+					<ul class="no_login fl">
+						
 
-					<li><span>哞，欢迎来火吻</span></li>
-					<li><a href="/user/login">请登录</a></li>
-					<li><a href="/user/register">免费注册</a></li>
-				</ul>
+						<li><span>哞，欢迎来火吻</span></li>
+						<li><a href="/user/login">请登录</a></li>
+						<li><a href="/user/register">免费注册</a></li>
+					</ul>
+				
 				<!-- 未开发功能 -->
 				<ul class="other_fk fr">
 					<li><span>|</span></li>
@@ -45,8 +50,8 @@
 				</ul>
 				<!-- 用户相关 -->
 				<ul class="user_set fr">
-					<li><a href="/user/order">我的宝贝</a></li>
-					<li><a href="#">购物车<em>0</em>件</a><i class="icon_cart"></i></li>
+					<li><a href="/user/order/1">我的宝贝</a></li>
+					<li><a href="/cart/" id="cart_top_total">购物车<em> </em>件</a><i class="icon_cart"></i></li>
 					<li><a href="#">收藏夹</a></li>
 				</ul>
 			</div>
@@ -58,8 +63,8 @@
 	<div class="header">
 		<a href="#" class="logo fl"><h1>FIREKISS</h1></a>
 		<div class="search fl">
-			<form class="search_str">
-				<input type="text" name="" class="input_text fl" placeholder="搜索 火吻 商品/品牌/店铺">
+			<form class="search_str" method="get" action="/search/">
+				<input type="text" name="q" class="input_text fl" placeholder="搜索 火吻 商品/品牌/店铺">
 				<input type="submit" name="" class="input_btn fl" value="搜 索">
 			</form>
 			<ul class="search_fast">
@@ -124,17 +129,17 @@
 		<div class="slide">
 			<ul class="list">
 				
-					<li><a href="#"><img src="http://192.168.0.100:8888/group1/M00/00/00/wKgAZFxV-KSAFRp7AAGwSLW_xz41807052" alt=""></a></li>
+					<li><a href="#"><img src="http://192.168.0.101:8888/group1/M00/00/00/wKgAZFxV-KSAFRp7AAGwSLW_xz41807052" alt=""></a></li>
 				
-					<li><a href="#"><img src="http://192.168.0.100:8888/group1/M00/00/00/wKgAZFxV-JeAH4AQAAEWQx6O4gE3753659" alt=""></a></li>
+					<li><a href="#"><img src="http://192.168.0.101:8888/group1/M00/00/00/wKgAZFxV-JeAH4AQAAEWQx6O4gE3753659" alt=""></a></li>
 				
-					<li><a href="#"><img src="http://192.168.0.100:8888/group1/M00/00/00/wKgAZFxV-H-AZwQCAAFQ6RXER1s9398916" alt=""></a></li>
+					<li><a href="#"><img src="http://192.168.0.101:8888/group1/M00/00/00/wKgAZFxV-H-AZwQCAAFQ6RXER1s9398916" alt=""></a></li>
 				
-					<li><a href="#"><img src="http://192.168.0.100:8888/group1/M00/00/00/wKgAZFxV-GGAVlN6AAGWQvtY1-c7451542" alt=""></a></li>
+					<li><a href="#"><img src="http://192.168.0.101:8888/group1/M00/00/00/wKgAZFxV-GGAVlN6AAGWQvtY1-c7451542" alt=""></a></li>
 				
-					<li><a href="#"><img src="http://192.168.0.100:8888/group1/M00/00/00/wKgAZFxV-FSAMoa8AAIx9Hj6Cas2699966" alt=""></a></li>
+					<li><a href="#"><img src="http://192.168.0.101:8888/group1/M00/00/00/wKgAZFxV-FSAMoa8AAIx9Hj6Cas2699966" alt=""></a></li>
 				
-					<li><a href="#"><img src="http://192.168.0.100:8888/group1/M00/00/00/wKgAZFxV-DeANTi0AAGBZhrQFBg1686286" alt=""></a></li>
+					<li><a href="#"><img src="http://192.168.0.101:8888/group1/M00/00/00/wKgAZFxV-DeANTi0AAGBZhrQFBg1686286" alt=""></a></li>
 				
 			</ul>
 			<div class="point_con">
@@ -163,7 +168,7 @@
 				<span>BRAND SALE</span>
 				<i></i>
 				<a href="#" class="b_more"></a>
-				<a href="#" class="img_block"><img src="http://192.168.0.100:8888/group1/M00/00/00/wKgAZFxWHP2Ae1fdAAA2mnCaQZg3251917" alt="品牌闪购"></a>
+				<a href="#" class="img_block"><img src="http://192.168.0.101:8888/group1/M00/00/00/wKgAZFxWHP2Ae1fdAAA2mnCaQZg3251917" alt="品牌闪购"></a>
 			</div>
 			
 			<div class="b_channel">
@@ -171,7 +176,7 @@
 				<span>LUXURY CHANNEL</span>
 				<i></i>
 				<a href="#" class="b_more"></a>
-				<a href="#" class="img_block"><img src="http://192.168.0.100:8888/group1/M00/00/00/wKgAZFxWHauADzroAABXntv9Mgc3716034" alt="聚名品"></a>
+				<a href="#" class="img_block"><img src="http://192.168.0.101:8888/group1/M00/00/00/wKgAZFxWHauADzroAABXntv9Mgc3716034" alt="聚名品"></a>
 			</div>
 			
 			<div class="b_activity">
@@ -179,7 +184,7 @@
 				<span>BRAND ACTIVITY</span>
 				<i></i>
 				<a href="#" class="b_more"></a>
-				<a href="#" class="img_block"><img src="http://192.168.0.100:8888/group1/M00/00/00/wKgAZFxWHgmAW-GCAAC6VDY6JLs2883401" alt="品牌活动"></a>
+				<a href="#" class="img_block"><img src="http://192.168.0.101:8888/group1/M00/00/00/wKgAZFxWHgmAW-GCAAC6VDY6JLs2883401" alt="品牌活动"></a>
 			</div>
 			
 
@@ -208,7 +213,7 @@
 			<ul>
 				
 				<li>
-					<img src="http://192.168.0.100:8888/group1/M00/00/00/wKgAZFxWVm6AWumQAAAFxFsvzR83739621" alt="">
+					<img src="http://192.168.0.101:8888/group1/M00/00/00/wKgAZFxWVm6AWumQAAAFxFsvzR83739621" alt="">
 					<a href="#">
 						<span class="name">aspire（烟具）</span>
 						<span class="btn">点击进入</span>
@@ -216,7 +221,7 @@
 				</li>
 				
 				<li>
-					<img src="http://192.168.0.100:8888/group1/M00/00/00/wKgAZFxWTpiAFp1uAADcfOOVwhg9516573" alt="">
+					<img src="http://192.168.0.101:8888/group1/M00/00/00/wKgAZFxWTpiAFp1uAADcfOOVwhg9516573" alt="">
 					<a href="#">
 						<span class="name">Uniqlo/优衣库</span>
 						<span class="btn">点击进入</span>
@@ -254,16 +259,16 @@
 				
 			</div>
 			<div class="mart_bann">
-				<a href=""><img src="http://192.168.0.100:8888/group1/M00/00/00/wKgAZFxWH0GAIMZlAAKYiAsOMZg7082284" alt="火吻超市冬季促销"></a>
+				<a href=""><img src="http://192.168.0.101:8888/group1/M00/00/00/wKgAZVxeHQ-AfBYQAALHFbwhZ2c9069131" alt="火吻超市冬季促销"></a>
 			</div>
 			<div class="goods_list">
 				<ul class="mart_goods">
 					
 					<li>
-						<a href="#">
-							<img src="http://192.168.0.100:8888/group1/M00/00/00/wKgAZFxWP22AHxBSAACRpux7eCc0122655" alt="">
+						<a href="/goods/1">
+							<img src="http://192.168.0.101:8888/group1/M00/00/00/wKgAZVxbXY2AfBgfAAPRkqST3us6186194" alt="">
 							<span>心相印抽纸 经典系列纸巾2层200抽3包抽取式家用卫生纸巾餐巾纸巾</span>
-							<em>¥19.90</em>
+							<em>¥29.90</em>
 						</a>
 					</li>
 					
@@ -290,16 +295,16 @@
 				
 			</div>
 			<div class="mart_bann">
-				<a href=""><img src="http://192.168.0.100:8888/group1/M00/00/00/wKgAZFxWH8uABJ6BAADifxc3fjc3444158" alt="火吻超市冬季促销"></a>
+				<a href=""><img src="http://192.168.0.101:8888/group1/M00/00/00/wKgAZVxeHZiAYJfaAACoAnvcr9k4600709" alt="火吻超市冬季促销"></a>
 			</div>
 			<div class="goods_list">
 				<ul class="mart_goods">
 					
 					<li>
-						<a href="#">
-							<img src="http://192.168.0.100:8888/group1/M00/00/00/wKgAZFxWQO2AD7lLAAI61bn0gGs4840859" alt="">
+						<a href="/goods/2">
+							<img src="http://192.168.0.101:8888/group1/M00/00/00/wKgAZFxWQO2AD7lLAAI61bn0gGs4840859" alt="">
 							<span>【保税】资生堂吾诺UNO男士洗面奶保湿洁面泡沫洁面膏绿色130g</span>
-							<em>¥38.00</em>
+							<em>¥58.00</em>
 						</a>
 					</li>
 					
@@ -328,14 +333,14 @@
 				
 			</div>
 			<div class="mart_bann">
-				<a href=""><img src="http://192.168.0.100:8888/group1/M00/00/00/wKgAZFxWIEeAFhP_AAL4fR7X48g2870220" alt="火吻超市冬季促销"></a>
+				<a href=""><img src="http://192.168.0.101:8888/group1/M00/00/00/wKgAZFxWIEeAFhP_AAL4fR7X48g2870220" alt="火吻超市冬季促销"></a>
 			</div>
 			<div class="goods_list">
 				<ul class="mart_goods">
 					
 					<li>
-						<a href="#">
-							<img src="http://192.168.0.100:8888/group1/M00/00/00/wKgAZFxWRNmAYdvRAAJ9N7iqQjs4760562" alt="">
+						<a href="/goods/6">
+							<img src="http://192.168.0.101:8888/group1/M00/00/00/wKgAZFxWRNmAYdvRAAJ9N7iqQjs4760562" alt="">
 							<span>Adidas阿迪达斯拖鞋男鞋运动休闲鞋防滑耐磨轻便沙滩凉鞋AQ1701</span>
 							<em>¥159.00</em>
 						</a>
@@ -372,14 +377,14 @@
 				
 			</div>
 			<div class="mart_bann">
-				<a href=""><img src="http://192.168.0.100:8888/group1/M00/00/00/wKgAZFxWII6ABSN5AAMJ9BY4J0c9878106" alt="火吻超市冬季促销"></a>
+				<a href=""><img src="http://192.168.0.101:8888/group1/M00/00/00/wKgAZFxWII6ABSN5AAMJ9BY4J0c9878106" alt="火吻超市冬季促销"></a>
 			</div>
 			<div class="goods_list">
 				<ul class="mart_goods">
 					
 					<li>
-						<a href="#">
-							<img src="http://192.168.0.100:8888/group1/M00/00/00/wKgAZFxWQfaAVqt-AAd8LyIN21o3157024" alt="">
+						<a href="/goods/3">
+							<img src="http://192.168.0.101:8888/group1/M00/00/00/wKgAZFxWQfaAVqt-AAd8LyIN21o3157024" alt="">
 							<span>Acer/宏碁XZ271U27英寸曲面2K高分吃鸡电竞显示器144hz台机显示屏</span>
 							<em>¥2999.00</em>
 						</a>
@@ -416,16 +421,16 @@
 				
 			</div>
 			<div class="mart_bann">
-				<a href=""><img src="http://192.168.0.100:8888/group1/M00/00/00/wKgAZFxWIMaAUrMqAAMSD0eELGk2317733" alt="火吻超市冬季促销"></a>
+				<a href=""><img src="http://192.168.0.101:8888/group1/M00/00/00/wKgAZFxWIMaAUrMqAAMSD0eELGk2317733" alt="火吻超市冬季促销"></a>
 			</div>
 			<div class="goods_list">
 				<ul class="mart_goods">
 					
 					<li>
-						<a href="#">
-							<img src="http://192.168.0.100:8888/group1/M00/00/00/wKgAZFxWQzGATyaUAAIqUmLWS2I0202468" alt="">
+						<a href="/goods/4">
+							<img src="http://192.168.0.101:8888/group1/M00/00/00/wKgAZFxWQzGATyaUAAIqUmLWS2I0202468" alt="">
 							<span>周大生珍珠手链女正品新款珠宝首饰18K金珍珠手镯手串情人节礼物</span>
-							<em>¥478.00</em>
+							<em>¥520.00</em>
 						</a>
 					</li>
 					
@@ -464,14 +469,14 @@
 				
 			</div>
 			<div class="mart_bann">
-				<a href=""><img src="http://192.168.0.100:8888/group1/M00/00/00/wKgAZFxWIT-AZqm5AAKXkNd1ST85083115" alt="火吻超市冬季促销"></a>
+				<a href=""><img src="http://192.168.0.101:8888/group1/M00/00/00/wKgAZFxWIT-AZqm5AAKXkNd1ST85083115" alt="火吻超市冬季促销"></a>
 			</div>
 			<div class="goods_list">
 				<ul class="mart_goods">
 					
 					<li>
-						<a href="#">
-							<img src="http://192.168.0.100:8888/group1/M00/00/00/wKgAZFxWQ-2AEnNqAALBA18A1M89404599" alt="">
+						<a href="/goods/5">
+							<img src="http://192.168.0.101:8888/group1/M00/00/00/wKgAZFxWQ-2AEnNqAALBA18A1M89404599" alt="">
 							<span>百事可乐无糖500ml*24碳酸饮料 新老包装替换</span>
 							<em>¥69.00</em>
 						</a>
@@ -508,16 +513,16 @@
 				
 			</div>
 			<div class="mart_bann">
-				<a href=""><img src="http://192.168.0.100:8888/group1/M00/00/00/wKgAZFxWIXKANK9wAACOiow7nUo9447367" alt="火吻超市冬季促销"></a>
+				<a href=""><img src="http://192.168.0.101:8888/group1/M00/00/00/wKgAZFxWIXKANK9wAACOiow7nUo9447367" alt="火吻超市冬季促销"></a>
 			</div>
 			<div class="goods_list">
 				<ul class="mart_goods">
 					
 					<li>
-						<a href="#">
-							<img src="http://192.168.0.100:8888/group1/M00/00/00/wKgAZFxWRX2AGoc4AANcECQoEbg9569816" alt="">
+						<a href="/goods/7">
+							<img src="http://192.168.0.101:8888/group1/M00/00/00/wKgAZFxWRX2AGoc4AANcECQoEbg9569816" alt="">
 							<span>帅康35G不锈钢燃气灶嵌入式天然气灶液化气台式煤气灶双灶具家用</span>
-							<em>¥899.00</em>
+							<em>¥1899.00</em>
 						</a>
 					</li>
 					
@@ -531,21 +536,21 @@
 		<!-- 广告 -->
 		<div class="ad_con">
 			<a href="#" class="ads">
-				<img src="http://192.168.0.100:8888/group1/M00/00/00/wKgAZFxWNtyAHw2vAABwsWIKWoM4459196" alt="广告">
+				<img src="http://192.168.0.101:8888/group1/M00/00/00/wKgAZFxWNtyAHw2vAABwsWIKWoM4459196" alt="广告">
 			</a>
 		</div>
 	
 		<!-- 广告 -->
 		<div class="ad_con">
 			<a href="#" class="ads">
-				<img src="http://192.168.0.100:8888/group1/M00/00/00/wKgAZFxWNtGAUl0jAADpjsrS7SM6915326" alt="广告">
+				<img src="http://192.168.0.101:8888/group1/M00/00/00/wKgAZFxWNtGAUl0jAADpjsrS7SM6915326" alt="广告">
 			</a>
 		</div>
 	
 		<!-- 广告 -->
 		<div class="ad_con">
 			<a href="#" class="ads">
-				<img src="http://192.168.0.100:8888/group1/M00/00/00/wKgAZFxWNsaAOaOaAAC6Rx0AWjM7519392" alt="广告">
+				<img src="http://192.168.0.101:8888/group1/M00/00/00/wKgAZFxWNsaAOaOaAAC6Rx0AWjM7519392" alt="广告">
 			</a>
 		</div>
 	
@@ -559,10 +564,10 @@
 				<ul class="ulike_goods">
 					
 						<li>
-							<a href="#">
-								<img src="http://192.168.0.100:8888/group1/M00/00/00/wKgAZFxWRneAWE2EAALqIA1CWfU9110569" alt="">
+							<a href="/goods/8">
+								<img src="http://192.168.0.101:8888/group1/M00/00/00/wKgAZFxWRneAWE2EAALqIA1CWfU9110569" alt="">
 								<span>三只松鼠 年货坚果大礼包1523g每日坚果礼盒零食组合混合装8袋装</span>
-								<em>¥108.00</em>
+								<em>¥177.00</em>
 							</a>
 						</li>
 					
@@ -680,8 +685,8 @@
 	
 	<div class="global">
 		<h1>FIRE KISS 火吻</h1>
-		<form class="search">
-			<input type="text" name="" class="input_text fl" placeholder="搜索 火吻 商品/品牌/店铺">
+		<form class="search" method="get" action="/search/">
+			<input type="text" name="q" class="input_text fl" placeholder="搜索 火吻 商品/品牌/店铺">
 			<input type="submit" name="" class="input_btn fl" value="搜 索">
 		</form>
 	</div>
@@ -693,8 +698,10 @@
 			<div class="right_nav clearfix">
 				
 				
-					<a href="#" class="vip" title="会员中心"><i></i></a>
-					<a href="#" class="shop_cart clearfix"><i></i><span>购物车</span></a>
+					
+						<a href="#" class="vip" title="会员中心"><i></i></a>
+						<a href="/cart/" class="shop_cart clearfix"><i></i><span>购物车</span></a>
+					
 				
 				<a href="#" class="money" title="支付方式"><i></i></a>
 				<a href="#" class="colle" title="我的收藏"><i></i></a>

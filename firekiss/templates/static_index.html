@@ -1,4 +1,4 @@
-{% extends "static_base.html" %}
+{% extends "base.html" %}
 {% load staticfiles %}
 {% block title %}火吻商城-首页{% endblock title %}
 {% block topfiles %}
@@ -18,7 +18,7 @@
 {# 头部栏包括logo、搜索框 #}
 {% block header %}
 	<div class="header">
-		<a href="{% url 'goods:index' %}" class="logo fl"><h1>FIREKISS</h1></a>
+		<a href="#" class="logo fl"><h1>FIREKISS</h1></a>
 		<div class="search fl">
 			<form class="search_str" method="get" action="/search/">
 				<input type="text" name="q" class="input_text fl" placeholder="搜索 火吻 商品/品牌/店铺">
@@ -174,7 +174,7 @@
 				<ul class="mart_goods">
 					{% for m_goods in mb.m_goods %}
 					<li>
-						<a href="#">
+						<a href="{% url 'goods:detail' m_goods.sku.id %}">
 							<img src="{{m_goods.sku.image.url}}" alt="">
 							<span>{{m_goods.sku.name}}</span>
 							<em>¥{{m_goods.sku.real_price}}</em>
@@ -205,7 +205,7 @@
 				<ul class="ulike_goods">
 					{% for ulike in ulikes %}
 						<li>
-							<a href="#">
+							<a href="{% url 'goods:detail' ulike.sku.id %}">
 								<img src="{{ulike.sku.image.url}}" alt="">
 								<span>{{ulike.sku.name}}</span>
 								<em>¥{{ulike.sku.real_price}}</em>
@@ -222,8 +222,8 @@
 {% block top_fixed_search %}
 	<div class="global">
 		<h1>FIRE KISS 火吻</h1>
-		<form class="search">
-			<input type="text" name="" class="input_text fl" placeholder="搜索 火吻 商品/品牌/店铺">
+		<form class="search" method="get" action="/search/">
+			<input type="text" name="q" class="input_text fl" placeholder="搜索 火吻 商品/品牌/店铺">
 			<input type="submit" name="" class="input_btn fl" value="搜 索">
 		</form>
 	</div>
