@@ -1,6 +1,12 @@
 $(function () {
     // 商品购物车js
 
+    // 页面刷新时判断复选框个数
+    if ($(':checkbox').length <= 2) {
+        //如果小于等于两个则表示没商品，需要删除店铺复选框(当前版本)
+        $('.s_group').remove();
+    }
+
     // 全选
     // 整个购物车全选框改变时
     $('.all_chex').change(function () {
@@ -258,7 +264,7 @@ $(function () {
 
     // 无商品时结算按钮禁止提交
     $('.settle_right').find('input').click(function (event) {
-        if ($(':checked').length <= 0) {
+        if ($(':checkbox').length <= 2) {
             event.preventDefault();
             return;
         }

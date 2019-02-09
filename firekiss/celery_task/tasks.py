@@ -35,7 +35,7 @@ def send_confirm_mail(to_mail, username, token):
     sender = settings.EMAIL_FROM  # 发件人
     recceiver = [to_mail]  # 收件人
     # 正文包含html内容
-    html_message = '<h1>%s,欢迎来到火吻商城</h1><p>请点击下面的链接完成账户激活,链接在24小时候后失效</p><p><a href="http://192.168.0.100:8000/user/active/%s">http://192.168.0.100:8000/user/active/%s</a></p>' % (
+    html_message = '<h1>%s,欢迎来到火吻商城</h1><p>请点击下面的链接完成账户激活,链接在24小时候后失效</p><p><a href="http://192.168.0.101/user/active/%s">http://192.168.0.100/user/active/%s</a></p>' % (
     username, token, token)
 
     send_mail(subject, message, sender, recceiver, html_message=html_message)

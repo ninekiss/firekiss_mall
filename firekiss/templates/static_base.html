@@ -22,7 +22,7 @@
 				<!-- 未登录 -->
 				<ul class="no_login fl">
 					{% block is_index %}
-						<li><a href="index.html">火吻首页</a><i class="icon_home"></i></li>
+						<li><a href="{% url 'goods:index' %}">火吻首页</a><i class="icon_home"></i></li>
 					{% endblock is_index %}
 					<li><span>哞，欢迎来火吻</span></li>
 					<li><a href="{% url 'user:login' %}">请登录{{user.username}}</a></li>
@@ -38,7 +38,7 @@
 				</ul>
 				<!-- 用户相关 -->
 				<ul class="user_set fr">
-					<li><a href="{% url 'user:order' %}">我的宝贝</a></li>
+					<li><a href="{% url 'user:order' 1 %}">我的宝贝</a></li>
 					<li><a href="#">购物车<em>0</em>件</a><i class="icon_cart"></i></li>
 					<li><a href="#">收藏夹</a></li>
 				</ul>

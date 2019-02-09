@@ -24,7 +24,8 @@ sys.path.insert(1, os.path.join(BASE_DIR, 'apps'))
 SECRET_KEY = '19cxfz&n-fviwkz46rp99fu1pv7-d!23^&_c17gdf3p57jmm%u'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['*']
 
@@ -114,6 +115,8 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+# django收集静态文件的目录
+STATIC_ROOT = '/var/www/firekiss/static'
 
 # 富文本编辑器
 TINYMCE_DEFAULT_CONFIG = {
