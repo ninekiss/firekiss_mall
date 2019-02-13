@@ -1,197 +1,331 @@
 $(function () {
-    var $global_chexbox = $('input[type="checkbox"]'),
-        $all_chexbox = $('.all_chex'),
-        $group_chexbox = $('.group_chex'),
-        $goods_chexbox = $('.goods_chex');
+    // 商品购物车js
 
-    var $goods_group = $('.s_group'),
-        $every_goods = $('.s_goods');
+    // 全选
+    // 整个购物车全选框改变时
+    $('.all_chex').change(function () {
+        // 全选是否选中
+        is_checked = $(this).prop('checked');
 
-    // 全局全选与取消全选
-    $all_chexbox.click(function() {
-        var $chexs = $goods_group.find('input[type="checkbox"]');
-        if($(this).is(':checked')) {
-            $chexs.prop("checked", true);
+        // 使每个复选框的状态与全选保持一致
+        $('.se_body').find(':checkbox').each(function () {
+             $(this).prop('checked', is_checked);
+        });
+
+        update_page_info();
+    });
+
+    // 除了顶级全选以外的复选框
+    checkbox_count = $(':checkbox').length-1;
+
+    // 购物车页面的所有复选框
+    $(':checkbox').change(function () {
+        if ($(this).prop('checked')){
+            // 更该结算按钮样式，允许结算
+            $('.settle_right').find('input').addClass('allow_settle');
+
+            if($(':checked').length == checkbox_count){
+                $('.all_chex').prop('checked', true);
+            }
         }
         else {
-            $chexs.prop("checked", false);
+            if ($(':checked').length <= 0) {
+                // 未选中，不允许结算
+                $('.settle_right').find('input').removeClass('allow_settle');
+            }
+
+            $('.all_chex').prop('checked', false);
         }
-        totalMoney();
+        update_page_info();
     });
 
-    // 单个商品与全选
-    $goods_chexbox.each(function() {
-        $(this).click(function () {
-            if($(this).is(':checked')) {
-                //判断：所有单个商品是否勾选
-                var goods_len = $goods_chexbox.length;
-                var num = 0;
-                $goods_chexbox.each(function () {
-                    if ($(this).is(':checked')) {
-                        num++;
-                    }
-                });
-                if (num == goods_len) {
-                    $all_chexbox.prop("checked", true);
-                }
-            }
-            else {
-                //单个商品取消勾选，全局全选取消勾选
-                $all_chexbox.prop("checked", false);
+    // 每个店铺全选框改变时
+    $('.group_chex').change(function () {
+        if ($(this).prop('checked')) {
+            // 选中
+            // 该店铺的所有商品选中
+            $(this).parents('.s_group').find(':checkbox').prop('checked',true);
 
+            if($(':checked').length == checkbox_count){
+                // 全部选中
+                $('.all_chex').prop('checked', true);
             }
-            totalMoney();
-        });
+        }
+        else {
+            // 该店铺的所有商品取消选中
+           $(this).parents('.s_group').find(':checkbox').prop('checked',false);
+        }
+        update_page_info();
+        if ($(':checked').length <= 0) {
+            // 未选中，不允许结算
+            $('.settle_right').find('input').removeClass('allow_settle');
+        }
+   });
+
+    // 每个商品的复选框
+    $('.goods_chex').change(function () {
+        //该店铺的所有商品复选框
+        group_chex_count = $(this).parents('.s_group').find(':checkbox').length-1;
+
+        if ($(this).prop('checked')) {
+            group_chexd = $(this).parents('.s_group').find(':checked').length;
+            if(group_chexd == group_chex_count){
+                // 全部选中
+                $(this).parents('.s_group').find('.group_chex').prop('checked', true);
+            }
+            if($(':checked').length == checkbox_count){
+                // 全部选中
+                $('.all_chex').prop('checked', true);
+            }
+        }
+        else {
+            $(this).parents('.s_group').find('.group_chex').prop('checked', false);
+        }
+        update_page_info();
+
+        if ($(':checked').length <= 0) {
+            // 未选中，不允许结算
+            $('.settle_right').find('input').removeClass('allow_settle');
+        }
     });
 
-    // 每个店铺与全选
-    $group_chexbox.each(function() {
-        $(this).click(function () {
-            if($(this).is(':checked')) {
-                //判断：所有店铺是否勾选
-                var group_len = $group_chexbox.length;
-                var num = 0;
-                $group_chexbox.each(function () {
-                    if ($(this).is(':checked')) {
-                        $(this).parents().nextAll().find('.goods_chex').prop("checked", true);
-                        num++;
-                    }
-                    else {
-                        $(this).parents().nextAll().find('.goods_chex').prop("checked", false);
-                    }
-                });
-                if (num == group_len) {
-                    $all_chexbox.prop("checked", true);
-                }
+
+    // 数量增加
+    $('.update_goods_count').next().click(function () {
+        // sku_id
+        sku_id = $(this).prev().attr('sku_id');
+        // 获取要添加的商品的数量
+        count = $(this).prev().val();
+        count = parseInt(count)+1;
+
+        // 发送ajax请求，更新购物车商品记录
+        update_cart_info(sku_id, count)
+
+        if (update_success) {
+            // 如果更新成功,更新商品数据
+            // 设置商品的数量
+            $(this).prev().val(count);
+
+            // 设置商品小计
+            update_goods_amount($(this).parents('.s_goods'));
+
+            // 获取商品对应的复选框
+            is_checked = $(this).parents('.s_goods').find(':checkbox').prop('checked');
+
+            if(is_checked) {
+                // 如果选中，更新页面信息
+                update_page_info();
             }
-            else {
-                var group_len = $group_chexbox.length;
-                var num = 0;
-                $group_chexbox.each(function () {
-                    if ($(this).is(':checked')) {
-                        $(this).parents().nextAll().find('.goods_chex').prop("checked", true);
-                        num++;
-                    }
-                    else {
-                        $(this).parents().nextAll().find('.goods_chex').prop("checked", false);
-                    }
-                });
-                //单个店铺取消勾选，全局全选取消勾选
-                $all_chexbox.prop("checked", false);
-            }
-            totalMoney();
-        });
+
+            // 更新页面上的商品总数量
+            $('.se_op').find('em').text(total_count);
+        }
     });
 
-    // 单个店铺与其商品
-    // 店铺中的商品有一个未选中，则该店铺全选按钮取消选中，若全都选中，则全选打对勾
-    $goods_group.each(function () {
-        // 店铺下的商品
-        var $goods_chexbox = $(this).find('.goods_chex');
-        $goods_chexbox.each(function () {
-            $(this).click(function () {
-                if ($(this).is(':checked')) {
-                    //判断：如果所有该店铺的商品都选中则该店铺全选打对勾
-                    var goods_lens = $goods_chexbox.length;
-                    var num = 0;
-                    $goods_chexbox.each(function () {
-                        if ($(this).is(':checked')) {
-                            num++;
-                        }
-                    });
-                    if (num == goods_lens) {
-                        $(this).parents().parents().parents().parents().children().eq(0).find('.group_chex').prop("checked", true);
-                    }
+    // 数量减少
+    $('.update_goods_count').prev().click(function () {
+        // sku_id
+        sku_id = $(this).next().attr('sku_id');
+        // 获取要添加的商品的数量
+        count = $(this).next().val();
+        count = parseInt(count)-1;
+        if (count <= 0) {
+            return
+        }
+
+        // 发送ajax请求，更新购物车商品记录
+        update_cart_info(sku_id, count)
+
+        if (update_success) {
+            // 如果更新成功,更新商品数据
+            // 设置商品的数量
+            $(this).next().val(count);
+
+            // 设置商品小计
+            update_goods_amount($(this).parents('.s_goods'));
+
+            // 获取商品对应的复选框
+            is_checked = $(this).parents('.s_goods').find(':checkbox').prop('checked');
+
+            if(is_checked) {
+                // 如果选中，更新页面信息
+                update_page_info();
+            }
+
+            // 更新页面上的商品总数量
+            $('.se_op').find('em').text(total_count);
+        }
+    });
+
+    // 手动输入商品数量
+    $('.update_goods_count').keyup(function() {
+        // 校验手动输入的正则
+        re_count = /^\d+$/;
+        // 获取要添加的商品的数量
+        count = parseInt($(this).val());
+        if(count == 0 | !(re_count.test(count))) {
+            count = 1;
+        }
+        $(this).val(count);
+    });
+    $('.update_goods_count').blur(function() {
+        // sku_id
+        sku_id = $(this).attr('sku_id');
+        // 获取要添加的商品的数量
+        count = parseInt($(this).val());
+        // 发送ajax请求，更新购物车商品记录
+        update_cart_info(sku_id, count)
+
+        if (update_success) {
+            // 如果更新成功,更新商品数据
+            // 设置商品的数量
+            $(this).val(count);
+
+            // 设置商品小计
+            update_goods_amount($(this).parents('.s_goods'));
+
+            // 获取商品对应的复选框
+            is_checked = $(this).parents('.s_goods').find(':checkbox').prop('checked');
+
+            if (is_checked) {
+                // 如果选中，更新页面信息
+                update_page_info();
+            }
+
+            // 更新页面上的商品总数量
+            $('.se_op').find('em').text(total_count);
+        }
+    });
+
+    // 删除商品
+    $('.cart_del_goods').click(function () {
+        // 商品id(sku_id)
+        sku_id = $(this).parents('.s_goods').find('.update_goods_count').attr('sku_id');
+
+        // csrf
+        csrf = $('input[name="csrfmiddlewaretoken"]').val();
+
+        content = {"sku_id": sku_id, "csrfmiddlewaretoken": csrf}
+
+        // 店铺元素
+        store_ele = $(this).parents('.s_group');
+        // 商品元素
+        goods_ele = $(this).parents('.s_goods');
+        // 商品数量
+        goods_len = $(this).parents('.s_group').find(':checkbox').length-1;
+
+        // 发送ajax post 请求
+        $.post('/cart/delete', content, function (data) {
+            status = data.status;
+            if (status == 200 ){
+                // 删除成功
+                // 判断该店铺剩余的商品数量
+                if (goods_len <= 1) {
+                    // 该店铺只有一件商品,删除店铺元素
+                    store_ele.remove();
                 }
                 else {
-                    //否则，店铺全选取消
-                    $(this).parents().parents().parents().parents().children().eq(0).find('.group_chex').prop("checked", false);
+                    // 该店铺只有一件商品,删除商品元素
+                     goods_ele.remove();
                 }
-                totalMoney();
-            });
-        });
+
+                // 获取要删除的商品的选中状态
+                is_checked = goods_ele.find(':checkbox').prop('checked');
+
+                if (is_checked){
+                    // 已选中，更新页面信息
+                    update_page_info();
+                }
+
+                // 更新页面上的商品总数量
+                $('.se_op').find('em').text(total_count);
+
+                if ($(':checked').length <= 0) {
+                // 未选中，不允许结算
+                $('.settle_right').find('input').removeClass('allow_settle');
+
+                // 更新页面上的复选框数量
+                checkbox_count = $(':checkbox').length-1;
+            }
+            }
+            else {
+                alert(data.msg);
+            }
+        })
+
 
     });
 
-    $every_goods.each(function(){
+    // 计算被选中的商品的总价和总数量
+    function update_page_info() {
+        total_count = 0;
+        total_price = 0;
+        // 选中的商品所在的div
+        $('.s_goods').find(':checked').parents('.s_goods').each(function () {
+            // 获取商品的数目和小计
+            count = $(this).find('.update_goods_count').val();
+            amount = $(this).find('.update_amount_price').text();
+            count = parseInt(count);
+            amount = parseFloat(amount);
+            total_count += count;
+            total_price += amount;
+        })
 
-        var now_count = 0;
-        var now_price = 0;
-        var re_count = /^\d+$/;
-
-        // 每个商品的数量
-        var $count_con = $(this).find('.s_count input');
-        var $goods_count = $count_con.eq(1);
-        var $count_add = $count_con.eq(2);
-        var $count_less = $count_con.eq(0);
-        
-        // 每个商品的单价
-        var $one_price = $(this).find('.s_oneprice em');
-        // 每个商品的小计
-        var $many_price = $(this).find('.s_manyprice em');
-
-        var c_one_price = parseInt(parseFloat($one_price.html())*100);
-
-        // 当前的商品数量
-        $goods_count.keyup(function() {
-
-            now_count = parseInt($(this).val()); 
-            
-            if(now_count == 0 | !(re_count.test(now_count))) {
-                now_count = 1;
-            }
-            $(this).val(now_count);
-            now_price = now_count*c_one_price/100;
-            $many_price.html(now_price);
-            totalMoney();
-        });
-
-        $count_add.click(function() {
-            now_count = parseInt($goods_count.val());
-            now_count++;
-            $goods_count.val(now_count);
-            now_price = now_count*c_one_price/100;
-            $many_price.html(now_price);
-            totalMoney();
-        });
-
-        $count_less.click(function() {
-            now_count = parseInt($goods_count.val());
-            now_count--;
-            if(now_count<1){
-                now_count = 1;
-            }
-            $goods_count.val(now_count);
-            now_price = now_count*c_one_price/100;
-            $many_price.html(now_price);
-            totalMoney();
-        });
-    });
-
-    function totalMoney() {
-        var total_money = 0;
-        var total_count = 0;
-        // 结算区域
-        var $settle_right = $('.settle_right');
-        // 已选商品的总价
-        var $all_price = $settle_right.find('em');
-
-        $goods_chexbox.each(function () {
-            
-            if ($(this).is(':checked')) {
-                var money = $(this).parents().parents().find('.s_manyprice h6 em');
-                var count = $(this).parents().parents().find('.s_count input').eq(1);
-                total_money += parseFloat(money.html())*100;
-                total_count += parseInt(count.val());
-            }
-        });
-        if(total_money!=0 && total_count!=0){
-            $all_price.html(total_money/100);
-            $settle_right.find('input').addClass('se_enabled');
-        }
-        else {
-            $all_price.html('0.00');
-            $settle_right.find('input').removeClass('se_enabled');
-        }
+        // 设置被选中的商品的总件数和总价格
+        $('.settle_right').each(function () {
+            $(this).find('b').text(total_count);
+            $(this).find('em').text(total_price.toFixed(2));
+        })
     };
+
+    // 发送ajax请求，更新购物车商品记录
+    function update_cart_info(sku_id, count) {
+        // ajax post请求
+        // 商品id(sku_id),数量(count)
+        // csrf
+        csrf = $('input[name="csrfmiddlewaretoken"]').val();
+
+        // 组织参数
+        content = {
+            "sku_id": sku_id,
+            "count": count,
+            "csrfmiddlewaretoken": csrf
+        }
+
+        update_success = false
+        total_count = 0;
+
+        // 设置发送同步的ajax请求
+        $.ajaxSettings.async = false;
+        // 发送ajax post请求
+        $.post('/cart/update', content, function (data) {
+            status = data.status
+            if (status == 200) {
+                // 更新成功
+                update_success = true;
+                total_count = data.total;
+            }
+            else {
+                // 更新失败
+                update_success = false;
+                alert(data.msg);
+            }
+        });
+         // 设置发送异步的ajax请求
+        $.ajaxSettings.async = true;
+    };
+
+    // 设置商品小计
+    function update_goods_amount(sku_ele) {
+        // 数量
+        count = sku_ele.find('.update_goods_count').val();
+        // 优惠后价格
+        price = sku_ele.find('.goods_real_price').text();
+        // 小计
+        amount = parseInt(count)*parseFloat(price);
+
+        // 设置商品小计
+        sku_ele.find('.update_amount_price').text(amount.toFixed(2));
+
+    }
 });

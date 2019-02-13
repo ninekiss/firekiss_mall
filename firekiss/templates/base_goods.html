@@ -12,17 +12,20 @@
 		<div class="result_pagena_con">
 			<div class="result_pagena">
 				<ul>
-					<li><a href="javascript:;" id="r_prev_page" class="now_page">&lt;上一页</a></li>
+					<li><a href="{% if skus_page.has_previous %}{% url 'goods:list' type.id skus_page.previous_page_number %}?sort={{sort}}{% else %}javascript:;{% endif %}" id="r_prev_page" class="now_page">&lt;上一页</a></li>
 					<div class="page_con">
-						<li><a href="javascript:;" class="now_page">1</a></li>
-						<li><a href="javascript:;">2</a></li>
-						<li><a href="javascript:;">333</a></li>
+						{% for pageindex in pages_left %}
+						<li><a href="{% url 'goods:list' type.id pageindex %}"{% if pageindex == skus_page.number %}class="now_page"{% endif %}>{{pageindex}}</a></li>
+						{% endfor %}
 						<li><span>···</span></li>
+						{% for pageindex in pages_right %}
+						<li><a href="{% url 'goods:list' type.id pageindex %}"{% if pageindex == skus_page.number %}class="now_page"{% endif %}>{{pageindex}}</a></li>
+						{% endfor %}
 					</div>
-					<li><a href="javascript:;" id="r_next_page">下一页&gt;</a><i class="i_china_year" title="春节快乐，猪事如意"></i></li>
-					<li><span>共<em class="all_pages">5</em>页，到第</span></li>
-					<li><input type="text" id="page_to" placeholder="1">页</li>
-					<li><input type="submit" id="page_to_btn" value="确定" class="btn"></li>
+					<li><a href="{% if skus_page.has_next %}{% url 'goods:list' type.id skus_page.next_page_number %}?sort={{sort}}{% else %}javascript:;{% endif %}" id="r_next_page">下一页&gt;</a><i class="i_china_year" title="春节快乐，猪事如意"></i></li>
+					<li><span>共<em class="all_pages">{{skus_page.paginator.num_pages}}</em>页，到第</span></li>
+					<li><input type="text" id="page_to" value="1">页</li>
+					<li><input type="submit" id="page_to_btn1" value="确定" class="btn"></li>
 				</ul>
 			</div>
 		</div>
@@ -49,84 +52,32 @@
 		</div>
 		<div class="result_list">
 				<ul class="clearfix">
+					{% for goods in goods_list %}
 					<li>
 						<div class="border_shake no_icon">
-							<a href="#" class="pic">
-								<img src="images/TB107BWXgnD8KJjy1XdCweZsVXa_023057.jpg" alt="">
+							<a href="{% url 'goods:detail' goods.id %}" class="pic">
+								<img src="{{goods.image.url}}" alt="">
 							</a>
-							<p class="price">¥<em>1399.00</em><span class="before_price">¥<em>1399.00</em></span></p>
+							<p class="price">¥<em>{{goods.real_price}}</em><span class="before_price">¥<em>{{goods.bid_price}}</em></span></p>
 							<p class="sales">
-								<span>该款月成交 <em>4.1万笔</em></span>
+								<span>该款月成交 <em>{{goods.sales}}笔</em></span>
 								<a href="#">包邮</a>
 							</p>
-							<p class="title"><a href="#"><span>iPhone XR</span> 4G智能手机苹果xr全面屏手机</a></p>
-							<p class="saler"><a href="#">火吻官方自营店</a></p>
+							<p class="title"><a href="{% url 'goods:detail' goods.id %}"><span>{{goods.name}}</span> </a></p>
+							<p class="saler"><a href="#">{{goods.brand}}</a></p>
 					</div>
 					</li>
-					<li>
-							<div class="border_shake no_icon">
-								<a href="#" class="pic">
-									<img src="images/TB107BWXgnD8KJjy1XdCweZsVXa_023057.jpg" alt="">
-								</a>
-								<p class="price">¥<em>1399.00</em><span class="before_price">¥<em>1399.00</em></span></p>
-								<p class="sales">
-									<span>该款月成交 <em>4.1万笔</em></span>
-									<a href="#">包邮</a>
-								</p>
-								<p class="title"><a href="#"><span>iPhone XR</span> 4G智能手机苹果xr全面屏手机</a></p>
-								<p class="saler"><a href="#">火吻官方自营店</a></p>
-						</div>
-					</li>
-					<li>
-							<div class="border_shake no_icon">
-								<a href="#" class="pic">
-									<img src="images/TB107BWXgnD8KJjy1XdCweZsVXa_023057.jpg" alt="">
-								</a>
-								<p class="price">¥<em>1399.00</em><span class="before_price">¥<em>1399.00</em></span></p>
-								<p class="sales">
-									<span>该款月成交 <em>4.1万笔</em></span>
-									<a href="#">包邮</a>
-								</p>
-								<p class="title"><a href="#"><span>iPhone XR</span> 4G智能手机苹果xr全面屏手机</a></p>
-								<p class="saler"><a href="#">火吻官方自营店</a></p>
-						</div>
-					</li>
-					<li>
-							<div class="border_shake no_icon">
-								<a href="#" class="pic">
-									<img src="images/TB107BWXgnD8KJjy1XdCweZsVXa_023057.jpg" alt="">
-								</a>
-								<p class="price">¥<em>1399.00</em><span class="before_price">¥<em>1399.00</em></span></p>
-								<p class="sales">
-									<span>该款月成交 <em>4.1万笔</em></span>
-									<a href="#">包邮</a>
-								</p>
-								<p class="title"><a href="#"><span>iPhone XR</span> 4G智能手机苹果xr全面屏手机</a></p>
-								<p class="saler"><a href="#">火吻官方自营店</a></p>
-						</div>
-					</li>
-					<li>
-							<div class="border_shake no_icon">
-								<a href="#" class="pic">
-									<img src="images/TB107BWXgnD8KJjy1XdCweZsVXa_023057.jpg" alt="">
-								</a>
-								<p class="price">¥<em>1399.00</em><span class="before_price">¥<em>1399.00</em></span></p>
-								<p class="sales">
-									<span>该款月成交 <em>4.1万笔</em></span>
-									<a href="#">包邮</a>
-								</p>
-								<p class="title"><a href="#"><span>iPhone XR</span> 4G智能手机苹果xr全面屏手机</a></p>
-								<p class="saler"><a href="#">火吻官方自营店</a></p>
-						</div>
-					</li>
+					{% empty %}
+						<p>没有历史浏览记录</p>
+					{% endfor%}
 				</ul>
 		</div>
 	</div>
 
 	<!-- bot search -->
 	<div class="bot_search list_page clearfix">
-		<form class="search_str">
-			<input type="text" name="" class="input_text fl" placeholder="请输入关键词">
+		<form class="search_str" method="get" action="/search/">
+			<input type="text" name="q" class="input_text fl" placeholder="请输入关键词">
 			<input type="submit" name="" class="input_btn fl" value="搜 索">
 		</form>
 	</div>

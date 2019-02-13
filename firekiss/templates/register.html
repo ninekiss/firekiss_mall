@@ -14,7 +14,7 @@
     <div class="r_con">
         <div class="cont step_con">
             <div class="step_title">
-                <a href="index.html" class="logo"><h1>FIREKISS</h1></a>
+                <a href="{% url 'goods:index' %}" class="logo"><h1>FIREKISS</h1></a>
                 <div class="active"><span>1</span>设置用户名</div>
                 <div><span>2</span>填写账号信息</div>
                 <div><span>3</span>设置支付方式</div>
@@ -87,7 +87,7 @@
                     <div class="r_input_con">
                         <h2>验证邮件已送达邮箱: <span id="user_mail"></span></h2>
                         <p>请登录邮箱，点击激活链接激活账号，激活链接在24小时内有效</p>
-                        <button class="btn" id="success_btn">请查收邮件</button>
+                        <a href="{% url 'goods:index' %}" class="btn" id="success_btn">请查收邮件</button>
                         <a href="#" id="resend_link">没有收到邮件?</a>
                     </div>
                     <div class="re_send">

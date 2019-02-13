@@ -5,7 +5,7 @@
 {% block body %}
     <div class="">
         <div class="top cont">
-            <h1><a href="index.html">FIREKISS 火吻</a></h1>
+            <h1><a href="{% url 'goods:index' %}">FIREKISS 火吻</a></h1>
         </div>
     </div>
     <div class="con">
@@ -26,7 +26,7 @@
                     <div class="login_other">
                         <a href="#">忘记密码</a>
                         <a href="#">忘记用户名</a>
-                        <a href="/user/register" class="register_link">免费注册</a>
+                        <a href="{% url 'user:register' %}" class="register_link">免费注册</a>
                     </div>
                     <div class="msg">{{msg}}</div>
                 </form>

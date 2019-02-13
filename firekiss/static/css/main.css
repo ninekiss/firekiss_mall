@@ -95,8 +95,14 @@ body {
 	background: url(../images/FK_0001.png) 0 0 no-repeat;
 	background-size: 100%;
 	position: absolute;
-	left: 88px;
+	left: -5px;
 	top: 10px;
+}
+.login .icon_home {
+	width: 15px;
+	height: 15px;
+	left: -9px;
+    top: 9px;
 }
 
 
@@ -198,20 +204,17 @@ body {
 .nav_con .cate {
 	width: 200px;
 	padding: 1px 0;
-	background: #000;
-	opacity: 0.55;
+	background: rgba(0,0,0,0.5);
 	position: absolute;
 	left: 0px;
 	top: 42px;
 	z-index: 999;
-	/*display: none; */
 }
 .cate li {
 	height: 31px;
 	color: #fff;
 	line-height: 31px;
 	padding-left: 40px;
-	background: #000;
 }
 .cate li a {
 	color: #fff;
@@ -277,7 +280,7 @@ body {
 .slide_con {
 	width: 100%;
 	height: 500px;
-	background: #f00;
+	background: rgba(0,0,0,0.05);
 }
 .slide {
 	width: 1230px;
@@ -322,7 +325,7 @@ body {
 	position: absolute;
 	left: 0;
 	bottom: 0;
-	z-index: 999;
+	z-index: 2;
 }
 .point li {
 	float: left;
@@ -453,7 +456,8 @@ body {
 	position: relative;
 }
 .brand_bann img {
-	margin: 25px 11px;	
+	width:100px;
+	margin: 20px 12px;
 }
 .brand_bann a {
 	display: block;
@@ -1480,6 +1484,9 @@ body {
 .result_list .title, .result_list .saler {
 	margin-bottom: 2px;
 	text-indent: 5px;
+	overflow:hidden;
+	text-overflow:clip;
+	white-space:nowrap;
 }
 .title a {
 	color: rgba(0, 0, 0, 0.883);
@@ -1794,12 +1801,12 @@ body {
 .store_header .score_con p {
 	text-indent: 0;
 	text-align: center;
-	color: #d4c680;
+	color: #b3a665;
 }
 .store_header .score_con .score {
 	margin-top: -10px;
 	padding-bottom: 10px;
-	color: rgb(21, 139, 21);
+	color: rgb(243, 70, 58);
 }
 .score_con span {
 	padding: 0 3px;
@@ -2070,6 +2077,9 @@ body {
 }
 .i_top h1 {
 	font-size: 18px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
 }
 .i_top h4 {
 	font-weight: normal;
@@ -2272,10 +2282,10 @@ body {
 	height: 40px;
 	margin-top: 1px;
 }
-.count button {
+.count a {
 	float: left;
-	width: 15px;
-	height: 15px;
+	width: 13px;
+	height: 13px;
 	padding: 0;
 	margin: 2px 0;
 	border: 1px solid #999;
@@ -2295,8 +2305,20 @@ body {
 	height: 100px;
 	padding-left: 50px;
 	text-align: center;
+	position: relative;
 }
-.buy_btn a {
+.buy_btn .point {
+	width: 16px;
+	height: 16px;
+	border-radius: 8px;
+	background: red;
+	position: absolute;
+	left: 0px;
+	top: 0px;
+	z-index: 10000;
+	display: none;
+}
+.buy_btn a, .buy_btn input{
 	float: left;
 	width: 200px;
 	height: 40px;
@@ -2306,6 +2328,8 @@ body {
 	font-size: 16px;
 	color: #f00;
 	background: rgb(251, 236, 236);
+	box-sizing:content-box;
+	cursor: pointer;
 }
 .buy_btn .cart {
 	color: #fff;
@@ -2915,9 +2939,13 @@ body {
 }
 .descs .user_desc {
 	color: #666;
+	width: 100%;
+}
+.d_body .descs p {
+	width: 100%;
 }
 .user_desc ul {
-	height: 45px;
+	height: 46px;
 	margin: 10px 10px 10px 0;
 	overflow: hidden;
 }
@@ -2930,6 +2958,7 @@ body {
 	border: 1px solid #eeebeb;
 	background: #fff;
 }
+
 .user_desc li img {
 	width: 100%;
 }
@@ -2937,6 +2966,7 @@ body {
 	color: #999;
 }
 .descs .clerk_desc {
+	width: 100%;
 	margin: 15px 0;
 	padding: 0 10px;
 	color: #dbaf5c;
@@ -3065,6 +3095,10 @@ body {
 	cursor: not-allowed;
 	outline: none;
 }
+.settle_right .allow_settle {
+	background: #f00;
+	cursor: pointer;
+}
 .c_center .se_title {
 	height: 50px;
 	padding: 0 10px;
@@ -3138,7 +3172,7 @@ body {
 	margin: 10px 5px;
 }
 .g_pic img {
-	width: 100%;
+	width: 80px;
 }
 .s_info .g_title {
 	width: 210px;
@@ -3176,7 +3210,7 @@ body {
 	position: relative;
 }
 .s_stand:hover {
-	border: 1px dashed #f00;
+	/*border: 1px dashed #f00;*/
 }
 .s_stand i {
 	width: 40px;
@@ -3228,6 +3262,7 @@ body {
 	border-color: #aaa;
 	background: #e7e7e7;
 	box-sizing: content-box;
+	cursor: pointer;
 }
 .s_count .btn:hover {
 	border-color: #f00;
@@ -3421,6 +3456,7 @@ body {
 }
 .logined .shop_cart span {
 	padding-bottom: 20px;
+	width: 20px;
 }
 .logined .cart_page .shop_cart {
 	background: #f00;

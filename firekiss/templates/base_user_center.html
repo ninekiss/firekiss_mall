@@ -1,0 +1,85 @@
+{% extends "base_goods.html" %}
+{% load staticfiles %}
+{% block title %}个人中心-火吻商城{% endblock title %}
+{% block topfiles %}
+	<script>
+		$(function() {
+			$('#edit_pic').click(function() {
+				$('.upload').toggle();
+			})
+		});
+	</script>
+{% endblock topfiles %}
+
+{# 头部栏包括logo、搜索框 #}
+{% block header %}
+	<!-- 头部栏包括logo、搜索框 -->
+	<div class="header list_page cart_page">
+		<a href="#" class="logo fl"><h1>FIREKISS</h1></a>
+		<h3>我的火吻</h3>
+		<div class="search fl">
+			<form class="search_str" method="get" action="/search/">
+				<input type="text" name="q" class="input_text fl" placeholder="请输入关键词">
+				<input type="submit" name="" class="input_btn fl" value="搜 索">
+			</form>
+		</div>
+	</div>
+{% endblock header %}
+
+{# 每个商品相关页主要内容块 #}
+{% block body_main %}
+	<!-- 用户中心 -->
+	<div class="user_con">
+		<div class="u_left">
+			<div class="pic">
+				<img src="{% if user.avatar %}{{user.avatar.url}}{% else %} {% endif %}" alt="">
+			</div>
+			<h4>账号管理</h4>
+			<ul class="clearfix">
+				<li><a href="{% url 'user:user' %}" {% if page == 'user' %} class="now_page"{% endif %}>个人资料</a></li>
+				<li><a href="{% url 'user:address' %}" {% if page == 'address' %} class="now_page"{% endif %}>收货地址</a></li>
+				<li><a href="{% url 'user:order' 1 %}" {% if page == 'order' %} class="now_page"{% endif %}>我的订单</a></li>
+				<li><a href="{% url 'user:pay_method' %}" {% if page == 'pay_method' %} class="now_page"{% endif %}>支付设置</a></li>
+				<li><a href="{% url 'user:safety' %}" {% if page == 'safety' %} class="now_page"{% endif %}>安全设置</a></li>
+				<li><a href="{% url 'user:privacy' %}" {% if page == 'privacy' %} class="now_page"{% endif %}>隐私设置</a></li>
+			</ul>
+		</div>
+		<div class="u_center">
+		{# 用户中心内容块 #}
+		{% block user_center %}
+			<div class="edit">
+				<form method="post" enctype="multipart/form-data" >
+					{% csrf_token %}
+					<div class="e_pic">
+						<img src="{% if user.avatar %}{{user.avatar.url}}{% else %} {% endif %}" alt="">
+						<a href="javascript:;" id="edit_pic">编辑头像</a>
+						<input type="file" class="upload" value1="选择图片" name="avatar">
+					</div>
+					<div class="e_info">
+
+							<label for="">昵称:</label>
+							<input type="text" readonly="readonly" value="{{user.username}}"><br>
+							<label for="">手机:</label>
+							<input type="text" readonly="readonly" value="{{user.tel}}"><br>
+							<label for="">邮箱:</label>
+							<input type="text" readonly="readonly" value="{{user.email}}"><br>
+							<label for="">生日:</label>
+							<input type="text"  readonly="readonly" value="暂不支持"><br>
+							<p>
+								<label for="">性别:</label>
+								<input type="radio">男
+								<input type="radio">女
+								<input type="radio">其他
+							</p>
+							<input type="submit" class="btn" value="保存">
+					</div>
+				</form>
+			</div>
+		{% endblock user_center %}
+		</div>
+	</div>
+{% endblock body_main %}
+
+{# 底部分页相关 #}
+{% block body_other %}
+{% endblock body_other %}

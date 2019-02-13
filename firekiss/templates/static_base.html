@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load staticfiles %}
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	{# 网页标题块 #}
+	<title>{% block title %}{% endblock title %}</title>
+	<link rel="stylesheet" href="{% static 'css/reset.css' %}">
+	<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+	<script src="{% static 'js/jquery-1.12.4.js' %}"></script>
+	<script src="{% static 'js/main.js' %}"></script>
+	{# 网页顶部引入文件块#}
+	{% block topfiles %}{% endblock topfiles %}
+</head>
+<body>
+	{# 顶部栏 #}
+	{% block top %}
+		<div class="top_con">
+			<div class="top">
+				<!-- 未登录 -->
+				<ul class="no_login fl">
+					{% block is_index %}
+						<li><a href="index.html">火吻首页</a><i class="icon_home"></i></li>
+					{% endblock is_index %}
+					<li><span>哞，欢迎来火吻</span></li>
+					<li><a href="{% url 'user:login' %}">请登录{{user.username}}</a></li>
+					<li><a href="{% url 'user:register' %}">免费注册</a></li>
+				</ul>
+				<!-- 未开发功能 -->
+				<ul class="other_fk fr">
+					<li><span>|</span></li>
+					<li><a href="#">手机版</a><i class="icon_mobile"></i></li>
+					<li><a href="#">冰吻鲜生</a></li>
+					<li><a href="#">商家支持</a></li>
+					<li><a href="#">网站导航</a><i class="icon_nav"></i></li>
+				</ul>
+				<!-- 用户相关 -->
+				<ul class="user_set fr">
+					<li><a href="{% url 'user:order' %}">我的宝贝</a></li>
+					<li><a href="#">购物车<em>0</em>件</a><i class="icon_cart"></i></li>
+					<li><a href="#">收藏夹</a></li>
+				</ul>
+			</div>
+		</div>
+	{% endblock top %}
+	
+	{# 头部栏包括logo、搜索框 #}
+	{% block header %}
+	{% endblock header %}
+	
+	{# 导航栏 #}
+	{% block nav %}
+	{% endblock nav %}
+
+	{# 网页body块 #}
+	{% block body %}
+
+	{% endblock body %}
+
+	<!-- footer -->
+	<div class="foot_con">
+		<div class="foot clearfix">
+			<a href="#" class="fk_ensure">
+				<img src="{% static 'images/ensure.jpg' %}" alt="火吻品控">
+			</a>
+			<div class="desc clearfix">
+				<dl>
+					<dt>购物指南</dt>
+					<dd><a href="#">免费注册</a></dd>
+					<dd><a href="#">开通kisspay</a></dd>
+					<dd><a href="#">kisspay充值</a></dd>
+				</dl>
+				<dl>
+					<dt>火吻保障</dt>
+					<dd><a href="#">发票保障</a></dd>
+					<dd><a href="#">售后规则</a></dd>
+					<dd><a href="#">缺货赔付</a></dd>
+				</dl>
+				<dl>
+					<dt>支付方式</dt>
+					<dd><a href="#">快捷支付</a></dd>
+					<dd><a href="#">信用卡</a></dd>
+					<dd><a href="#">kisspay</a></dd>
+					<dd><a href="#">蚂蚁花呗</a></dd>
+					<dd><a href="#">货到付款</a></dd>
+					<dd><a href="#">支付宝</a></dd>
+					<dd><a href="#">paypal</a></dd>
+				</dl>
+				<dl>
+					<dt>商家服务</dt>
+					<dd><a href="#">火吻规则</a></dd>
+					<dd><a href="#">商家入驻</a></dd>
+					<dd><a href="#">商家中心</a></dd>
+					<dd><a href="#">物流服务</a></dd>
+					<dd><a href="#">运营服务</a></dd>
+				</dl>
+				<dl>
+					<dt>手机火吻</dt>
+					<dd>
+						<a href="#"><img src="{% static 'images/qr_code.png' %}" alt=""></a>
+					</dd>
+				</dl>
+			</div>
+		</div>
+	</div>
+	
+	<!-- bottom -->
+	<div class="bottom_con">
+		<div class="bottom clearfix">
+			<div class="bot_link">
+				<a href="#">关于火吻</a>
+				<a href="#">帮助中心</a>
+				<a href="#">开放平台</a>
+				<a href="#">诚聘英才</a>
+				<a href="#">联系我们</a>
+				<a href="#">网站合作</a>
+				<a href="#">法律声明</a>
+				<a href="#">隐私权政策</a>
+				<a href="#">知识产权</a>
+				<a href="#">廉正举报</a>
+				<a href="#">规则意见征集</a>
+			</div>
+			<div class="fk_other_link">
+				<a href="#">观天集团</a> |
+				<a href="#">火吻</a> |
+				<a href="#">全星系速卖通</a> |
+				<a href="#">观天星际交易市场</a> |
+				<a href="#">2084</a> |
+				<a href="#">火矢星旅</a> |
+				<a href="#">观天数据</a> |
+				<a href="#">Aodoco</a> |
+				<a href="#">KissPay</a> |
+				<a href="#">赫斯顿商业协会</a> |
+			</div>
+			<div class="fk_info">
+				<p>
+					<span>增值电信业务经营许可证：<a href="#">赫斯顿A-J637098</a></span>
+					<span>市场名称登记证：工商网市字33010041049号</span>
+					<span>出版物网络交易平台服务经营备案证：新出发威备字第001号</span>
+				</p>
+				<p>
+					<span>互联网违法和不良信息举报电话：00001-00000001 blxxjb@firekiss-inc.com</span>
+					<span>互联网药品信息服务资质证书编号：<a href="#">银-（经营性）-2049-0002</a></span>
+					<span><a href="#" class="police_icon"><i></i>银河警备 33010002000120号</a></span>
+				</p>
+				<p>
+					<span>医疗器械网络交易服务第三方平台备案：（银）网械平台备字[2049]第00001号</span>
+					<span>互联网药品交易服务资格证书：赫斯顿A20150001</span>
+				</p>
+				<p>
+					<span>威尔市网络食品销售第三方平台提供者备案：威网食A33010001</span>
+					<span><a href="#">0000001举报</a></span>
+				</p>
+				<p><span class="allright">© 20028-2049 FIREKISS.COM 版权所有</span></p>
+				<p>
+					<a href="#"><img src="" alt=""></a>
+					<a href="#"><img src="" alt=""></a>
+				</p>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 固定定位元素 -->
+	{# 顶部悬浮搜索框块 #}
+	{% block top_fixed_search %}
+	{% endblock top_fixed_search %}
+
+	{# 右侧导航条块 #}
+	{% block right_nav %}
+		<div class="logined right_nav_con">
+			<div class="right_nav clearfix">
+				{# 右侧选项 #}
+				{% block right_op %}
+					<a href="#" class="vip" title="会员中心"><i></i></a>
+					<a href="#" class="shop_cart clearfix"><i></i><span>购物车</span></a>
+				{% endblock right_op %}
+				<a href="#" class="money" title="支付方式"><i></i></a>
+				<a href="#" class="colle" title="我的收藏"><i></i></a>
+				<a href="#" class="seen" title="我看过的"><i></i></a>
+				<a href="#" class="pay" title="我要充值"><i></i></a>
+				<a href="#" class="feed" title="用户反馈"><i></i></a>
+				<a href="#" class="qr" title="手机火吻"><i></i></a>
+				<a href="javascript:;" class="r_top"><i></i></a>
+			</div>
+		</div>
+	{% endblock right_nav %}
+</body>
+</html>

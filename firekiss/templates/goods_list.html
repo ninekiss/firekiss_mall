@@ -1,10 +1,41 @@
 {% extends "base_goods.html" %}
+{% load staticfiles %}
 {% block title %}手机-火吻商城{% endblock title %}
 {% block topfiles %}
 	<script>
 		$(function() {
 			filter_con();
 			pagenater();
+			var top_prev_page = $('#f_prev_page');
+			var top_next_page = $('#f_next_page');
+			var page_to_btn = $('#page_to_btn1');
+
+			top_prev_page.click(function () {
+				var prev_url = $(this).prop('name');
+				if (prev_url){
+				    window.location.href = prev_url;
+				}
+
+            });
+			top_next_page.click(function () {
+				var next_url = $(this).prop('name');
+				if (next_url){
+				    window.location.href = next_url;
+				}
+
+            });
+
+		    page_to_btn.click(function () {
+
+		        var page_to = $(this).parent().prev().children().val();
+		        var type_id = {{type.id|safe}};
+		        var sort = '{{sort|safe}}';
+
+		        var url = '/list/'+type_id+'/'+page_to+'?sort='+sort;
+		        if (parseInt(page_to)){
+		            window.location.href = url;
+		        }
+            });
 		});
 	</script>
 {% endblock topfiles %}
@@ -12,10 +43,10 @@
 {# 头部栏包括logo、搜索框 #}
 {% block header %}
 	<div class="header list_page">
-		<a href="#" class="logo fl"><h1>FIREKISS</h1></a>
+		<a href="{% url 'goods:index' %}" class="logo fl"><h1>FIREKISS</h1></a>
 		<div class="search fl">
-			<form class="search_str">
-				<input type="text" name="" class="input_text fl" placeholder="请输入关键词">
+			<form class="search_str" method="get" action="/search/">
+				<input type="text" name="q" class="input_text fl" placeholder="请输入关键词">
 				<input type="submit" name="" class="input_btn fl" value="搜 索">
 			</form>
 			<ul class="search_fast">
@@ -30,7 +61,7 @@
 		</div>
 		<div class="list_top_ads">
 			<a href="#">
-				<img src="images/TB1vHJ8qQomBKNjSZFqXXXtqVXa-380-160.png" alt="手机火吻">
+				<img src="{% static 'images/TB1vHJ8qQomBKNjSZFqXXXtqVXa-380-160.png' %}" alt="手机火吻">
 			</a>
 		</div>
 	</div>
@@ -44,21 +75,21 @@
 			<div class="all_search">
 				<a href="#">全部</a>
 				<i>></i>
-				<input type="text" placeholder="手机">
+				<input type="text" placeholder="{{type.type}}" readonly>
 				<i class="icon"></i>
 			</div>
 			<div class="all_result">
-				共 <em>1942334</em> 件相关商品
+				共 <em>{{skus_page.paginator.count}}</em> 件相关商品
 			</div>
 		</div>
 		<div class="filter">
 			<div class="f_many fl">
 				<div class="div1">
-					<a href="javascript:;" class="f_active">综合<i class="icon_filter"></i></a>
-					<a href="javascript:;">人气<i class="icon_filter"></i></a>
-					<a href="javascript:;">新品<i class="icon_filter"></i></a>
-					<a href="javascript:;">销量<i class="icon_filter"></i></a>
-					<a href="javascript:;">价格<i class="icon_filter"></i></a>
+					<a href="{% url 'goods:list' type.id 1 %}"{% if sort == 'default' %}class="f_active"{% endif %}>综合<i class="icon_filter"></i></a>
+					<a href="{% url 'goods:list' type.id 1 %}?sort=hot"{% if sort == 'hot' %}class="f_active"{% endif %}>人气<i class="icon_filter"></i></a>
+					<a href="{% url 'goods:list' type.id 1 %}?sort=new"{% if sort == 'new' %}class="f_active"{% endif %}>新品<i class="icon_filter"></i></a>
+					<a href="{% url 'goods:list' type.id 1 %}?sort=sales"{% if sort == 'sales' %}class="f_active"{% endif %}>销量<i class="icon_filter"></i></a>
+					<a href="{% url 'goods:list' type.id 1 %}?sort=price"{% if sort == 'price' %}class="f_active"{% endif %}>价格<i class="icon_filter"></i></a>
 				</div>
 				<div class="div2">
 					<span>收货地:</span>
@@ -92,9 +123,9 @@
 				</div>
 			</div>
 			<div class="f_page fr">
-				<p><em>1</em>/<em>5</em></p>
-				<input type="button" id="f_prev_page" class="active_btn"  value="&lt;">
-				<input type="button" id="f_next_page" value="&gt;">
+				<p><em>{{skus_page.number}}</em>/<em>{{skus_page.paginator.num_pages}}</em></p>
+				<input type="button" id="f_prev_page" name="{% if skus_page.has_previous %}{% url 'goods:list' type.id skus_page.previous_page_number %}?sort={{sort}}{% endif %}" class="active_btn"  value="&lt;">
+				<input type="button" id="f_next_page" name="{% if skus_page.has_next %}{% url 'goods:list' type.id skus_page.next_page_number %}?sort={{sort}}{% endif %}" value="&gt;">
 			</div>
 		</div>
 	</div>
@@ -103,356 +134,43 @@
 	<div class="result_list_con">
 		<div class="result_list">
 			<ul class="clearfix">
+				{% for sku in skus_page %}
 				<li>
 					<div class="border_shake">
-						<a href="#" class="pic">
-							<img src="images/TB107BWXgnD8KJjy1XdCweZsVXa_023057.jpg" alt="">
+						<a href="{% url 'goods:detail' sku.id %}" class="pic">
+							<img src="{{sku.image.url}}" alt="">
 						</a>
-						<div class="thump_con">
+						<div class="thump_con no_icon">
 							<p class="thump">
-								<a href="#" class="first">
-									<img src="images/O1CN0122AEDT7gMmrnOUp_!!1917047079.jpg_30x30.jpg" alt="">
+								<a href="{% url 'goods:detail' sku.id %}" class="first">
+									<img src="{{sku.image.url}}" alt="">
 								</a>
-								<a href="#">
-									<img src="images/O1CN0122AEDUW7KTlcv7q_!!1917047079.jpg_30x30.jpg" alt="">
+								<a href="{% url 'goods:detail' sku.id %}" class="first">
+									<img src="{{sku.image.url}}" alt="">
 								</a>
-								<a href="#">
-									<img src="images/TB1X2tSXlfH8KJjy1XbCwfLdXXa_023057.jpg_30x30.jpg" alt="">
+								<a href="{% url 'goods:detail' sku.id %}" class="first">
+									<img src="{{sku.image.url}}" alt="">
 								</a>
-								<a href="#">
-									<img src="images/O1CN0122AEDNRubJERqkK_!!1917047079.jpg_30x30.jpg" alt="">
+								<a href="{% url 'goods:detail' sku.id %}" class="first">
+									<img src="{{sku.image.url}}" alt="">
 								</a>
-								<a href="#">
-									<img src="images/O1CN0122AEDUW7KTlcv7q_!!1917047079.jpg_30x30.jpg" alt="">
+								<a href="{% url 'goods:detail' sku.id %}" class="first">
+									<img src="{{sku.image.url}}" alt="">
 								</a>
 							</p>
-							<i class="i_prev"></i>
-							<i class="i_next"></i>
+							<!--<i class="i_prev"></i>-->
+							<!--<i class="i_next"></i>-->
 						</div>
-						<p class="price">¥<em>1399.00</em></p>
-						<p class="title"><a href="#">Apple/苹果 iPhone X</a></p>
+						<p class="price">¥<em>{{sku.real_price}}</em></p>
+						<p class="title"><a href="{% url 'goods:detail' sku.id %}">{{sku.name}}</a></p>
 						<p class="saler"><a href="#">火吻官方自营店</a></p>
 						<p class="sales">
-							<span>该款月成交 <em>4.1万笔</em></span>
+							<span>该款月成交 <em>{{sku.sales}}笔</em></span>
 							<a href="#" title="点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。"><i class="i_curs"></i></a>
 						</p>
 				</div>
 				</li>
-				<li>
-						<div class="border_shake">
-							<a href="#" class="pic">
-								<img src="images/TB107BWXgnD8KJjy1XdCweZsVXa_023057.jpg" alt="">
-							</a>
-							<div class="thump_con no_icon">
-								<p class="thump">
-									<a href="#" class="first">
-										<img src="images/O1CN0122AEDT7gMmrnOUp_!!1917047079.jpg_30x30.jpg" alt="">
-									</a>
-									<a href="#">
-										<img src="images/O1CN0122AEDUW7KTlcv7q_!!1917047079.jpg_30x30.jpg" alt="">
-									</a>
-									<a href="#">
-										<img src="images/TB1X2tSXlfH8KJjy1XbCwfLdXXa_023057.jpg_30x30.jpg" alt="">
-									</a>
-									<a href="#">
-										<img src="images/O1CN0122AEDNRubJERqkK_!!1917047079.jpg_30x30.jpg" alt="">
-									</a>
-									<a href="#">
-										<img src="images/O1CN0122AEDUW7KTlcv7q_!!1917047079.jpg_30x30.jpg" alt="">
-									</a>
-								</p>
-								<i class="i_prev"></i>
-								<i class="i_next"></i>
-							</div>
-							<p class="price">¥<em>1399.00</em></p>
-							<p class="title"><a href="#">Apple/苹果 iPhone X</a></p>
-							<p class="saler"><a href="#">火吻官方自营店</a></p>
-							<p class="sales">
-								<span>该款月成交 <em>4.1万笔</em></span>
-								<a href="#" title="点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。"><i class="i_curs"></i></a>
-							</p>
-					</div>
-				</li>
-				<li>
-							<div class="border_shake">
-								<a href="#" class="pic">
-									<img src="images/TB107BWXgnD8KJjy1XdCweZsVXa_023057.jpg" alt="">
-								</a>
-								<div class="thump_con no_icon">
-									<p class="thump">
-										<a href="#" class="first">
-											<img src="images/O1CN0122AEDT7gMmrnOUp_!!1917047079.jpg_30x30.jpg" alt="">
-										</a>
-										<a href="#">
-											<img src="images/O1CN0122AEDUW7KTlcv7q_!!1917047079.jpg_30x30.jpg" alt="">
-										</a>
-										<a href="#">
-											<img src="images/TB1X2tSXlfH8KJjy1XbCwfLdXXa_023057.jpg_30x30.jpg" alt="">
-										</a>
-										<a href="#">
-											<img src="images/O1CN0122AEDNRubJERqkK_!!1917047079.jpg_30x30.jpg" alt="">
-										</a>
-										<a href="#">
-											<img src="images/O1CN0122AEDUW7KTlcv7q_!!1917047079.jpg_30x30.jpg" alt="">
-										</a>
-									</p>
-									<i class="i_prev"></i>
-									<i class="i_next"></i>
-								</div>
-								<p class="price">¥<em>1399.00</em></p>
-								<p class="title"><a href="#">Apple/苹果 iPhone X</a></p>
-								<p class="saler"><a href="#">火吻官方自营店</a></p>
-								<p class="sales">
-									<span>该款月成交 <em>4.1万笔</em></span>
-									<a href="#" title="点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。"><i class="i_curs"></i></a>
-								</p>
-						</div>
-				</li>
-				<li>
-								<div class="border_shake">
-									<a href="#" class="pic">
-										<img src="images/TB107BWXgnD8KJjy1XdCweZsVXa_023057.jpg" alt="">
-									</a>
-									<div class="thump_con no_icon">
-										<p class="thump">
-											<a href="#" class="first">
-												<img src="images/O1CN0122AEDT7gMmrnOUp_!!1917047079.jpg_30x30.jpg" alt="">
-											</a>
-											<a href="#">
-												<img src="images/O1CN0122AEDUW7KTlcv7q_!!1917047079.jpg_30x30.jpg" alt="">
-											</a>
-											<a href="#">
-												<img src="images/TB1X2tSXlfH8KJjy1XbCwfLdXXa_023057.jpg_30x30.jpg" alt="">
-											</a>
-											<a href="#">
-												<img src="images/O1CN0122AEDNRubJERqkK_!!1917047079.jpg_30x30.jpg" alt="">
-											</a>
-											<a href="#">
-												<img src="images/O1CN0122AEDUW7KTlcv7q_!!1917047079.jpg_30x30.jpg" alt="">
-											</a>
-										</p>
-										<i class="i_prev"></i>
-										<i class="i_next"></i>
-									</div>
-									<p class="price">¥<em>1399.00</em></p>
-									<p class="title"><a href="#">Apple/苹果 iPhone X</a></p>
-									<p class="saler"><a href="#">火吻官方自营店</a></p>
-									<p class="sales">
-										<span>该款月成交 <em>4.1万笔</em></span>
-										<a href="#" title="点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。"><i class="i_curs"></i></a>
-									</p>
-							</div>
-				</li>
-				<li>
-						<div class="border_shake">
-							<a href="#" class="pic">
-								<img src="images/TB107BWXgnD8KJjy1XdCweZsVXa_023057.jpg" alt="">
-							</a>
-							<div class="thump_con no_icon">
-								<p class="thump">
-									<a href="#" class="first">
-										<img src="images/O1CN0122AEDT7gMmrnOUp_!!1917047079.jpg_30x30.jpg" alt="">
-									</a>
-									<a href="#">
-										<img src="images/O1CN0122AEDUW7KTlcv7q_!!1917047079.jpg_30x30.jpg" alt="">
-									</a>
-									<a href="#">
-										<img src="images/TB1X2tSXlfH8KJjy1XbCwfLdXXa_023057.jpg_30x30.jpg" alt="">
-									</a>
-									<a href="#">
-										<img src="images/O1CN0122AEDNRubJERqkK_!!1917047079.jpg_30x30.jpg" alt="">
-									</a>
-									<a href="#">
-										<img src="images/O1CN0122AEDUW7KTlcv7q_!!1917047079.jpg_30x30.jpg" alt="">
-									</a>
-								</p>
-								<i class="i_prev"></i>
-								<i class="i_next"></i>
-							</div>
-							<p class="price">¥<em>1399.00</em></p>
-							<p class="title"><a href="#">Apple/苹果 iPhone X</a></p>
-							<p class="saler"><a href="#">火吻官方自营店</a></p>
-							<p class="sales">
-								<span>该款月成交 <em>4.1万笔</em></span>
-								<a href="#" title="点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。"><i class="i_curs"></i></a>
-							</p>
-					</div>
-				</li>
-				<li>
-						<div class="border_shake">
-							<a href="#" class="pic">
-								<img src="images/TB107BWXgnD8KJjy1XdCweZsVXa_023057.jpg" alt="">
-							</a>
-							<div class="thump_con">
-								<p class="thump">
-									<a href="#" class="first">
-										<img src="images/O1CN0122AEDT7gMmrnOUp_!!1917047079.jpg_30x30.jpg" alt="">
-									</a>
-									<a href="#">
-										<img src="images/O1CN0122AEDUW7KTlcv7q_!!1917047079.jpg_30x30.jpg" alt="">
-									</a>
-									<a href="#">
-										<img src="images/TB1X2tSXlfH8KJjy1XbCwfLdXXa_023057.jpg_30x30.jpg" alt="">
-									</a>
-									<a href="#">
-										<img src="images/O1CN0122AEDNRubJERqkK_!!1917047079.jpg_30x30.jpg" alt="">
-									</a>
-									<a href="#">
-										<img src="images/O1CN0122AEDUW7KTlcv7q_!!1917047079.jpg_30x30.jpg" alt="">
-									</a>
-								</p>
-								<i class="i_prev"></i>
-								<i class="i_next"></i>
-							</div>
-							<p class="price">¥<em>1399.00</em></p>
-							<p class="title"><a href="#">Apple/苹果 iPhone X</a></p>
-							<p class="saler"><a href="#">火吻官方自营店</a></p>
-							<p class="sales">
-								<span>该款月成交 <em>4.1万笔</em></span>
-								<a href="#" title="点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。"><i class="i_curs"></i></a>
-							</p>
-					</div>
-				</li>
-				<li>
-						<div class="border_shake">
-							<a href="#" class="pic">
-								<img src="images/TB107BWXgnD8KJjy1XdCweZsVXa_023057.jpg" alt="">
-							</a>
-							<div class="thump_con no_icon">
-								<p class="thump">
-									<a href="#" class="first">
-										<img src="images/O1CN0122AEDT7gMmrnOUp_!!1917047079.jpg_30x30.jpg" alt="">
-									</a>
-									<a href="#">
-										<img src="images/O1CN0122AEDUW7KTlcv7q_!!1917047079.jpg_30x30.jpg" alt="">
-									</a>
-									<a href="#">
-										<img src="images/TB1X2tSXlfH8KJjy1XbCwfLdXXa_023057.jpg_30x30.jpg" alt="">
-									</a>
-									<a href="#">
-										<img src="images/O1CN0122AEDNRubJERqkK_!!1917047079.jpg_30x30.jpg" alt="">
-									</a>
-									<a href="#">
-										<img src="images/O1CN0122AEDUW7KTlcv7q_!!1917047079.jpg_30x30.jpg" alt="">
-									</a>
-								</p>
-								<i class="i_prev"></i>
-								<i class="i_next"></i>
-							</div>
-							<p class="price">¥<em>1399.00</em></p>
-							<p class="title"><a href="#">Apple/苹果 iPhone X</a></p>
-							<p class="saler"><a href="#">火吻官方自营店</a></p>
-							<p class="sales">
-								<span>该款月成交 <em>4.1万笔</em></span>
-								<a href="#" title="点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。"><i class="i_curs"></i></a>
-							</p>
-					</div>
-				</li>
-				<li>
-							<div class="border_shake">
-								<a href="#" class="pic">
-									<img src="images/TB107BWXgnD8KJjy1XdCweZsVXa_023057.jpg" alt="">
-								</a>
-								<div class="thump_con no_icon">
-									<p class="thump">
-										<a href="#" class="first">
-											<img src="images/O1CN0122AEDT7gMmrnOUp_!!1917047079.jpg_30x30.jpg" alt="">
-										</a>
-										<a href="#">
-											<img src="images/O1CN0122AEDUW7KTlcv7q_!!1917047079.jpg_30x30.jpg" alt="">
-										</a>
-										<a href="#">
-											<img src="images/TB1X2tSXlfH8KJjy1XbCwfLdXXa_023057.jpg_30x30.jpg" alt="">
-										</a>
-										<a href="#">
-											<img src="images/O1CN0122AEDNRubJERqkK_!!1917047079.jpg_30x30.jpg" alt="">
-										</a>
-										<a href="#">
-											<img src="images/O1CN0122AEDUW7KTlcv7q_!!1917047079.jpg_30x30.jpg" alt="">
-										</a>
-									</p>
-									<i class="i_prev"></i>
-									<i class="i_next"></i>
-								</div>
-								<p class="price">¥<em>1399.00</em></p>
-								<p class="title"><a href="#">Apple/苹果 iPhone X</a></p>
-								<p class="saler"><a href="#">火吻官方自营店</a></p>
-								<p class="sales">
-									<span>该款月成交 <em>4.1万笔</em></span>
-									<a href="#" title="点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。"><i class="i_curs"></i></a>
-								</p>
-						</div>
-				</li>
-				<li>
-								<div class="border_shake">
-									<a href="#" class="pic">
-										<img src="images/TB107BWXgnD8KJjy1XdCweZsVXa_023057.jpg" alt="">
-									</a>
-									<div class="thump_con no_icon">
-										<p class="thump">
-											<a href="#" class="first">
-												<img src="images/O1CN0122AEDT7gMmrnOUp_!!1917047079.jpg_30x30.jpg" alt="">
-											</a>
-											<a href="#">
-												<img src="images/O1CN0122AEDUW7KTlcv7q_!!1917047079.jpg_30x30.jpg" alt="">
-											</a>
-											<a href="#">
-												<img src="images/TB1X2tSXlfH8KJjy1XbCwfLdXXa_023057.jpg_30x30.jpg" alt="">
-											</a>
-											<a href="#">
-												<img src="images/O1CN0122AEDNRubJERqkK_!!1917047079.jpg_30x30.jpg" alt="">
-											</a>
-											<a href="#">
-												<img src="images/O1CN0122AEDUW7KTlcv7q_!!1917047079.jpg_30x30.jpg" alt="">
-											</a>
-										</p>
-										<i class="i_prev"></i>
-										<i class="i_next"></i>
-									</div>
-									<p class="price">¥<em>1399.00</em></p>
-									<p class="title"><a href="#">Apple/苹果 iPhone X</a></p>
-									<p class="saler"><a href="#">火吻官方自营店</a></p>
-									<p class="sales">
-										<span>该款月成交 <em>4.1万笔</em></span>
-										<a href="#" title="点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。"><i class="i_curs"></i></a>
-									</p>
-							</div>
-				</li>
-				<li>
-						<div class="border_shake">
-							<a href="#" class="pic">
-								<img src="images/TB107BWXgnD8KJjy1XdCweZsVXa_023057.jpg" alt="">
-							</a>
-							<div class="thump_con no_icon">
-								<p class="thump">
-									<a href="#" class="first">
-										<img src="images/O1CN0122AEDT7gMmrnOUp_!!1917047079.jpg_30x30.jpg" alt="">
-									</a>
-									<a href="#">
-										<img src="images/O1CN0122AEDUW7KTlcv7q_!!1917047079.jpg_30x30.jpg" alt="">
-									</a>
-									<a href="#">
-										<img src="images/TB1X2tSXlfH8KJjy1XbCwfLdXXa_023057.jpg_30x30.jpg" alt="">
-									</a>
-									<a href="#">
-										<img src="images/O1CN0122AEDNRubJERqkK_!!1917047079.jpg_30x30.jpg" alt="">
-									</a>
-									<a href="#">
-										<img src="images/O1CN0122AEDUW7KTlcv7q_!!1917047079.jpg_30x30.jpg" alt="">
-									</a>
-								</p>
-								<i class="i_prev"></i>
-								<i class="i_next"></i>
-							</div>
-							<p class="price">¥<em>1399.00</em></p>
-							<p class="title"><a href="#">Apple/苹果 iPhone X</a></p>
-							<p class="saler"><a href="#">火吻官方自营店</a></p>
-							<p class="sales">
-								<span>该款月成交 <em>4.1万笔</em></span>
-								<a href="#" title="点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。"><i class="i_curs"></i></a>
-							</p>
-					</div>
-				</li>
+				{% endfor %}
 			</ul>
 		</div>
 	</div>

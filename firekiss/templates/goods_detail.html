@@ -1,4 +1,5 @@
 {% extends "base_goods.html" %}
+{% load staticfiles %}
 {% block title %}商品详情页-火吻商城{% endblock title %}
 {% block topfiles %}
 	<script>
@@ -10,6 +11,52 @@
 			glass(pself, shadow, follow, multiple);
 			pagenater();
 			detail_con();
+			cart_add();
+
+			function cart_add() {
+			    var $add_btn = $('.cart');
+			    var $cart_top = $('#cart_top_total em');
+			    var $cart_right = $('#cart_right_total em');
+			    // 添加商品到购物车
+				// ajax post请求
+				// 参数:商品id(sku.id),要添加的数量(count)
+				$add_btn.mousedown(function () {
+					$(this).css("background-color","#c14b4b");
+                });
+				$add_btn.mouseup(function () {
+					$(this).css("background-color","red");
+                });
+				$add_btn.click(function () {
+					// 获取要添加的数量
+					var sku_id = $('#sku_add_count').attr('sku_id');
+					var count = $('#sku_add_count').val();
+					var csrf = $(this).prev().val();
+
+					// 组织参数
+					content = {
+						"sku_id": sku_id,
+						"count": count,
+						"csrfmiddlewaretoken": csrf
+					}
+
+					// 发送ajax请求
+					$.post('/cart/add', content, function (data) {
+						if (data.status == 200){
+							// 添加成功
+							// 修改页面顶部和右侧购物车商品数目
+							$cart_top.text(data.total);
+							$cart_right.text(data.total);
+							alert(data.msg);
+						}
+						else {
+							alert(data.msg+',请重试!');
+						}
+					});
+				});
+			};
+
+
+
 		})
 	</script>
 {% endblock topfiles %}
@@ -18,12 +65,12 @@
 {% block header %}
 	<div class="detail_con">
 		<div class="header list_page detail_page">
-		<a href="#" class="logo fl"><h1>FIREKISS</h1></a>
+		<a href="{% url 'goods:index' %}" class="logo fl"><h1>FIREKISS</h1></a>
 		<ul class="store_header">
 			<div class="for_hover">
 				<li  class="name">
 					<p>
-						<span>南国屋食品专营店</span>
+						<span>火吻官方直营店</span>
 					</p>
 					<p>
 						<a href="#"></a>
@@ -36,57 +83,54 @@
 					<span>物流</span>
 				</p>
 				<p class="score">
-					<span><em>4.7</em>↓</span>
-					<span><em>4.7</em>↓</span>
-					<span><em>4.7</em>↓</span>
+					<span><em>5.2</em>↑</span>
+					<span><em>5.2</em>↑</span>
+					<span><em>5.2</em>↑</span>
 				</p>
 				<i></i>
 				</li>
 			</div>
-			<div class="store_info">
-				<div class="topr clearfix">
-					<h2><span>店铺动态评分</span><span>与同行业相比</span></h2>
-					<p><span>描述相符:</span><a href="#"><em>4.7</em><span>↓ 低于<em>3.24%</em></span></a></p>
-					<p><span>服务态度:</span><a href="#"><em>4.7</em><span>↓ 低于<em>2.15%</em></span></a></p>
-					<p><span>物流服务:</span><a href="#"><em>4.7</em><span>↓ 低于<em>1.96%</em></span></a></p>
-				</div>
-				<div class="center clearfix">
-					<h2>店铺服务</h2>
-					<p>掌 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 柜:<span>南国屋食品专营店</span></p>
-					<p>客 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 服:<i class="kefu"></i></p>
-					<p>开店时长:<i class="time"></i></p>
-					<p>所 在 &nbsp;地:<span>海南, 海口</span></p>
-					<p>企业资质:<i class="qua"></i></p>
-				</div>
-				<div  class="botr">
-					<button><i></i>进店逛逛</button>
-					<button class="now_store"><i></i>收藏本店</button>
-				</div>
-			</div>
+			<!--<div class="store_info">-->
+				<!--<div class="topr clearfix">-->
+					<!--<h2><span>店铺动态评分</span><span>与同行业相比</span></h2>-->
+					<!--<p><span>描述相符:</span><a href="#"><em>4.7</em><span>↓ 低于<em>3.24%</em></span></a></p>-->
+					<!--<p><span>服务态度:</span><a href="#"><em>4.7</em><span>↓ 低于<em>2.15%</em></span></a></p>-->
+					<!--<p><span>物流服务:</span><a href="#"><em>4.7</em><span>↓ 低于<em>1.96%</em></span></a></p>-->
+				<!--</div>-->
+				<!--<div class="center clearfix">-->
+					<!--<h2>店铺服务</h2>-->
+					<!--<p>掌 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 柜:<span>南国屋食品专营店</span></p>-->
+					<!--<p>客 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 服:<i class="kefu"></i></p>-->
+					<!--<p>开店时长:<i class="time"></i></p>-->
+					<!--<p>所 在 &nbsp;地:<span>海南, 海口</span></p>-->
+					<!--<p>企业资质:<i class="qua"></i></p>-->
+				<!--</div>-->
+				<!--<div  class="botr">-->
+					<!--<button><i></i>进店逛逛</button>-->
+					<!--<button class="now_store"><i></i>收藏本店</button>-->
+				<!--</div>-->
+			<!--</div>-->
 			<li class="icon">
 				<p>手机逛</p>
 				<p><i></i></p>
 				<i></i>
 			</li>
-			<div class="app_code">
-				<img src="images/TB1O2WsPFXXXXXsXFXXwu0bFXXX.png" alt="">
-				<span>扫一扫，手机逛起来</span>
-			</div>
+			<!--<div class="app_code">-->
+				<!--<img src="" alt="">-->
+				<!--<span>扫一扫，手机逛起来</span>-->
+			<!--</div>-->
 		</ul>
 		<div class="search both_search">
-			<form class="search_str">
-				<input type="text" name="" class="input_text fl" placeholder="请输入关键词">
-				<input type="submit" name="" class="input_btn fl" value="搜火吻">
-				<input type="submit" name="" class="input_btn self_btn fl" value="搜本店">
+			<form class="search_str" method="get" action="/search/">
+				<input type="text" name="q" class="input_text fl" placeholder="请输入关键词">
+				<input type="submit" name="" class="input_btn fl" value="搜索">
+				<!--<input type="submit" name="" class="input_btn self_btn fl" value="搜本店">-->
 			</form>
 			<ul class="search_fast">
 				<li class="first"><a href="#" >华为</a></li>
 				<li><a href="#">小米</a></li>
 				<li><a href="#">魅族</a></li>
 				<li><a href="#">荣耀</a></li>
-				<li><a href="#">苹果苹果苹果</a></li>
-				<li><a href="#">苹果</a></li>
-				<li><a href="#">苹果苹果苹果苹果</a></li>
 				<li><a href="#">苹果</a></li>
 				<li><a href="#">三星</a></li>
 			</ul>
@@ -99,7 +143,7 @@
 {% block body_main %}
 	<!-- store banner -->
 	<div class="store_banner">
-		<img src="images/store_bnner.jpg" alt="">
+		<img src="{% static 'images/store_bnner.jpg' %}" alt="">
 	</div>
 
 	<!-- goods_detail -->
@@ -109,88 +153,92 @@
 				<div class="g_main fl">
 					<div class="m_pic_con fl">
 						<div class="m_pic">
-							<img src="images/TB2iZVvXs4IxuRkSO2gXXaynXXa_!!3323461210.jpg" alt="">
+							<img src="{{goods.image.url}}" alt="">
 							<div class="m_follow"></div>
-							<div class="m_shadow"></div>
+							<div class="m_shadow" style="background-image: url('{{goods.image.url}}');background-color: #fff"></div>
 						</div>
-						<div class="m_thump">
-								<a href="#" class="active"><img src="images/60x60q90.jpg" alt="商品"></a>
-								<a href="#"><img src="images/60x60q90.jpg" alt="商品"></a>
-								<a href="#"><img src="images/60x60q90.jpg" alt="商品"></a>
-								<a href="#"><img src="images/60x60q90.jpg" alt="商品"></a>
-								<a href="#"><img src="images/60x60q90.jpg" alt="商品"></a>
-							</div>
-							<div class="m_share">
-								<span><i></i><a href="#">分享</a></span>
-								<span><i></i><a href="#">收藏商品</a><em>(5724人气)</em></span>
-								<span class="report"><a href="#">举报</a></span>
-							</div>
+						<!--<div class="m_thump">-->
+							<!--<a href="#" class="active"><img src="images/60x60q90.jpg" alt="商品"></a>-->
+							<!--<a href="#"><img src="images/60x60q90.jpg" alt="商品"></a>-->
+							<!--<a href="#"><img src="images/60x60q90.jpg" alt="商品"></a>-->
+							<!--<a href="#"><img src="images/60x60q90.jpg" alt="商品"></a>-->
+							<!--<a href="#"><img src="images/60x60q90.jpg" alt="商品"></a>-->
+						<!--</div>-->
+						<div class="m_share">
+							<span><i></i><a href="#">分享</a></span>
+							<span><i></i><a href="#">收藏商品</a><em>({{popular}}人气)</em></span>
+							<span class="report"><a href="#">举报</a></span>
+						</div>
 					</div>
 					<div class="m_info fl">
 						<div class="i_top">
-							<h1>【第2件减10元】黑金刚莲雾2斤海南三亚新鲜水果莲雾果清甜多汁</h1>
-							<h4>1件=2斤 拍2件发一箱4斤</h4>
+							<h1>{{goods.name}}</h1>
+							<h4>{{goods.desc}}</h4>
 							<ul>
 								<li class="old_price">
 									<b>价格</b>
-									<span>¥ <em>128.00</em></span>
+									<span>¥ <em>{{goods.bid_price}}</em></span>
 								</li>
 								<li class="now_price">
 									<b>促销价</b>
-									<span>¥<em>39.00</em></span>
+									<span>¥<em>{{goods.real_price}}</em></span>
 									<i></i>
 								</li>
-								<li class="active_sale">
-									<b>本店活动</b>
-									<span>满58元减10元</span>
-									<span class="fr" id="sale_down_btn">更多优惠</span>
-									<i></i>
-								</li>
-								<div class="active_more">
-									<li>
-										<b>本店活动</b>
-										<a href="javascript:;">
-											<span><em>莲雾</em>到<em>2019-3-7 00:00:00</em>号结束</span>
-											<span class="fr" id="sale_up_btn">收起</span>
-										</a>
-										<i></i>
-									</li>
-									<li>
-										<i class="po"></i>
-										<p><span>满58元 减10元</span></p>
-									</li>
-								</div>
+								<!--<li class="active_sale">-->
+									<!--<b>本店活动</b>-->
+									<!--<span>满58元减10元</span>-->
+									<!--<span class="fr" id="sale_down_btn">更多优惠</span>-->
+									<!--<i></i>-->
+								<!--</li>-->
+								<!--<div class="active_more">-->
+									<!--<li>-->
+										<!--<b>本店活动</b>-->
+										<!--<a href="javascript:;">-->
+											<!--<span><em>莲雾</em>到<em>2019-3-7 00:00:00</em>号结束</span>-->
+											<!--<span class="fr" id="sale_up_btn">收起</span>-->
+										<!--</a>-->
+										<!--<i></i>-->
+									<!--</li>-->
+									<!--<li>-->
+										<!--<i class="po"></i>-->
+										<!--<p><span>满58元 减10元</span></p>-->
+									<!--</li>-->
+								<!--</div>-->
 							</ul>
 							<p class="fare">
 								<b>运费</b>
-								<span class="from"><em>海南</em><em>海口</em>至</span>
-								<span>&nbsp;<em>无锡</em><i></i></span>
-								<span><em>崇安区</em><i></i></span>
+								<!--<span class="from"><em>海南</em><em>海口</em>至</span>-->
+								<!--<span>&nbsp;<em>无锡</em><i></i></span>-->
+								<!--<span><em>崇安区</em><i></i></span>-->
 								<span>快递: <em>0.00</em></span>
 							</p>
 						</div>
 						<div class="i_center">
-							<a href="#">月销量<em>11911</em></a>
-							<a href="#" class="cent">累计评价<em>2616</em></a>
-							<a href="#">送火吻积分<em>19</em></a>
+							<a href="#">月销量<em>{{goods.sales}}</em></a>
+							<a href="#" class="cent">累计评价<em>{{appr_count}}</em></a>
+							<a href="#">送火吻积分<em>{{goods.integral}}</em></a>
 						</div>
 						<div class="i_bot">
 							<div class="buy">
+								<form method="post" action="{% url 'order:place' %}">
 								<div class="count">
 									<b>数量</b>
 									<p>
-										<input type="text" value="1">
+										<input type="hidden" name="sku_ids" value="{{goods.id}}">
+										<input type="text" name="count" id="sku_add_count" sku_id="{{goods.id}}" value="1">
 										<span class="count_change">
-											<button class="count_add"></button>
-											<button class="count_less"></button>
+											<a class="count_add"></a>
+											<a class="count_less"></a>
 										</span>
-										<span>&nbsp; 件 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;库存<em>12914</em>件</span>
+										<span>&nbsp; 件 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;库存<em>{{goods.stock}}</em>件</span>
 									</p>
 								</div>
 								<div class="buy_btn">
-									<a href="#">立即购买</a>
-									<a href="#" class="cart"><i></i>加入购物车</a>
+									<input type="submit" value="立即购买">
+									{% csrf_token %}
+									<a href="javascript:;" class="cart"><i></i>加入购物车</a>
 								</div>
+								</form>
 							</div>
 							<div class="promise">
 								<span>服务承诺</span>
@@ -209,51 +257,17 @@
 					<p class="recomm_title">看了又看</p>
 					<div class="look">
 						<ul>
+							{% for goods in look %}
 							<li>
-								<a href="#">
-									<img src="images/goods_01.jpg" alt="">
-									<span>￥<em>39.50</em></span>
+								<a href="{%url 'goods:detail' goods.id %}">
+									<img src="{{goods.image.url}}" alt="">
+									<span>￥<em>{{goods.real_price}}</em></span>
 								</a>
 								<p class="look_title">
-									<a href="#">【第2件减10元】黑金刚莲雾2斤海南三亚新鲜水果莲雾果清甜多汁</a>
+									<a href="{%url 'goods:detail' goods.id %}">{{goods.name}}</a>
 								</p>
 							</li>
-							<li>
-								<a href="#">
-									<img src="images/O1CN015LUqpd1i40Y7Mlkq2_!!0-item_pic.jpg_160x160q90.jpg" alt="">
-									<span>￥<em>39.50</em></span>
-								</a>
-								<p class="look_title">
-									<a href="#">【第2件减10元】黑金刚莲雾2斤海南三亚新鲜水果莲雾果清甜多汁</a>
-								</p>
-							</li>
-							<li>
-								<a href="#">
-									<img src="images/O1CN015LUqpd1i40Y7Mlkq2_!!0-item_pic.jpg_160x160q90.jpg" alt="">
-									<span>￥<em>39.50</em></span>
-								</a>
-								<p class="look_title">
-									<a href="#">【第2件减10元】黑金刚莲雾2斤海南三亚新鲜水果莲雾果清甜多汁</a>
-								</p>
-							</li>
-							<li>
-								<a href="#">
-									<img src="images/O1CN015LUqpd1i40Y7Mlkq2_!!0-item_pic.jpg_160x160q90.jpg" alt="">
-									<span>￥<em>39.50</em></span>
-								</a>
-								<p class="look_title">
-									<a href="#">【第2件减10元】黑金刚莲雾2斤海南三亚新鲜水果莲雾果清甜多汁</a>
-								</p>
-							</li>
-							<li>
-								<a href="#">
-									<img src="images/O1CN015LUqpd1i40Y7Mlkq2_!!0-item_pic.jpg_160x160q90.jpg" alt="">
-									<span>￥<em>39.50</em></span>
-								</a>
-								<p class="look_title">
-									<a href="#">【第2件减10元】黑金刚莲雾2斤海南三亚新鲜水果莲雾果清甜多汁</a>
-								</p>
-							</li>
+							{% endfor %}
 						</ul>
 					</div>
 					<div class="look_btn">
@@ -274,9 +288,9 @@
 						</p>
 						<p class="s_score">
 							<a href="#">
-								<span>描述<em>4.8 ↑</em></span>
-								<span>服务<em>4.8 ↑</em></span>
-								<span>物流<em>4.8 ↑</em></span>
+								<span>描述<em>5.2 ↑</em></span>
+								<span>服务<em>5.2 ↑</em></span>
+								<span>物流<em>5.2 ↑</em></span>
 							</a>
 						</p>
 						<p class="s_link">
@@ -291,108 +305,32 @@
 							<a href="#">收藏数</a>
 						</h4>
 						<ul class="r_goods default_filter" id="filter1">
+							{% for goods in ranking_by_sales%}
 							<li>
-								<a href="#" class="pic">
-									<img src="images/TB2AHCQbFzqK1RjSZFzXXXjrpXa_!!2549841410-0-sm.jpg" alt="">
+								<a href="{% url 'goods:detail' goods.id %}" class="pic">
+									<img src="{{goods.image.url}}" alt="">
 								</a>
 								<p>
-									<a href="#">【直营】日本花王Merries进口婴儿宝宝纸尿裤尿不湿透气L54 通用</a>
-									<span class="r_price">￥<em>89.00</em></span>
-									<span class="volume">已售出<em>2041022</em>份</span>
+									<a href="{% url 'goods:detail' goods.id %}">{{goods.name}}</a>
+									<span class="r_price">￥<em>{{goods.real_price}}</em></span>
+									<span class="volume">已售出<em>{{goods.sales}}</em>份</span>
 								</p>
 							</li>
-							<li>
-								<a href="#" class="pic">
-									<img src="images/TB2AHCQbFzqK1RjSZFzXXXjrpXa_!!2549841410-0-sm.jpg" alt="">
-								</a>
-								<p>
-									<a href="#">【直营】日本花王Merries进口婴儿宝宝纸尿裤尿不湿透气L54 通用</a>
-									<span class="r_price">￥<em>89.00</em></span>
-									<span class="volume">已售出<em>2041022</em>份</span>
-								</p>
-							</li>
-							<li>
-								<a href="#" class="pic">
-									<img src="images/TB2AHCQbFzqK1RjSZFzXXXjrpXa_!!2549841410-0-sm.jpg" alt="">
-								</a>
-								<p>
-									<a href="#">【直营】日本花王Merries进口婴儿宝宝纸尿裤尿不湿透气L54 通用</a>
-									<span class="r_price">￥<em>89.00</em></span>
-									<span class="volume">已售出<em>2041022</em>份</span>
-								</p>
-							</li>
-							<li>
-								<a href="#" class="pic">
-									<img src="images/TB2AHCQbFzqK1RjSZFzXXXjrpXa_!!2549841410-0-sm.jpg" alt="">
-								</a>
-								<p>
-									<a href="#">【直营】日本花王Merries进口婴儿宝宝纸尿裤尿不湿透气L54 通用</a>
-									<span class="r_price">￥<em>89.00</em></span>
-									<span class="volume">已售出<em>2041022</em>份</span>
-								</p>
-							</li>
-							<li>
-								<a href="#" class="pic">
-									<img src="images/TB2AHCQbFzqK1RjSZFzXXXjrpXa_!!2549841410-0-sm.jpg" alt="">
-								</a>
-								<p>
-									<a href="#">【直营】日本花王Merries进口婴儿宝宝纸尿裤尿不湿透气L54 通用</a>
-									<span class="r_price">￥<em>89.00</em></span>
-									<span class="volume">已售出<em>2041022</em>份</span>
-								</p>
-							</li>
+							{% endfor %}
 						</ul>
 						<ul class="r_goods" id="filter2">
+							{% for goods in ranking_by_comments%}
 							<li>
-								<a href="#" class="pic">
-									<img src="images/TB2AHCQbFzqK1RjSZFzXXXjrpXa_!!2549841410-0-sm.jpg" alt="">
+								<a href="{% url 'goods:detail' goods.id %}" class="pic">
+									<img src="{{goods.image.url}}" alt="">
 								</a>
 								<p>
-									<a href="#">【第三方】日本花王Merries进口婴儿宝宝纸尿裤尿不湿透气L54 通用</a>
-									<span class="r_price">￥<em>89.00</em></span>
-									<span class="volume">已售出<em>2041022</em>份</span>
+									<a href="{% url 'goods:detail' goods.id %}">{{goods.name}}</a>
+									<span class="r_price">￥<em>{{goods.real_price}}</em></span>
+									<span class="volume">已售出<em>{{goods.sales}}</em>份</span>
 								</p>
 							</li>
-							<li>
-								<a href="#" class="pic">
-									<img src="images/TB2AHCQbFzqK1RjSZFzXXXjrpXa_!!2549841410-0-sm.jpg" alt="">
-								</a>
-								<p>
-									<a href="#">【第三方】日本花王Merries进口婴儿宝宝纸尿裤尿不湿透气L54 通用</a>
-									<span class="r_price">￥<em>89.00</em></span>
-									<span class="volume">已售出<em>2041022</em>份</span>
-								</p>
-							</li>
-							<li>
-								<a href="#" class="pic">
-									<img src="images/TB2AHCQbFzqK1RjSZFzXXXjrpXa_!!2549841410-0-sm.jpg" alt="">
-								</a>
-								<p>
-									<a href="#">【第三方】日本花王Merries进口婴儿宝宝纸尿裤尿不湿透气L54 通用</a>
-									<span class="r_price">￥<em>89.00</em></span>
-									<span class="volume">已售出<em>2041022</em>份</span>
-								</p>
-							</li>
-							<li>
-								<a href="#" class="pic">
-									<img src="images/TB2AHCQbFzqK1RjSZFzXXXjrpXa_!!2549841410-0-sm.jpg" alt="">
-								</a>
-								<p>
-									<a href="#">【第三方】日本花王Merries进口婴儿宝宝纸尿裤尿不湿透气L54 通用</a>
-									<span class="r_price">￥<em>89.00</em></span>
-									<span class="volume">已售出<em>2041022</em>份</span>
-								</p>
-							</li>
-							<li>
-								<a href="#" class="pic">
-									<img src="images/TB2AHCQbFzqK1RjSZFzXXXjrpXa_!!2549841410-0-sm.jpg" alt="">
-								</a>
-								<p>
-									<a href="#">【第三方】日本花王Merries进口婴儿宝宝纸尿裤尿不湿透气L54 通用</a>
-									<span class="r_price">￥<em>89.00</em></span>
-									<span class="volume">已售出<em>2041022</em>份</span>
-								</p>
-							</li>
+							{% endfor %}
 						</ul>
 						<div class="g_more">
 							<a href="#">查看更多宝贝<i></i></a>
@@ -406,7 +344,7 @@
 								<b>在线咨询</b>
 								<span>客服中心</span>
 								<a href="#">
-									<img src="images/hwlx.gif" alt="和我联系">
+									<img src="{% static 'images/hwlx.gif'%}" alt="和我联系">
 								</a>
 								</p>
 							<p><b>联系方式</b><span>联系电话:</span><em>4008816190</em></p>
@@ -417,60 +355,60 @@
 					<div class="fu_main">
 						<ul class="m_header">
 							<li class="m_active"><span>商品详情</span></li>
-							<li><span>累计评价<em>8723</em></span></li>
+							<li><span>累计评价<em>{{appr_count}}</em></span></li>
 							<li><span>服务详情</span></li>
 						</ul>
 						<div class="m_body">
-							<div class="m_param">
-								<p class="m_brand">品牌名称:<span>dyson/戴森</span></p>
-								<h5>详细参数</h5>
-								<ul class="clearfix">
-									<li>产品名称:&nbsp;&nbsp;dyson/戴森 HD01 superso...</li>
-									<li>便携性能:&nbsp;&nbsp;手柄不可折叠</li>
-									<li>功能:&nbsp;&nbsp;吹头发</li>
-									<li>产地:&nbsp;&nbsp;其他海外地区</li>
-									<li>保修期:&nbsp;&nbsp;无保修</li>
-									<li>颜色分类:&nbsp;&nbsp;白色 粉红色 紫色限量版 红色 黑色</li>
-									<li>电吹风品牌:&nbsp;&nbsp;dyson/戴森</li>
-									<li>型号:&nbsp;&nbsp;HD01 supersonic</li>
-									<li>生产企业:&nbsp;&nbsp;dyson</li>
-								</ul>
-							</div>
+							<!--<div class="m_param">-->
+								<!--<p class="m_brand">品牌名称:<span>{{goods.brand.brand}}</span></p>-->
+								<!--<h5>详细参数</h5>-->
+								<!--<ul class="clearfix">-->
+									<!--<li>产品名称:&nbsp;&nbsp;dyson/戴森 HD01 superso...</li>-->
+									<!--<li>便携性能:&nbsp;&nbsp;手柄不可折叠</li>-->
+									<!--<li>功能:&nbsp;&nbsp;吹头发</li>-->
+									<!--<li>产地:&nbsp;&nbsp;其他海外地区</li>-->
+									<!--<li>保修期:&nbsp;&nbsp;无保修</li>-->
+									<!--<li>颜色分类:&nbsp;&nbsp;白色 粉红色 紫色限量版 红色 黑色</li>-->
+									<!--<li>电吹风品牌:&nbsp;&nbsp;dyson/戴森</li>-->
+									<!--<li>型号:&nbsp;&nbsp;HD01 supersonic</li>-->
+									<!--<li>生产企业:&nbsp;&nbsp;dyson</li>-->
+								<!--</ul>-->
+							<!--</div>-->
 							<div class="m_full">
-								<img src="images/O1CN016ScVRT1pcXiIYOmPY_!!4120005381-0-scmitem1000.jpg" alt="">
+								{{goods.detail | safe}}
 							</div>
 						</div>
 						<div class="m_discuss">
 							<div class="d_header">
-								<h5>累计评价&nbsp;&nbsp;<em>3333366</em></h3>
-								<div class="d_op_con default_hidden clearfix">
-									<div class="op_left">
-										<span>与描述相符</span>
-										<em>4.8</em>
-										<i></i>
-									</div>
-									<div class="op_center">
-										<span>大家都写到</span>
-										<i></i>
-									</div>
-									<div class="op_right">
-										<span><a href="#">温和不刺激(<em>4522</em>)</a></span>
-										<span><a href="#">保湿润肤(<em>4522</em>)</a></span>
-										<span><a href="#">保湿润肤(<em>4522</em>)</a></span>
-										<span><a href="#">保湿润肤(<em>4522</em>)</a></span>
-										<span class="default_no"><a href="#">保湿润肤(<em>4522</em>)</a></span>
-										<span class="ng_score"><a href="#">清洁效果不佳(<em>4522</em>)</a></span>
-										<span class="default_no"><a href="#">保湿润肤(<em>4522</em>)</a></span>
-										<span class="default_no"><a href="#">保湿润肤(<em>4522</em>)</a></span>
-										<span><a href="#">保湿润肤(<em>4522</em>)</a></span>
-										<span class="ng_score default_no"><a href="#">清洁效果不佳(<em>4522</em>)</a></span>
-										<i></i>
-									</div>
-								</div>
+								<h5>累计评价&nbsp;&nbsp;<em>{{appr_count}}</em></h5>
+								<!--<div class="d_op_con default_hidden clearfix">-->
+									<!--<div class="op_left">-->
+										<!--<span>与描述相符</span>-->
+										<!--<em>4.8</em>-->
+										<!--<i></i>-->
+									<!--</div>-->
+									<!--<div class="op_center">-->
+										<!--<span>大家都写到</span>-->
+										<!--<i></i>-->
+									<!--</div>-->
+									<!--<div class="op_right">-->
+										<!--<span><a href="#">温和不刺激(<em>4522</em>)</a></span>-->
+										<!--<span><a href="#">保湿润肤(<em>4522</em>)</a></span>-->
+										<!--<span><a href="#">保湿润肤(<em>4522</em>)</a></span>-->
+										<!--<span><a href="#">保湿润肤(<em>4522</em>)</a></span>-->
+										<!--<span class="default_no"><a href="#">保湿润肤(<em>4522</em>)</a></span>-->
+										<!--<span class="ng_score"><a href="#">清洁效果不佳(<em>4522</em>)</a></span>-->
+										<!--<span class="default_no"><a href="#">保湿润肤(<em>4522</em>)</a></span>-->
+										<!--<span class="default_no"><a href="#">保湿润肤(<em>4522</em>)</a></span>-->
+										<!--<span><a href="#">保湿润肤(<em>4522</em>)</a></span>-->
+										<!--<span class="ng_score default_no"><a href="#">清洁效果不佳(<em>4522</em>)</a></span>-->
+										<!--<i></i>-->
+									<!--</div>-->
+								<!--</div>-->
 								<div class="d_filter">
 									<div class="df_main fl">
 										<input type="radio" id="d_all_btn" name="filter" checked><span>全部</span>
-										<input type="radio" id="d_have_add_btn" name="filter"><span>追评(<em>7062</em>)</span>
+										<input type="radio" id="d_have_add_btn" name="filter"><span>追评(<em>{{appr_add_count}}</em>)</span>
 										<input type="radio" id="d_have_pic_btn" name="filter"><span>图片(<em>233365</em>)</span>
 									</div>
 									<div class="df_more fr">
@@ -485,127 +423,104 @@
 							</div>
 							<div class="d_body clearfix">
 								<table>
-									<tr>
-										<td class="descs">
-											<div class="user_desc">
-												<p>
-													很棒，真是物有所值。1万个赞，回购好几次了，之前买了两瓶用着不错，
-													喜欢。会继续回购，如果价格能再便宜点就好了，温和不刺激，清洁度强，
-													清洁力也不错，洗后不紧绷，用完皮肤都滑滑的，感觉细胞都膨胀起来了。
-													洗完不紧绷，应该是正品。物流也非常快，五星好评。物流快，质量好
-												</p>
-												<!-- <ul>
-													<li><img src="images/O1CN01t4xKYr2N2XWhIrTxc_!!0-rate.jpg_400x400.jpg" alt=""></li>
-													<li><img src="images/O1CN01t4xKYr2N2XWhIrTxc_!!0-rate.jpg_400x400.jpg" alt=""></li>
-													<li><img src="images/O1CN01t4xKYr2N2XWhIrTxc_!!0-rate.jpg_400x400.jpg" alt=""></li>
-													<li><img src="images/O1CN01t4xKYr2N2XWhIrTxc_!!0-rate.jpg_400x400.jpg" alt=""></li>
-													<li><img src="images/O1CN01t4xKYr2N2XWhIrTxc_!!0-rate.jpg_400x400.jpg" alt=""></li>
-												</ul> -->
-											</div>
-											<div class="desc_time">2018.12.29</div>
-											<div class="clerk_desc">
-												<p><span>解释:</span>亲亲，感谢您对火吻国际官方直营店铺的支持，
-													感谢您对店铺宝贝和我们服务的认可，我们后续会再接再厉哦，相信我们会越做越好哒！
-													店铺所售商品均为正品保障哦~长期关注我们，一定会有新惊喜！
-													您在使用过程中有任何疑问都可以直接联系店铺小二，希望您能继续支持我们店铺，期待您的再次光临！
-												</p>
-											</div>
-										</td>
-										<td class="desc_goods">
-										
-												<p>化妆品净含量:<em>207ml</em></p>
-										</td>
-										<td class="desc_user">
-												<p>你<span>***</span>心<span>(匿名)</span></p>
-										</td>
-									</tr>
-									<tr class="have_add have_pic">
-											<td class="descs">
-												<div class="date_tag">
-													<p>初次评价:</p>
-													<span>2018.12.29</span>
-												</div>
-												<div class="first_desc">
-													<div class="user_desc">
-														<p>
-															很棒，真是物有所值。1万个赞，回购好几次了，之前买了两瓶用着不错，
-															喜欢。会继续回购，如果价格能再便宜点就好了，温和不刺激，清洁度强，
-															清洁力也不错，洗后不紧绷，用完皮肤都滑滑的，感觉细胞都膨胀起来了。
-															洗完不紧绷，应该是正品。物流也非常快，五星好评。物流快，质量好
-														</p>
-														<ul>
-															<li><img src="images/O1CN01t4xKYr2N2XWhIrTxc_!!0-rate.jpg_400x400.jpg" alt=""></li>
-															<li><img src="images/O1CN01t4xKYr2N2XWhIrTxc_!!0-rate.jpg_400x400.jpg" alt=""></li>
-															<li><img src="images/O1CN01t4xKYr2N2XWhIrTxc_!!0-rate.jpg_400x400.jpg" alt=""></li>
-															<li><img src="images/O1CN01t4xKYr2N2XWhIrTxc_!!0-rate.jpg_400x400.jpg" alt=""></li>
-															<li><img src="images/O1CN01t4xKYr2N2XWhIrTxc_!!0-rate.jpg_400x400.jpg" alt=""></li>
-														</ul>
+									{% for ap in apprs %}
+										<tr class="{% if ap.has_add and ap.has_pic %}have_add have_pic{% elif ap.has_add %}have_add{% elif ap.has_pic %}have_pic{% endif%}">
+											{% for f in ap.first %}
+												<td class="descs">
+													{% if not ap.has_add %}
+														<div class="user_desc">
+															<p>
+																{{f.about_goods}}
+															</p>
+															<ul>
+																<li><img src="{% static 'images/O1CN01t4xKYr2N2XWhIrTxc_!!0-rate.jpg_400x400.jpg' %}" alt=""></li>
+															</ul>
+														</div>
+														<div class="desc_time">{{f.update_time}}</div>
+														<div class="clerk_desc">
+															<p>
+																{% for e in ap.expo_first %}
+																	{% if e %}
+																		<span>解释:</span>
+																		{{e.about_goods}}
+																	{% endif %}
+																{% endfor %}
+															</p>
+														</div>
+
+													{% else %}
+													<div class="date_tag">
+														<p>初次评价:</p>
+														<span>{{f.update_time}}</span>
 													</div>
-													<div class="clerk_desc">
-														<p><span>解释:</span>亲亲，感谢您对火吻国际官方直营店铺的支持，
-															感谢您对店铺宝贝和我们服务的认可，我们后续会再接再厉哦，相信我们会越做越好哒！
-															店铺所售商品均为正品保障哦~长期关注我们，一定会有新惊喜！
-															您在使用过程中有任何疑问都可以直接联系店铺小二，希望您能继续支持我们店铺，期待您的再次光临！
-														</p>
+
+													<div class="first_desc">
+														<div class="user_desc">
+															<p>
+																{{f.about_goods}}
+															</p>
+															<ul>
+																<li><img src="{% static 'images/O1CN01t4xKYr2N2XWhIrTxc_!!0-rate.jpg_400x400.jpg' %}" alt=""></li>
+															</ul>
+														</div>
+														<div class="clerk_desc">
+															<p>
+																{% for e in ap.expo_first %}
+																	{% if e %}
+																		<span>解释:</span>
+																		{{e.about_goods}}
+																	{% endif %}
+																{% endfor %}
+															</p>
+														</div>
 													</div>
-												</div>
-												<div class="date_tag">
-													<p>收货<em>365天</em>后追加:</p>
-												</div>
-												<div class="add_desc">
-													<div class="user_desc">
-														<p>
-															很棒，真是物有所值。1万个赞，回购好几次了，之前买了两瓶用着不错，
-															喜欢。会继续回购，如果价格能再便宜点就好了，温和不刺激，清洁度强，
-															清洁力也不错，洗后不紧绷，用完皮肤都滑滑的，感觉细胞都膨胀起来了。
-															洗完不紧绷，应该是正品。物流也非常快，五星好评。物流快，质量好
-														</p>
-														<ul>
-															<li><img src="images/O1CN01t4xKYr2N2XWhIrTxc_!!0-rate.jpg_400x400.jpg" alt=""></li>
-															<li><img src="images/O1CN01t4xKYr2N2XWhIrTxc_!!0-rate.jpg_400x400.jpg" alt=""></li>
-															<li><img src="images/O1CN01t4xKYr2N2XWhIrTxc_!!0-rate.jpg_400x400.jpg" alt=""></li>
-															<li><img src="images/O1CN01t4xKYr2N2XWhIrTxc_!!0-rate.jpg_400x400.jpg" alt=""></li>
-															<li><img src="images/O1CN01t4xKYr2N2XWhIrTxc_!!0-rate.jpg_400x400.jpg" alt=""></li>
-														</ul>
+													{% endif %}
+													{% for a in ap.add %}
+													<div class="date_tag">
+														<p>追加:</p>
+														<span>{{a.update_time}}</span>
 													</div>
-													<div class="clerk_desc">
-														<p><span>解释:</span>亲亲，感谢您对火吻国际官方直营店铺的支持，
-															感谢您对店铺宝贝和我们服务的认可，我们后续会再接再厉哦，相信我们会越做越好哒！
-															店铺所售商品均为正品保障哦~长期关注我们，一定会有新惊喜！
-															您在使用过程中有任何疑问都可以直接联系店铺小二，希望您能继续支持我们店铺，期待您的再次光临！
-														</p>
+													<div class="add_desc">
+														<div class="user_desc">
+															<p>
+																{{a.about_goods}}
+															</p>
+															<ul>
+																<li><img src="images/O1CN01t4xKYr2N2XWhIrTxc_!!0-rate.jpg_400x400.jpg" alt=""></li>
+															</ul>
+														</div>
+														<div class="clerk_desc">
+															<p>
+																{% for e in ap.expo_first %}
+																	{% if e %}
+																		<span>解释:</span>
+																		{{e.about_goods}}
+																	{% endif %}
+																{% endfor %}
+															</p>
+														</div>
 													</div>
-												</div>
-											</td>
-											<td class="desc_goods">
-												<p>化妆品净含量:<em>207ml</em></p>
-											</td>
-											<td class="desc_user">
-												<p>你<span>***</span>心<span>(匿名)</span></p>
-												<p class="user_vip"><em>超级会员</em></p>
-											</td>
-									</tr>
-									<tr class="have_pic">
-											<td class="descs">
-												<div class="user_desc">
-													<p>
-														被种草了好久！终于下手买了一瓶，很喜欢自动起的泡泡，感觉洗完又干净又不紧绷，
-														很好用！207ml一百多感觉还是蛮划算的，很大一瓶应该会很耐用吧！
+													{% endfor %}
+												</td>
+												<td class="desc_goods">
+													<!--<p>化妆品净含量:<em>207ml</em></p>-->
+												</td>
+												<td class="desc_user">
+													<!--<p>你<span>***</span>心<span>(匿名)</span></p>-->
+													<p>{{f.user.username}}<span>(匿名)</span></p>
+													<p class="user_vip">
+														<em>
+															{% if f.user.is_vip == 2 %}
+															超级会员
+															{% elif f.user.is_vip == 1 %}
+															会员
+															{% endif %}
+														</em>
 													</p>
-													<ul>
-														<li><img src="images/O1CN01t4xKYr2N2XWhIrTxc_!!0-rate.jpg_400x400.jpg" alt=""></li>
-													</ul>
-												</div>
-												<div class="desc_time">2018.12.29</div>
-							
-											</td>
-											<td class="desc_goods">
-												<p>化妆品净含量:<em>207ml</em></p>
-											</td>
-											<td class="desc_user">
-												<p>你<span>***</span>心<span>(匿名)</span></p>
-											</td>
-									</tr>
+												</td>
+											{% endfor%}
+										</tr>
+									{% endfor %}
 								</table>
 							</div>
 						</div>

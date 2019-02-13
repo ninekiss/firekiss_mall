@@ -39,6 +39,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tinymce',  # 富文本编辑器
+    'haystack',
     'goods',
     'user',
     'order',
@@ -86,7 +87,7 @@ DATABASES = {
         'NAME': 'firekiss',
         'USER': 'kean',
         'PASSWORD': 'lyy520..',
-        'HOST':'192.168.0.100',
+        'HOST':'192.168.0.101',
         'PORT': 3306
     }
 }
@@ -127,17 +128,16 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_SSL = True
 EMAIL_HOST = 'smtp.qiye.aliyun.com'
 EMAIL_PORT = 465
-# EMAIL_PORT = 25
-EMAIL_HOST_USER = 'product@seespace.ml'  # 发送邮件的邮箱
+EMAIL_HOST_USER = 'firekiss@seespace.ml'  # 发送邮件的邮箱
 EMAIL_HOST_PASSWORD = 'Lyy520..'  # 密码
-EMAIL_FROM = 'FIREKISS 火吻 <product@seespace.ml>'  # 收件人看到的发件人昵称
+EMAIL_FROM = 'FIREKISS 火吻 <firekiss@seespace.ml>'  # 收件人看到的发件人昵称
 
 
 # django缓存配置
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://192.168.0.100:6379/1",
+        "LOCATION": "redis://192.168.0.101:6379/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
@@ -147,3 +147,31 @@ CACHES = {
 # 使用缓存作为session后端
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "default"
+
+# 登录的url
+LOGIN_URL = '/user/login'
+
+
+# FastDFS 相关配置
+# 自定义文件存储类配置
+DEFAULT_FILE_STORAGE = 'utils.fdfs.storage.FDFSStorage'
+# fdfs客户配置文件
+HDFS_CLIENT_CONF = './utils/fdfs/client.conf'
+# fdfs服务器所使用的nginx的地址
+HDFS_URL = 'http://192.168.0.101:8888/'
+
+
+# 全文检索框架配置
+HAYSTACK_CONNECTIONS = {
+    'default': {
+        # 'ENGINE': 'haystack.backends.whoosh_backend.WhooshEngine',
+        'ENGINE': 'haystack.backends.whoosh_cn_backend.WhooshEngine',  # 使用jieba分词
+        'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+    },
+}
+
+# 当添加、修改、删除数据时，自动生成索引
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+# 返回的page对象每页显示的条数
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 1

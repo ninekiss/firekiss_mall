@@ -1,0 +1,168 @@
+{% extends "base_search.html" %}
+{% load staticfiles %}
+{% block title %}手机-火吻商城{% endblock title %}
+{% block topfiles %}
+	<script>
+		$(function() {
+			filter_con();
+			pagenater();
+			var top_prev_page = $('#f_prev_page');
+			var top_next_page = $('#f_next_page');
+			var page_to_btn = $('#page_to_btn1');
+
+			top_prev_page.click(function () {
+				var prev_url = $(this).prop('name');
+				if (prev_url){
+				    window.location.href = prev_url;
+				}
+
+            });
+			top_next_page.click(function () {
+				var next_url = $(this).prop('name');
+				if (next_url){
+				    window.location.href = next_url;
+				}
+
+            });
+
+		    page_to_btn.click(function () {
+		        var page_to = $(this).parent().prev().children().val();
+		        var url = '/search/'+'?q={{query}}&page='+page_to;
+
+		        if (parseInt(page_to)){
+		            window.location.href = url;
+		        }
+            });
+		});
+	</script>
+{% endblock topfiles %}
+
+{# 头部栏包括logo、搜索框 #}
+{% block header %}
+	<div class="header list_page">
+		<a href="{% url 'goods:index' %}" class="logo fl"><h1>FIREKISS</h1></a>
+		<div class="search fl">
+			<form class="search_str" method="get" action="/search">
+				<input type="text" name="q" class="input_text fl" placeholder="请输入关键词" value="{{query}}">
+				<input type="submit" name="" class="input_btn fl" value="搜 索">
+			</form>
+			<ul class="search_fast">
+				<li class="first"><a href="#" >华为</a></li>
+				<li><a href="#">小米</a></li>
+				<li><a href="#">魅族</a></li>
+				<li><a href="#">荣耀</a></li>
+				<li><a href="#">苹果</a></li>
+				<li><a href="#">苹果</a></li>
+				<li><a href="#">三星</a></li>
+			</ul>
+		</div>
+		<div class="list_top_ads">
+			<a href="#">
+				<img src="{% static 'images/TB1vHJ8qQomBKNjSZFqXXXtqVXa-380-160.png' %}" alt="手机火吻">
+			</a>
+		</div>
+	</div>
+{% endblock header %}
+
+{# 每个商品相关页主要内容块 #}
+{% block body_main %}
+	<!-- 条件过滤区域 -->
+	<div class="filter_con clearfix">
+		<div class="all">
+			<div class="all_search">
+				<a href="#">全部</a>
+				<i>></i>
+				<input type="text" placeholder="{{query}}" readonly>
+				<i class="icon"></i>
+			</div>
+			<div class="all_result">
+				共 <em>{{paginator.count}}</em> 件相关商品
+			</div>
+		</div>
+		<div class="filter">
+			<div class="f_many fl">
+
+				<div class="div2">
+					<span>收货地:</span>
+					<div>杭州<i class="icon_select"></i></div>
+				</div>
+				<div class="div3">
+					<input type="text" placeholder=" ¥请输入最低金额">
+					-
+					<input type="text" class="last" placeholder=" ¥请输入最低金额">
+				</div>
+				<div class="div4">
+					<div class="check_con show_all">
+						<div class="check_list">
+							<p>
+								<input type="checkbox"><span>包邮</span>
+								<input type="checkbox"><span>折扣</span>
+								<input type="checkbox"><span>搭配减价</span>
+							</p>
+							<p>
+								<input type="checkbox"><span>满就减</span>
+								<input type="checkbox"><span>货到付款</span>
+								<input type="checkbox"><span>通用排序</span>
+							</p>
+							<button class="more">更多<i class="icon_down"></i></button>
+						</div>
+					</div>
+				</div>
+				<div class="div5">
+					<a href="javascript:;"><i class="icon_store"></i>店铺</a>
+					<a href="javascript:;" class="f_active"><i class="icon_bigpic"></i>大图</a>
+				</div>
+			</div>
+			<div class="f_page fr">
+				<p><em>{{page.number}}</em>/<em>{{paginator.num_pages}}</em></p>
+				<input type="button" id="f_prev_page" name="{% if page.has_previous %}/search/?q={{query}}&page={{page.previous_page_number}}{% endif %}" class="active_btn"  value="&lt;">
+				<input type="button" id="f_next_page" name="{% if page.has_next %}/search?q={{query}}&page={{page.next_page_number}}{% endif %}" value="&gt;">
+			</div>
+		</div>
+	</div>
+
+	<!-- 商品区域 -->
+	<div class="result_list_con">
+		<div class="result_list">
+			<ul class="clearfix">
+				{% for item in page %}
+				<li>
+					<div class="border_shake">
+						<a href="{% url 'goods:detail' item.object.id %}" class="pic">
+							<img src="{{item.object.image.url}}" alt="">
+						</a>
+						<div class="thump_con no_icon">
+							<p class="thump">
+								<a href="{% url 'goods:detail' item.object.id %}" class="first">
+									<img src="{{item.object.image.url}}" alt="">
+								</a>
+								<a href="{% url 'goods:detail' item.object.id %}" class="first">
+									<img src="{{item.object.image.url}}" alt="">
+								</a>
+								<a href="{% url 'goods:detail' item.object.id %}" class="first">
+									<img src="{{item.object.image.url}}" alt="">
+								</a>
+								<a href="{% url 'goods:detail' item.object.id %}" class="first">
+									<img src="{{item.object.image.url}}" alt="">
+								</a>
+								<a href="{% url 'goods:detail' item.object.id %}" class="first">
+									<img src="{{item.object.image.url}}" alt="">
+								</a>
+							</p>
+							<!--<i class="i_prev"></i>-->
+							<!--<i class="i_next"></i>-->
+						</div>
+						<p class="price">¥<em>{{item.object.real_price}}</em></p>
+						<p class="title"><a href="{% url 'goods:detail' item.object.id %}">{{item.object.name}}</a></p>
+						<p class="saler"><a href="#">火吻官方自营店</a></p>
+						<p class="sales">
+							<span>该款月成交 <em>{{item.object.sales}}笔</em></span>
+							<a href="#" title="点此可以直接和卖家交流选好的宝贝，或相互交流网购体验，还支持语音视频噢。"><i class="i_curs"></i></a>
+						</p>
+				</div>
+				</li>
+				{% endfor %}
+			</ul>
+		</div>
+	</div>
+{% endblock body_main %}

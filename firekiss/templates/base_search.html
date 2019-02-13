@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% load gen_range %}
+{# 网页body块 #}
+{% block body %}
+	{# 每个商品相关页主要内容块 #}
+	{% block body_main %}
+	{% endblock body_main %}
+
+	{# 底部分页相关 #}
+	{% block body_other %}
+		<!-- 底部分页 -->
+		<div class="result_pagena_con">
+			<div class="result_pagena">
+				<ul>
+					<li><a href="{% if page.has_previous %}/search/?q={{query}}&page={{page.previous_page_number}}{% else %}javascript:;{% endif %}" id="r_prev_page" class="now_page">&lt;上一页</a></li>
+					<div class="page_con">
+						{% if paginator.num_pages < 8 %}
+							{% if page.number <= 6 %}
+								{% for pageindex in paginator.num_pages|range:"nlet6" %}
+									<li><a href="/search/?q={{query}}&page={{pageindex}}"{% if pageindex == page.number %}class="now_page"{% endif %}>{{pageindex}}</a></li>
+								{% endfor%}
+								<li><span>···</span></li>
+							{% else %}
+								{% for pageindex in 1|range:3 %}
+									<li><a href="/search/?q={{query}}&page={{pageindex}}"{% if pageindex == page.number %}class="now_page"{% endif %}>{{pageindex}}</a></li>
+								{% endfor%}
+								<li><span>···</span></li>
+								{% for pageindex in paginator.nums_pages|range:"let8"  %}
+									<li><a href="/search/?q={{query}}&page={{pageindex}}"{% if pageindex == page.number %}class="now_page"{% endif %}>{{pageindex}}</a></li>
+								{% endfor%}
+							{% endif%}
+						{% else %}
+							{% for pageindex in 1|range:3 %}
+								<li><a href="/search/?q={{query}}&page={{pageindex}}"{% if pageindex == page.number %}class="now_page"{% endif %}>{{pageindex}}</a></li>
+							{% endfor%}
+							<li><span>···</span></li>
+							{% for pageindex in page.number|range:"gt8" %}
+								<li><a href="/search/?q={{query}}&page={{pageindex}}"{% if pageindex == page.number %}class="now_page"{% endif %}>{{pageindex}}</a></li>
+							{% endfor%}
+						{% endif%}
+					</div>
+					<li><a href="{% if page.has_next %}/search/?q={{query}}&page={{page.next_page_number}}{% else %}javascript:;{% endif %}" id="r_next_page">下一页&gt;</a><i class="i_china_year" title="春节快乐，猪事如意"></i></li>
+					<li><span>共<em class="all_pages">{{page.paginator.num_pages}}</em>页，到第</span></li>
+					<li><input type="text" id="page_to" value="1">页</li>
+					<li><input type="submit" id="page_to_btn1" value="确定" class="btn"></li>
+				</ul>
+			</div>
+		</div>
+
+		<!-- bot fast_link -->
+		<ul class="bot_fast clearfix">
+			<li><span>您是不是想找</span></li>
+			<li ><a href="#" >华为</a></li>
+			<li><a href="#">小米</a></li>
+			<li><a href="#">魅族</a></li>
+			<li><a href="#">荣耀</a></li>
+			<li><a href="#">苹果</a></li>
+			<li><a href="#">苹果</a></li>
+			<li><a href="#">三星</a></li>
+		</ul>
+	{% endblock body_other %}
+
+	<!-- bot ad -->
+	<div class="bot_ads">
+		<div class="ads_title">
+			<a href="#" class="fl"><h1>掌柜热卖</h1></a>
+			<a href="#" class="fr">更多热卖&gt;</a>
+			<i></i>
+		</div>
+		<div class="result_list">
+				<ul class="clearfix">
+					{% for goods in goods_list %}
+					<li>
+						<div class="border_shake no_icon">
+							<a href="{% url 'goods:detail' goods.id %}" class="pic">
+								<img src="{{goods.image.url}}" alt="">
+							</a>
+							<p class="price">¥<em>{{goods.real_price}}</em><span class="before_price">¥<em>{{goods.bid_price}}</em></span></p>
+							<p class="sales">
+								<span>该款月成交 <em>{{goods.sales}}笔</em></span>
+								<a href="#">包邮</a>
+							</p>
+							<p class="title"><a href="{% url 'goods:detail' goods.id %}"><span>{{goods.name}}</span> </a></p>
+							<p class="saler"><a href="#">{{goods.brand}}</a></p>
+					</div>
+					</li>
+					{% empty %}
+						<p>没有历史浏览记录</p>
+					{% endfor%}
+				</ul>
+		</div>
+	</div>
+
+	<!-- bot search -->
+	<div class="bot_search list_page clearfix">
+		<form class="search_str" method="get" action="/search/">
+			<input type="text" name="q" class="input_text fl" placeholder="请输入关键词">
+			<input type="submit" name="" class="input_btn fl" value="搜 索">
+		</form>
+	</div>
+
+	<!-- bot advice -->
+	<p class="bot_advice"><i class="i_advice"></i>在此反馈您的意见和建议吧，<a href="#">立刻反馈</a></p>
+{% endblock body %}
