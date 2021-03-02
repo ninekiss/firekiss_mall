@@ -85,10 +85,10 @@ WSGI_APPLICATION = 'firekiss.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'firekiss',
-        'USER': 'kean',
-        'PASSWORD': 'lyy520..',
-        'HOST':'192.168.0.101',
+        'NAME': 'dbName',
+        'USER': 'username',
+        'PASSWORD': 'password',
+        'HOST':'127.0.0.1',
         'PORT': 3306
     }
 }
@@ -129,18 +129,18 @@ TINYMCE_DEFAULT_CONFIG = {
 # 发邮件配置
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_USE_SSL = True
-EMAIL_HOST = 'smtp.qiye.aliyun.com'
+EMAIL_HOST = 'example.com'
 EMAIL_PORT = 465
-EMAIL_HOST_USER = 'firekiss@seespace.ml'  # 发送邮件的邮箱
-EMAIL_HOST_PASSWORD = 'Lyy520..'  # 密码
-EMAIL_FROM = 'FIREKISS 火吻 <firekiss@seespace.ml>'  # 收件人看到的发件人昵称
+EMAIL_HOST_USER = 'example@example.com'  # 发送邮件的邮箱
+EMAIL_HOST_PASSWORD = 'password'  # 密码
+EMAIL_FROM = 'FIREKISS 火吻 <example@example.com>'  # 收件人看到的发件人昵称
 
 
 # django缓存配置
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
-        "LOCATION": "redis://192.168.0.101:6379/1",
+        "LOCATION": "redis://127.0.0.1:6379/1",
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
         }
@@ -161,7 +161,7 @@ DEFAULT_FILE_STORAGE = 'utils.fdfs.storage.FDFSStorage'
 # fdfs客户配置文件
 HDFS_CLIENT_CONF = './utils/fdfs/client.conf'
 # fdfs服务器所使用的nginx的地址
-HDFS_URL = 'http://192.168.0.101:8888/'
+HDFS_URL = 'http://127.0.0.1:8888/'
 
 
 # 全文检索框架配置
