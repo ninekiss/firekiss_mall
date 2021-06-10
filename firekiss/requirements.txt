@@ -3,7 +3,7 @@ billiard==3.5.0.5
 celery==4.2.1
 certifi==2018.11.29
 chardet==3.0.4
-Django==1.11.29
+Django==2.2.24
 django-haystack==2.8.1
 django-redis==3.8.4
 django-tinymce==2.6.0
